@@ -1,0 +1,37 @@
+HUONG DAN UP LEN GITHUB REPO TOBO
+
+Repo cua ban:
+https://github.com/kienztrn/TOBO
+
+Cach nhanh nhat:
+1. Giai nen ZIP nay.
+2. Mo thu muc vietsub_desktop_windows\vietsub_desktop.
+3. Bam file PUSH_TO_GITHUB.bat.
+4. Neu Git hoi dang nhap, dang nhap tai khoan GitHub cua ban.
+5. Cho push xong, mo lai repo tren trinh duyet de kiem tra.
+
+Neu may chua co Git:
+- Cai Git for Windows: https://git-scm.com/download/win
+- Cai xong mo lai PUSH_TO_GITHUB.bat.
+
+Ve nut Cap nhat trong app:
+- update_config.json da tro ve:
+  https://raw.githubusercontent.com/kienztrn/TOBO/main/update_manifest.json
+
+- update_manifest.json hien dang de version 1.3.2, tuc la bang ban hien tai.
+- Khi co ban moi:
+  1. Build EXE/portable moi.
+  2. Tao GitHub Release.
+  3. Upload file zip/exe vao Release.
+  4. Sua update_manifest.json:
+     - tang version, vi du 1.3.3
+     - url tro den file Release moi
+     - notes ghi noi dung cap nhat
+  5. Push lai len GitHub.
+
+Vi du update_manifest.json:
+{
+  "version": "1.3.3",
+  "url": "https://github.com/kienztrn/TOBO/releases/download/v1.3.3/TOBO_VietSub_Portable.zip",
+  "notes": "Toi uu giao dien, sua loi update."
+}

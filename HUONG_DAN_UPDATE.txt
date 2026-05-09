@@ -1,0 +1,19 @@
+HUONG DAN UPDATE TOBO VIETSUB
+
+1. Push code len repo GitHub:
+   https://github.com/kienztrn/TOBO
+
+2. Build portable ZIP tren Windows:
+   BUILD_PORTABLE_RELEASE.bat
+
+3. Vao GitHub > Releases > Draft a new release.
+
+4. Upload file ZIP portable voi ten:
+   TOBO_VietSub_Portable.zip
+
+5. Tang version trong update_manifest.json, vi du:
+   "version": "1.4.1"
+
+6. Push update_manifest.json len GitHub.
+
+7. Trong app bam Kiem tra cap nhat.
