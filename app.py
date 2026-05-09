@@ -31,7 +31,7 @@ else:
 TEMP_DIR = APP_DIR / "temp"
 OUTPUT_DIR = APP_DIR / "output"
 UPDATES_DIR = APP_DIR / "updates"
-CURRENT_VERSION = "1.6.2"
+CURRENT_VERSION = "1.6.3"
 APP_NAME = "TOBO VietSub"
 TEMP_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -60,6 +60,261 @@ ENTRY_BG = "#FFFFFF"
 TEXTBOX_BG = "#FFFFFF"
 SUCCESS = "#11A36A"
 WARNING = "#D97706"
+
+SETTINGS_CONFIG_NAME = "tobo_ui_settings.json"
+
+THEME_PRESETS = {
+    "1. Kem cam đào": {
+        "bg": "#FFF7ED", "surface": "#FFFBF5", "primary": "#F97316", "secondary": "#FB7185",
+        "accent": "#FACC15", "text": "#292524", "muted": "#78716C", "border": "#FED7AA",
+    },
+    "2. Apple Light": {
+        "bg": "#F8FAFC", "surface": "#FFFFFF", "primary": "#111827", "secondary": "#CBD5E1",
+        "accent": "#007AFF", "text": "#1E293B", "muted": "#64748B", "border": "#E5E7EB",
+    },
+    "3. Apple Light Soft": {
+        "bg": "#F8FAFC", "surface": "#FFFFFF", "primary": "#111827", "secondary": "#CBD5E1",
+        "accent": "#007AFF", "text": "#1E293B", "muted": "#64748B", "border": "#E5E7EB",
+    },
+    "4. Peach Cream": {
+        "bg": "#FFF7ED", "surface": "#FFFBF5", "primary": "#F97316", "secondary": "#FB7185",
+        "accent": "#FACC15", "text": "#292524", "muted": "#78716C", "border": "#FED7AA",
+    },
+    "5. Pink Neon Soft": {
+        "bg": "#FFF1F7", "surface": "#FFFFFF", "primary": "#DB2777", "secondary": "#9333EA",
+        "accent": "#F472B6", "text": "#2E1065", "muted": "#7E6A8A", "border": "#FBCFE8",
+    },
+    "6. Blue Cloud": {
+        "bg": "#F8FBFF", "surface": "#FFFFFF", "primary": "#3B82F6", "secondary": "#60A5FA",
+        "accent": "#93C5FD", "text": "#1E3A8A", "muted": "#64748B", "border": "#DBEAFE",
+    },
+    "7. Golden Warm": {
+        "bg": "#FFFBEB", "surface": "#FFFFFF", "primary": "#F59E0B", "secondary": "#FBBF24",
+        "accent": "#FDE68A", "text": "#78350F", "muted": "#71635A", "border": "#FDE68A",
+    },
+    "8. Shopee Peach": {
+        "bg": "#FFF7F2", "surface": "#FFFFFF", "primary": "#EE4D2D", "secondary": "#FF6B81",
+        "accent": "#FFB86B", "text": "#431407", "muted": "#7C6A63", "border": "#FFD6C2",
+    },
+    "9. Coffee Gold": {
+        "bg": "#FAF7F2", "surface": "#FFFFFF", "primary": "#A16207", "secondary": "#D97706",
+        "accent": "#FCD34D", "text": "#292524", "muted": "#78716C", "border": "#E7E0D5",
+    },
+}
+
+LANG_OPTIONS = {
+    "vi": "Tiếng Việt",
+    "en": "English",
+    "ko": "한국어",
+    "zh": "中文",
+}
+
+APP_LANG = "vi"
+CURRENT_THEME_KEY = "2. Apple Light"
+
+I18N = {
+    "vi": {
+        "subtitle": "Studio phụ đề AI • dịch văn bản sạch • xuất TXT/SRT • cập nhật tại chỗ",
+        "control": "TOBO AI CONTROL",
+        "mode": "AI LIGHT MODE",
+        "settings": "Cài đặt",
+        "update_center": "Update Center",
+        "update_desc": "Cập nhật tại chỗ, giữ nguyên thư viện và dữ liệu đã cài.",
+        "update": "↻ Cập nhật",
+        "updates": "📁 Updates",
+        "sparkle": "Sparkle FX",
+        "sound": "Âm click",
+        "ready": "In-place update ready",
+        "keep_libs": "Không xóa .venv • không tải lại thư viện",
+        "pick": "＋ Chọn video/audio",
+        "source_lang": "Ngôn ngữ gốc",
+        "translate": "Dịch",
+        "model": "Model AI",
+        "device": "Thiết bị",
+        "export": "Xuất file",
+        "start": "▶ Bắt đầu xử lý",
+        "save_txt": "💾 Lưu TXT",
+        "export_srt": "🎬 Xuất SRT",
+        "output": "📁 Output",
+        "clear": "🧹 Xóa",
+        "status": "SYSTEM STATUS",
+        "original": "Văn bản gốc",
+        "original_hint": "Có timestamp để kiểm tra transcript",
+        "translation": "Bản dịch",
+        "translation_hint": "Chỉ hiện văn bản dịch sạch, không kèm giây",
+        "app_language": "Ngôn ngữ app",
+        "theme": "Bảng màu giao diện",
+        "apply": "Áp dụng",
+        "close": "Đóng",
+        "settings_title": "Cài đặt TOBO VietSub",
+        "theme_note": "Đổi theme sẽ áp dụng ngay, không cần cài lại thư viện.",
+    },
+    "en": {
+        "subtitle": "AI subtitle studio • clean translation • TXT/SRT export • in-place updater",
+        "control": "TOBO AI CONTROL",
+        "mode": "AI LIGHT MODE",
+        "settings": "Settings",
+        "update_center": "Update Center",
+        "update_desc": "Update in-place while keeping installed libraries and data.",
+        "update": "↻ Update",
+        "updates": "📁 Updates",
+        "sparkle": "Sparkle FX",
+        "sound": "Click sound",
+        "ready": "In-place update ready",
+        "keep_libs": "Keep .venv • no library reinstall",
+        "pick": "＋ Pick video/audio",
+        "source_lang": "Source language",
+        "translate": "Translate",
+        "model": "AI model",
+        "device": "Device",
+        "export": "Export file",
+        "start": "▶ Start",
+        "save_txt": "💾 Save TXT",
+        "export_srt": "🎬 Export SRT",
+        "output": "📁 Output",
+        "clear": "🧹 Clear",
+        "status": "SYSTEM STATUS",
+        "original": "Original text",
+        "original_hint": "Timestamped transcript for checking",
+        "translation": "Translation",
+        "translation_hint": "Clean translated text without seconds",
+        "app_language": "App language",
+        "theme": "UI color theme",
+        "apply": "Apply",
+        "close": "Close",
+        "settings_title": "TOBO VietSub Settings",
+        "theme_note": "Theme changes apply instantly. Libraries stay untouched.",
+    },
+    "ko": {
+        "subtitle": "AI 자막 스튜디오 • 깔끔한 번역 • TXT/SRT 내보내기 • 제자리 업데이트",
+        "control": "TOBO AI CONTROL",
+        "mode": "AI LIGHT MODE",
+        "settings": "설정",
+        "update_center": "업데이트 센터",
+        "update_desc": "설치된 라이브러리와 데이터를 유지하며 업데이트합니다.",
+        "update": "↻ 업데이트",
+        "updates": "📁 Updates",
+        "sparkle": "Sparkle FX",
+        "sound": "클릭음",
+        "ready": "제자리 업데이트 준비됨",
+        "keep_libs": ".venv 유지 • 라이브러리 재설치 없음",
+        "pick": "＋ 비디오/오디오 선택",
+        "source_lang": "원본 언어",
+        "translate": "번역",
+        "model": "AI 모델",
+        "device": "장치",
+        "export": "파일 내보내기",
+        "start": "▶ 시작",
+        "save_txt": "💾 TXT 저장",
+        "export_srt": "🎬 SRT 내보내기",
+        "output": "📁 Output",
+        "clear": "🧹 지우기",
+        "status": "SYSTEM STATUS",
+        "original": "원본 텍스트",
+        "original_hint": "확인용 타임스탬프 포함",
+        "translation": "번역문",
+        "translation_hint": "초 단위 없이 깔끔한 번역문만 표시",
+        "app_language": "앱 언어",
+        "theme": "UI 색상 테마",
+        "apply": "적용",
+        "close": "닫기",
+        "settings_title": "TOBO VietSub 설정",
+        "theme_note": "테마는 즉시 적용됩니다. 라이브러리는 그대로 유지됩니다.",
+    },
+    "zh": {
+        "subtitle": "AI 字幕工作室 • 干净翻译 • 导出 TXT/SRT • 原地更新",
+        "control": "TOBO AI CONTROL",
+        "mode": "AI LIGHT MODE",
+        "settings": "设置",
+        "update_center": "更新中心",
+        "update_desc": "原地更新，保留已安装库和数据。",
+        "update": "↻ 更新",
+        "updates": "📁 Updates",
+        "sparkle": "Sparkle FX",
+        "sound": "点击音",
+        "ready": "原地更新已就绪",
+        "keep_libs": "保留 .venv • 不重新安装库",
+        "pick": "＋ 选择视频/音频",
+        "source_lang": "源语言",
+        "translate": "翻译",
+        "model": "AI 模型",
+        "device": "设备",
+        "export": "导出文件",
+        "start": "▶ 开始处理",
+        "save_txt": "💾 保存 TXT",
+        "export_srt": "🎬 导出 SRT",
+        "output": "📁 Output",
+        "clear": "🧹 清空",
+        "status": "SYSTEM STATUS",
+        "original": "原文",
+        "original_hint": "带时间戳，方便检查",
+        "translation": "译文",
+        "translation_hint": "只显示干净译文，不带秒数",
+        "app_language": "应用语言",
+        "theme": "界面颜色主题",
+        "apply": "应用",
+        "close": "关闭",
+        "settings_title": "TOBO VietSub 设置",
+        "theme_note": "主题会立即应用，不会重新安装库。",
+    },
+}
+
+
+def get_settings_path() -> Path:
+    return APP_DIR / SETTINGS_CONFIG_NAME
+
+
+def load_ui_settings() -> dict:
+    defaults = {"app_language": "vi", "theme": CURRENT_THEME_KEY}
+    path = get_settings_path()
+    if not path.exists():
+        return defaults
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, dict):
+            return defaults
+        defaults.update({k: v for k, v in data.items() if k in defaults})
+        return defaults
+    except Exception:
+        return defaults
+
+
+def save_ui_settings(data: dict):
+    path = get_settings_path()
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def apply_theme(theme_key: str):
+    global BG_COLOR, BG_2, SURFACE, SURFACE_2, CARD, ACCENT, ACCENT_2, ACCENT_3
+    global TEXT, TEXT_MUTED, TEXT_DIM, BORDER, ENTRY_BG, TEXTBOX_BG, SUCCESS, WARNING, CURRENT_THEME_KEY
+    theme = THEME_PRESETS.get(theme_key) or THEME_PRESETS.get(CURRENT_THEME_KEY) or next(iter(THEME_PRESETS.values()))
+    CURRENT_THEME_KEY = theme_key if theme_key in THEME_PRESETS else CURRENT_THEME_KEY
+    BG_COLOR = theme["bg"]
+    BG_2 = theme["bg"]
+    SURFACE = theme["surface"]
+    SURFACE_2 = theme["surface"]
+    CARD = theme["surface"]
+    ACCENT = theme["primary"]
+    ACCENT_2 = theme["accent"]
+    ACCENT_3 = theme["secondary"]
+    TEXT = theme["text"]
+    TEXT_MUTED = theme["muted"]
+    TEXT_DIM = theme["muted"]
+    BORDER = theme["border"]
+    ENTRY_BG = theme["surface"]
+    TEXTBOX_BG = theme["surface"]
+    SUCCESS = theme.get("success", "#16A34A")
+    WARNING = theme.get("warning", "#D97706")
+
+
+def tr(key: str) -> str:
+    table = I18N.get(APP_LANG) or I18N["vi"]
+    return table.get(key, I18N["vi"].get(key, key))
+
+
+_loaded_ui = load_ui_settings()
+APP_LANG = _loaded_ui.get("app_language", "vi") if _loaded_ui.get("app_language") in LANG_OPTIONS else "vi"
+apply_theme(_loaded_ui.get("theme", CURRENT_THEME_KEY))
 
 LANGUAGES = {
     "Tự động nhận diện": None,
@@ -189,11 +444,11 @@ class NeonButton(tk.Button):
         self.sound_callback = sound_callback
         self.user_command = command
         palette = {
-            "primary": (ACCENT, "#8157F2", "#FFFFFF"),
-            "cyan": (ACCENT_2, "#05A5C4", "#FFFFFF"),
-            "pink": (ACCENT_3, "#F06CCB", "#FFFFFF"),
-            "ghost": ("#F4F0FF", "#EAE2FF", TEXT),
-            "dark": ("#FFFFFF", "#F7F4FF", TEXT),
+            "primary": (ACCENT, ACCENT_3, "#FFFFFF"),
+            "cyan": (ACCENT_2, ACCENT, "#FFFFFF"),
+            "pink": (ACCENT_3, ACCENT, "#FFFFFF"),
+            "ghost": (SURFACE_2, BORDER, TEXT),
+            "dark": (SURFACE, SURFACE_2, TEXT),
         }
         self.normal_bg, self.hover_bg, self.fg_color = palette.get(variant, palette["primary"])
         super().__init__(
@@ -348,7 +603,7 @@ class TOBOVietSubApp:
 
         tk.Label(
             title_wrap,
-            text="AI subtitle studio • clean translation • TXT/SRT export • in-place updater",
+            text=tr("subtitle"),
             bg=BG_COLOR,
             fg=TEXT_MUTED,
             font=("Segoe UI", 10),
@@ -368,28 +623,45 @@ class TOBOVietSubApp:
         control_card.pack(anchor="e")
         control_card.pack_propagate(False)
 
-        top_strip = tk.Frame(control_card, bg="#FFFFFF", height=32)
+        top_strip = tk.Frame(control_card, bg=SURFACE, height=32)
         top_strip.pack(fill="x", side="top")
         top_strip.pack_propagate(False)
         tk.Label(
             top_strip,
-            text="TOBO AI CONTROL",
-            bg="#FFFFFF",
+            text=tr("control"),
+            bg=SURFACE,
             fg=ACCENT,
             font=("Segoe UI", 8, "bold"),
         ).pack(side="left", padx=14)
+        self.settings_button = tk.Button(
+            top_strip,
+            text="☰",
+            command=self.open_settings,
+            bg=SURFACE_2,
+            fg=TEXT,
+            activebackground=BORDER,
+            activeforeground=TEXT,
+            relief="flat",
+            bd=0,
+            width=3,
+            cursor="hand2",
+            font=("Segoe UI", 12, "bold"),
+            highlightthickness=1,
+            highlightbackground=BORDER,
+        )
+        self.settings_button.pack(side="right", padx=(0, 12), pady=3)
         tk.Label(
             top_strip,
             text=f"v{CURRENT_VERSION}",
-            bg="#FFFFFF",
+            bg=SURFACE,
             fg=TEXT_DIM,
             font=("Segoe UI", 9, "bold"),
-        ).pack(side="right", padx=14)
+        ).pack(side="right", padx=(0, 10))
 
         card_body = tk.Frame(control_card, bg=SURFACE)
         card_body.pack(fill="both", expand=True, padx=14, pady=12)
 
-        aura_panel = tk.Frame(card_body, bg="#FBFAFF", width=304, height=112, highlightthickness=1, highlightbackground="#ECE4FF")
+        aura_panel = tk.Frame(card_body, bg=SURFACE_2, width=304, height=112, highlightthickness=1, highlightbackground=BORDER)
         aura_panel.pack(side="left", fill="y")
         aura_panel.pack_propagate(False)
 
@@ -397,7 +669,7 @@ class TOBOVietSubApp:
             aura_panel,
             width=304,
             height=112,
-            bg="#FBFAFF",
+            bg=SURFACE_2,
             highlightthickness=0,
             bd=0,
         )
@@ -405,8 +677,8 @@ class TOBOVietSubApp:
 
         badge = tk.Label(
             aura_panel,
-            text="APPLE / AI LIGHT MODE",
-            bg="#FFFFFF",
+            text=tr("mode"),
+            bg=SURFACE,
             fg=ACCENT,
             font=("Segoe UI", 8, "bold"),
             padx=9,
@@ -417,7 +689,7 @@ class TOBOVietSubApp:
         self.header_status_label = tk.Label(
             aura_panel,
             text="Soft sparkle active",
-            bg="#FFFFFF",
+            bg=SURFACE,
             fg=TEXT,
             font=("Segoe UI", 8, "bold"),
             padx=9,
@@ -430,14 +702,14 @@ class TOBOVietSubApp:
 
         tk.Label(
             control_panel,
-            text="Update Center",
+            text=tr("update_center"),
             bg=SURFACE,
             fg=TEXT,
             font=("Segoe UI Variable Display", 15, "bold"),
         ).pack(anchor="w")
         tk.Label(
             control_panel,
-            text="Cập nhật tại chỗ, giữ nguyên thư viện và dữ liệu đã cài.",
+            text=tr("update_desc"),
             bg=SURFACE,
             fg=TEXT_MUTED,
             justify="left",
@@ -447,32 +719,32 @@ class TOBOVietSubApp:
 
         action_row = tk.Frame(control_panel, bg=SURFACE)
         action_row.pack(fill="x")
-        NeonButton(action_row, "↻ Cập nhật", self.check_update, variant="primary", sound_callback=self.play_click).pack(side="left")
-        NeonButton(action_row, "📁 Updates", self.open_updates_folder, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(8, 0))
+        NeonButton(action_row, tr("update"), self.check_update, variant="primary", sound_callback=self.play_click).pack(side="left")
+        NeonButton(action_row, tr("updates"), self.open_updates_folder, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(8, 0))
 
         toggle_row = tk.Frame(control_panel, bg=SURFACE)
         toggle_row.pack(fill="x", pady=(12, 0))
         tk.Checkbutton(
             toggle_row,
-            text="Sparkle FX",
+            text=tr("sparkle"),
             variable=self.sparkle_enabled,
             bg=SURFACE,
             fg=TEXT_MUTED,
             activebackground=SURFACE,
             activeforeground=TEXT,
-            selectcolor="#F2ECFF",
+            selectcolor=ENTRY_BG,
             font=("Segoe UI", 10),
             relief="flat",
         ).pack(side="left")
         tk.Checkbutton(
             toggle_row,
-            text="Âm click",
+            text=tr("sound"),
             variable=self.sound_enabled,
             bg=SURFACE,
             fg=TEXT_MUTED,
             activebackground=SURFACE,
             activeforeground=TEXT,
-            selectcolor="#F2ECFF",
+            selectcolor=ENTRY_BG,
             font=("Segoe UI", 10),
             relief="flat",
         ).pack(side="left", padx=(14, 0))
@@ -481,14 +753,14 @@ class TOBOVietSubApp:
         info_row.pack(fill="x", pady=(12, 0))
         tk.Label(
             info_row,
-            text="In-place update ready",
+            text=tr("ready"),
             bg=SURFACE,
             fg=SUCCESS,
             font=("Segoe UI", 9, "bold"),
         ).pack(anchor="w")
         tk.Label(
             info_row,
-            text="Không xóa .venv • không tải lại thư viện",
+            text=tr("keep_libs"),
             bg=SURFACE,
             fg=TEXT_DIM,
             font=("Segoe UI", 8),
@@ -502,7 +774,7 @@ class TOBOVietSubApp:
 
         file_row = tk.Frame(top, bg=SURFACE)
         file_row.pack(fill="x", padx=16, pady=(16, 12))
-        NeonButton(file_row, "＋ Chọn video/audio", self.pick_file, variant="cyan", sound_callback=self.play_click).pack(side="left")
+        NeonButton(file_row, tr("pick"), self.pick_file, variant="cyan", sound_callback=self.play_click).pack(side="left")
         self.file_entry = tk.Entry(
             file_row,
             textvariable=self.selected_file,
@@ -522,50 +794,50 @@ class TOBOVietSubApp:
         for col in range(5):
             options.columnconfigure(col, weight=1)
 
-        self.add_combo(options, "Ngôn ngữ gốc", self.language, list(LANGUAGES.keys()), 0)
-        self.add_combo(options, "Dịch", self.translate_to, list(TRANSLATE_LANGUAGES.keys()), 1)
-        self.add_combo(options, "Model AI", self.model_size, list(MODEL_SIZES.keys()), 2)
-        self.add_combo(options, "Thiết bị", self.device_mode, ["Tự động", "CPU", "GPU NVIDIA"], 3)
-        self.add_combo(options, "Xuất file", self.export_format, list(EXPORT_FORMATS.keys()), 4)
+        self.add_combo(options, tr("source_lang"), self.language, list(LANGUAGES.keys()), 0)
+        self.add_combo(options, tr("translate"), self.translate_to, list(TRANSLATE_LANGUAGES.keys()), 1)
+        self.add_combo(options, tr("model"), self.model_size, list(MODEL_SIZES.keys()), 2)
+        self.add_combo(options, tr("device"), self.device_mode, ["Tự động", "CPU", "GPU NVIDIA"], 3)
+        self.add_combo(options, tr("export"), self.export_format, list(EXPORT_FORMATS.keys()), 4)
 
         btns = tk.Frame(top, bg=SURFACE)
         btns.pack(fill="x", padx=16, pady=(0, 16))
-        self.start_btn = NeonButton(btns, "▶ Bắt đầu xử lý", self.start, variant="primary", sound_callback=self.play_click)
+        self.start_btn = NeonButton(btns, tr("start"), self.start, variant="primary", sound_callback=self.play_click)
         self.start_btn.pack(side="left")
-        NeonButton(btns, "💾 Lưu TXT", self.save_text, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
-        NeonButton(btns, "🎬 Xuất SRT", self.save_srt_manual, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
-        NeonButton(btns, "📁 Output", self.open_output, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
-        NeonButton(btns, "🧹 Xóa", self.clear_text, variant="dark", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+        NeonButton(btns, tr("save_txt"), self.save_text, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+        NeonButton(btns, tr("export_srt"), self.save_srt_manual, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+        NeonButton(btns, tr("output"), self.open_output, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+        NeonButton(btns, tr("clear"), self.clear_text, variant="dark", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
 
         tk.Checkbutton(
             btns,
-            text="Sparkle FX",
+            text=tr("sparkle"),
             variable=self.sparkle_enabled,
             bg=SURFACE,
             fg=TEXT_MUTED,
             activebackground=SURFACE,
             activeforeground=TEXT,
-            selectcolor="#F2ECFF",
+            selectcolor=ENTRY_BG,
             font=("Segoe UI", 10),
             relief="flat",
         ).pack(side="right", padx=(0, 14))
 
         tk.Checkbutton(
             btns,
-            text="Âm click",
+            text=tr("sound"),
             variable=self.sound_enabled,
             bg=SURFACE,
             fg=TEXT_MUTED,
             activebackground=SURFACE,
             activeforeground=TEXT,
-            selectcolor="#F2ECFF",
+            selectcolor=ENTRY_BG,
             font=("Segoe UI", 10),
             relief="flat",
         ).pack(side="right")
 
         status_card = tk.Frame(main, bg=CARD, highlightthickness=1, highlightbackground=BORDER)
         status_card.pack(fill="x", pady=(0, 12))
-        tk.Label(status_card, text="SYSTEM STATUS", bg=CARD, fg=TEXT_DIM, font=("Segoe UI", 8, "bold")).pack(anchor="w", padx=14, pady=(10, 0))
+        tk.Label(status_card, text=tr("status"), bg=CARD, fg=TEXT_DIM, font=("Segoe UI", 8, "bold")).pack(anchor="w", padx=14, pady=(10, 0))
         self.progress_bar = ttk.Progressbar(status_card, variable=self.progress, maximum=100, mode="determinate")
         self.progress_bar.pack(fill="x", padx=14, pady=(8, 4))
         self.status_label = tk.Label(status_card, textvariable=self.status, bg=CARD, fg=TEXT_MUTED, font=("Segoe UI", 10))
@@ -574,8 +846,8 @@ class TOBOVietSubApp:
         panes = ttk.PanedWindow(main, orient="horizontal")
         panes.pack(fill="both", expand=True)
 
-        left = self.make_text_card(panes, "Văn bản gốc", "Có timestamp để kiểm tra transcript")
-        right = self.make_text_card(panes, "Bản dịch", "Chỉ hiện văn bản dịch sạch, không kèm giây")
+        left = self.make_text_card(panes, tr("original"), tr("original_hint"))
+        right = self.make_text_card(panes, tr("translation"), tr("translation_hint"))
         panes.add(left, weight=1)
         panes.add(right, weight=1)
 
@@ -584,12 +856,145 @@ class TOBOVietSubApp:
         self.text_translated = self.make_textbox(right)
         self.text_translated.pack(fill="both", expand=True, padx=12, pady=(0, 12))
 
+    def rebuild_ui(self):
+        try:
+            self.root.configure(bg=BG_COLOR)
+            for child in self.root.winfo_children():
+                child.destroy()
+            self.pulse_colors = [ACCENT, ACCENT_2, ACCENT_3, TEXT]
+            self.sparkle_canvas = None
+            self.sparkle_items = []
+            self.header_status_label = None
+            self.build_ui()
+            self.setup_sparkle_scene()
+            self.status.set("Sẵn sàng")
+        except Exception as e:
+            messagebox.showerror("Lỗi giao diện", str(e))
+
+    def open_settings(self):
+        self.play_click()
+        if self.worker and self.worker.is_alive():
+            messagebox.showinfo(tr("settings"), "App đang xử lý video, xử lý xong rồi đổi giao diện cho an toàn.")
+            return
+
+        current = load_ui_settings()
+        win = tk.Toplevel(self.root)
+        win.title(tr("settings_title"))
+        win.geometry("520x520")
+        win.resizable(False, False)
+        win.configure(bg=BG_COLOR)
+        try:
+            win.transient(self.root)
+            win.grab_set()
+        except Exception:
+            pass
+
+        wrap = tk.Frame(win, bg=BG_COLOR)
+        wrap.pack(fill="both", expand=True, padx=18, pady=18)
+
+        head = tk.Frame(wrap, bg=BG_COLOR)
+        head.pack(fill="x", pady=(0, 14))
+        tk.Label(head, text="☰", bg=BG_COLOR, fg=ACCENT, font=("Segoe UI", 22, "bold")).pack(side="left")
+        tk.Label(head, text=tr("settings_title"), bg=BG_COLOR, fg=TEXT, font=("Segoe UI Variable Display", 18, "bold")).pack(side="left", padx=(10, 0))
+
+        card = tk.Frame(wrap, bg=SURFACE, highlightthickness=1, highlightbackground=BORDER)
+        card.pack(fill="x", pady=(0, 14))
+
+        tk.Label(card, text=tr("app_language"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=14, pady=(14, 4))
+        lang_reverse = {name: key for key, name in LANG_OPTIONS.items()}
+        lang_var = tk.StringVar(value=LANG_OPTIONS.get(current.get("app_language", "vi"), "Tiếng Việt"))
+        lang_combo = ttk.Combobox(card, textvariable=lang_var, values=list(LANG_OPTIONS.values()), state="readonly")
+        lang_combo.pack(fill="x", padx=14, pady=(0, 14), ipady=5)
+
+        tk.Label(card, text=tr("theme"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=14, pady=(0, 4))
+        theme_var = tk.StringVar(value=current.get("theme", CURRENT_THEME_KEY) if current.get("theme", CURRENT_THEME_KEY) in THEME_PRESETS else CURRENT_THEME_KEY)
+        theme_combo = ttk.Combobox(card, textvariable=theme_var, values=list(THEME_PRESETS.keys()), state="readonly")
+        theme_combo.pack(fill="x", padx=14, pady=(0, 12), ipady=5)
+
+        preview = tk.Frame(card, bg=SURFACE)
+        preview.pack(fill="x", padx=14, pady=(0, 14))
+
+        swatches = []
+        labels = [("bg", "Nền"), ("surface", "Card"), ("primary", "Primary"), ("secondary", "Secondary"), ("accent", "Accent"), ("text", "Text"), ("muted", "Muted"), ("border", "Border")]
+
+        def draw_preview(*_):
+            for child in preview.winfo_children():
+                child.destroy()
+            theme = THEME_PRESETS.get(theme_var.get()) or THEME_PRESETS[CURRENT_THEME_KEY]
+            for i, (key, label) in enumerate(labels):
+                box = tk.Frame(preview, bg=SURFACE)
+                box.grid(row=i // 4, column=i % 4, sticky="ew", padx=4, pady=5)
+                color = theme[key]
+                tk.Label(box, text="  ", bg=color, width=4, relief="flat", highlightthickness=1, highlightbackground=BORDER).pack(side="left")
+                tk.Label(box, text=f" {label}\n {color}", bg=SURFACE, fg=TEXT_MUTED, justify="left", font=("Segoe UI", 8)).pack(side="left")
+            for c in range(4):
+                preview.columnconfigure(c, weight=1)
+
+        theme_combo.bind("<<ComboboxSelected>>", draw_preview)
+        draw_preview()
+
+        note = tk.Label(wrap, text=tr("theme_note"), bg=BG_COLOR, fg=TEXT_MUTED, wraplength=480, justify="left", font=("Segoe UI", 9))
+        note.pack(anchor="w", pady=(0, 14))
+
+        btn_row = tk.Frame(wrap, bg=BG_COLOR)
+        btn_row.pack(fill="x", side="bottom")
+
+        def apply_settings():
+            global APP_LANG
+            lang_key = lang_reverse.get(lang_var.get(), "vi")
+            theme_key = theme_var.get()
+            save_ui_settings({"app_language": lang_key, "theme": theme_key})
+            APP_LANG = lang_key
+            apply_theme(theme_key)
+            try:
+                win.grab_release()
+            except Exception:
+                pass
+            try:
+                win.destroy()
+            except Exception:
+                pass
+            self.rebuild_ui()
+
+        tk.Button(
+            btn_row,
+            text=tr("apply"),
+            command=apply_settings,
+            bg=ACCENT,
+            fg="#FFFFFF",
+            activebackground=ACCENT_3,
+            activeforeground="#FFFFFF",
+            relief="flat",
+            bd=0,
+            padx=18,
+            pady=10,
+            cursor="hand2",
+            font=("Segoe UI", 10, "bold"),
+        ).pack(side="left")
+        tk.Button(
+            btn_row,
+            text=tr("close"),
+            command=win.destroy,
+            bg=SURFACE,
+            fg=TEXT,
+            activebackground=SURFACE_2,
+            activeforeground=TEXT,
+            relief="flat",
+            bd=0,
+            padx=18,
+            pady=10,
+            cursor="hand2",
+            font=("Segoe UI", 10, "bold"),
+            highlightthickness=1,
+            highlightbackground=BORDER,
+        ).pack(side="left", padx=(10, 0))
+
     def setup_styles(self):
         style = ttk.Style()
         style.theme_use("clam")
         style.configure("TCombobox", fieldbackground=ENTRY_BG, background=ENTRY_BG, foreground=TEXT, arrowcolor=ACCENT, bordercolor=BORDER, lightcolor=BORDER, darkcolor=BORDER)
         style.map("TCombobox", fieldbackground=[("readonly", ENTRY_BG)], foreground=[("readonly", TEXT)])
-        style.configure("Horizontal.TProgressbar", thickness=12, troughcolor="#EFE8FF", background=ACCENT, bordercolor="#EFE8FF", lightcolor=ACCENT, darkcolor=ACCENT)
+        style.configure("Horizontal.TProgressbar", thickness=12, troughcolor=BORDER, background=ACCENT, bordercolor=BORDER, lightcolor=ACCENT, darkcolor=ACCENT)
         style.configure("TPanedwindow", background=BG_COLOR)
 
     def make_text_card(self, panes, title, subtitle):
@@ -640,11 +1045,11 @@ class TOBOVietSubApp:
         c = self.sparkle_canvas
         c.delete("all")
         w, h = 304, 112
-        c.create_rectangle(0, 0, w, h, fill="#FBFAFF", outline="")
-        c.create_oval(-50, -38, 132, 118, fill="#F0E8FF", outline="")
-        c.create_oval(148, -22, 330, 94, fill="#E9FAFF", outline="")
-        c.create_oval(172, 44, 342, 156, fill="#FFEAF8", outline="")
-        c.create_arc(36, 30, 270, 158, start=20, extent=142, style="arc", outline="#E5D8FF", width=2)
+        c.create_rectangle(0, 0, w, h, fill=SURFACE_2, outline="")
+        c.create_oval(-50, -38, 132, 118, fill=BORDER, outline="")
+        c.create_oval(148, -22, 330, 94, fill=BG_COLOR, outline="")
+        c.create_oval(172, 44, 342, 156, fill=SURFACE, outline="")
+        c.create_arc(36, 30, 270, 158, start=20, extent=142, style="arc", outline=BORDER, width=2)
         c.create_text(152, 43, text="TOBO", fill=TEXT, font=("Segoe UI Variable Display", 21, "bold"))
         c.create_text(152, 66, text="clean subtitle AI workspace", fill=TEXT_MUTED, font=("Segoe UI", 8))
         self.sparkle_items = []
@@ -672,7 +1077,7 @@ class TOBOVietSubApp:
                     x = sp["x"] + dx
                     y = sp["y"] + dy
                     self.sparkle_canvas.coords(sp["item"], x - size, y - size, x + size, y + size)
-                    color = palette[(idx + int(self.sparkle_tick / 5)) % len(palette)] if twinkle > 0.76 else "#D8CFFF"
+                    color = palette[(idx + int(self.sparkle_tick / 5)) % len(palette)] if twinkle > 0.76 else BORDER
                     self.sparkle_canvas.itemconfig(sp["item"], fill=color, outline=color)
                 if self.header_status_label:
                     label = "Soft sparkle active" if self.sparkle_tick % 10 < 5 else "Logo aura synced"

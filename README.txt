@@ -86,3 +86,10 @@ BAN v1.6.2:
 - Giao diện sáng, sạch kiểu Apple/AI tool hiện đại.
 - Bỏ nền video rối mắt, giữ Sparkle FX nhẹ theo logo.
 - Auto-update in-place: giữ .venv, output, temp, updates, không tải lại thư viện.
+
+BAN v1.6.3:
+- Them nut cai dat goc tren phai dang icon vuong 3 gach: ☰.
+- Cho phep doi ngon ngu app: Tieng Viet, English, Korean, Chinese.
+- Them 9 bang mau giao dien: Peach, Apple Light, Pink Neon, Blue Cloud, Golden, Shopee Peach, Coffee Gold...
+- Doi theme ap dung ngay, khong xoa .venv, khong tai lai thu vien.
+- Auto-update in-place van giu nguyen output/temp/updates/.venv.
