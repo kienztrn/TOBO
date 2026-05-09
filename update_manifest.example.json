@@ -1,5 +1,5 @@
 {
-  "version": "1.6.3",
+  "version": "1.6.4",
   "url": "https://github.com/kienztrn/TOBO/archive/refs/heads/main.zip",
-  "notes": "Thêm nút Cài đặt ☰, đổi ngôn ngữ app và 9 bảng màu giao diện, vẫn auto-update in-place giữ .venv/thư viện."
+  "notes": "Thêm theme 10 Dark Orange và sửa đổi ngôn ngữ app để toàn bộ UI, nút, combobox, trạng thái và hộp thoại đổi theo ngôn ngữ đã chọn."
 }

@@ -93,3 +93,9 @@ BAN v1.6.3:
 - Them 9 bang mau giao dien: Peach, Apple Light, Pink Neon, Blue Cloud, Golden, Shopee Peach, Coffee Gold...
 - Doi theme ap dung ngay, khong xoa .venv, khong tai lai thu vien.
 - Auto-update in-place van giu nguyen output/temp/updates/.venv.
+
+BAN v1.6.4:
+- Them theme moi: 10. Dark Orange, nen toi + cam.
+- Sua ngon ngu app: doi ngon ngu se doi dong bo UI chinh, nut bam, combobox, status, dialog va cua so cai dat.
+- Cac lua chon ngon ngu nguon/dich/model/thiet bi cung hien theo ngon ngu app.
+- Auto-update in-place van giu .venv, thu vien, output, temp va updates.

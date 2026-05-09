@@ -31,7 +31,7 @@ else:
 TEMP_DIR = APP_DIR / "temp"
 OUTPUT_DIR = APP_DIR / "output"
 UPDATES_DIR = APP_DIR / "updates"
-CURRENT_VERSION = "1.6.3"
+CURRENT_VERSION = "1.6.4"
 APP_NAME = "TOBO VietSub"
 TEMP_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -99,6 +99,11 @@ THEME_PRESETS = {
     "9. Coffee Gold": {
         "bg": "#FAF7F2", "surface": "#FFFFFF", "primary": "#A16207", "secondary": "#D97706",
         "accent": "#FCD34D", "text": "#292524", "muted": "#78716C", "border": "#E7E0D5",
+    },
+    "10. Dark Orange": {
+        "bg": "#0F0A05", "surface": "#1A120B", "primary": "#F97316", "secondary": "#FB923C",
+        "accent": "#FACC15", "text": "#FFF7ED", "muted": "#C4A484", "border": "#7C2D12",
+        "success": "#22C55E", "warning": "#F59E0B",
     },
 }
 
@@ -260,6 +265,22 @@ I18N = {
 }
 
 
+EXTRA_I18N = {'vi': {'ready_status': 'Sẵn sàng', 'soft_sparkle_active': 'Lấp lánh nhẹ đang bật', 'soft_sparkle_paused': 'Sparkle FX đã tắt', 'soft_glow': '✦ ánh sáng mềm', 'theme_swatches': ['Nền', 'Card', 'Chính', 'Phụ', 'Nhấn', 'Chữ', 'Mờ', 'Viền'], 'busy_title': 'Đang chạy', 'busy_processing': 'App đang xử lý file hiện tại.', 'busy_settings': 'App đang xử lý video, xử lý xong rồi đổi cài đặt cho an toàn.', 'ui_error_title': 'Lỗi giao diện', 'pick_title': 'Chọn video/audio', 'missing_file_title': 'Thiếu file', 'missing_file_message': 'Bạn hãy chọn video/audio trước.', 'preparing': 'Đang chuẩn bị...', 'loading_model': 'Đang tải/khởi động AI model. Lần đầu có thể lâu vì phải tải model...', 'reading_media': 'Đang đọc trực tiếp video/audio...', 'direct_read_failed': 'Đọc trực tiếp lỗi, thử fallback FFmpeg...', 'transcribing': 'Đang nhận diện giọng nói...', 'detected_lang': 'Đang nhận diện giọng nói. Ngôn ngữ phát hiện: {lang}', 'gpu_failed': 'GPU lỗi hoặc chưa đủ CUDA, chuyển sang CPU. Chi tiết: {error}', 'auto_device_failed': 'Tự động chọn thiết bị lỗi, chuyển sang CPU. Chi tiết: {error}', 'ffmpeg_extract': 'Đang fallback: tách audio bằng FFmpeg...', 'ffmpeg_error': 'FFmpeg lỗi khi tách audio:\n{error}', 'ffmpeg_missing': 'Không đọc trực tiếp được file này và máy chưa có FFmpeg để fallback.\n\nLỗi đọc trực tiếp:\n{error}\n\nCài FFmpeg: winget install Gyan.FFmpeg', 'exported': 'Đã xuất: {files}', 'transcribed_done': 'Đã nhận diện xong.', 'translating_clean': 'Đang dịch văn bản. Ô dịch chỉ hiện text sạch, không kèm timestamp...', 'done_message': 'Hoàn tất. File nằm trong thư mục output.', 'exported_list': 'Đã xuất', 'completed': 'Hoàn tất', 'missing_translate_lib': 'Chưa có thư viện dịch. Hãy chạy install_windows.bat để cài deep-translator.', 'translating_part': 'Đang dịch phần {i}/{total}...', 'no_data_title': 'Chưa có dữ liệu', 'no_text_to_save': 'Chưa có văn bản để lưu.', 'saved_title': 'Đã lưu', 'no_srt_data': 'Chưa có dữ liệu để xuất SRT. Hãy xử lý video trước.', 'saved_srt_title': 'Đã lưu SRT', 'output_folder': 'Thư mục output', 'updates_folder': 'Thư mục updates', 'update_title': 'Cập nhật', 'checking_update': 'Đang kiểm tra cập nhật...', 'update_available_title': 'Có bản cập nhật mới', 'update_available_msg': 'Có bản mới v{version}.\n\n{notes}\n\nTải về ngay không?', 'update_downloaded_title': 'Đã tải cập nhật', 'update_downloaded_msg': 'Đã tải xong file cập nhật:\n{path}\n\nMở thư mục updates, giải nén/chạy file mới để cập nhật.', 'newest_version': 'Bạn đang dùng bản mới nhất rồi: v{version}.', 'update_ready_apply': 'App sẽ tự cập nhật trong cửa sổ mới rồi mở lại.\nĐừng xóa .venv, thư viện sẽ được giữ nguyên.', 'settings_applied': 'Đã áp dụng cài đặt.'}, 'en': {'ready_status': 'Ready', 'soft_sparkle_active': 'Soft sparkle active', 'soft_sparkle_paused': 'Sparkle FX paused', 'soft_glow': '✦ soft glow', 'theme_swatches': ['Background', 'Card', 'Primary', 'Secondary', 'Accent', 'Text', 'Muted', 'Border'], 'busy_title': 'Running', 'busy_processing': 'The app is processing the current file.', 'busy_settings': 'The app is processing a video. Change settings after it finishes.', 'ui_error_title': 'UI error', 'pick_title': 'Choose video/audio', 'missing_file_title': 'Missing file', 'missing_file_message': 'Please choose a video/audio file first.', 'preparing': 'Preparing...', 'loading_model': 'Loading/starting AI model. First run may take longer because the model must download...', 'reading_media': 'Reading video/audio directly...', 'direct_read_failed': 'Direct reading failed, trying FFmpeg fallback...', 'transcribing': 'Transcribing speech...', 'detected_lang': 'Transcribing speech. Detected language: {lang}', 'gpu_failed': 'GPU failed or CUDA is not ready, switching to CPU. Details: {error}', 'auto_device_failed': 'Auto device selection failed, switching to CPU. Details: {error}', 'ffmpeg_extract': 'Fallback: extracting audio with FFmpeg...', 'ffmpeg_error': 'FFmpeg failed while extracting audio:\n{error}', 'ffmpeg_missing': 'This file could not be read directly and FFmpeg is not installed for fallback.\n\nDirect read error:\n{error}\n\nInstall FFmpeg: winget install Gyan.FFmpeg', 'exported': 'Exported: {files}', 'transcribed_done': 'Transcription finished.', 'translating_clean': 'Translating text. The translation panel shows clean text without timestamps...', 'done_message': 'Done. Files are in the output folder.', 'exported_list': 'Exported', 'completed': 'Completed', 'missing_translate_lib': 'Translation library is missing. Run install_windows.bat to install deep-translator.', 'translating_part': 'Translating part {i}/{total}...', 'no_data_title': 'No data', 'no_text_to_save': 'No text to save yet.', 'saved_title': 'Saved', 'no_srt_data': 'No data to export SRT. Process a video first.', 'saved_srt_title': 'SRT saved', 'output_folder': 'Output folder', 'updates_folder': 'Updates folder', 'update_title': 'Update', 'checking_update': 'Checking for updates...', 'update_available_title': 'New update available', 'update_available_msg': 'A new version v{version} is available.\n\n{notes}\n\nDownload now?', 'update_downloaded_title': 'Update downloaded', 'update_downloaded_msg': 'Update file downloaded:\n{path}\n\nOpen the updates folder and run/extract the new file.', 'newest_version': 'You are already on the latest version: v{version}.', 'update_ready_apply': 'The app will update itself in a new window and restart.\nDo not delete .venv; libraries will be preserved.', 'settings_applied': 'Settings applied.'}, 'ko': {'ready_status': '준비됨', 'soft_sparkle_active': '부드러운 반짝임 켜짐', 'soft_sparkle_paused': 'Sparkle FX 꺼짐', 'soft_glow': '✦ 부드러운 빛', 'theme_swatches': ['배경', '카드', '메인', '보조', '강조', '텍스트', '희미함', '테두리'], 'busy_title': '실행 중', 'busy_processing': '현재 파일을 처리 중입니다.', 'busy_settings': '비디오 처리 중입니다. 완료 후 설정을 변경하세요.', 'ui_error_title': 'UI 오류', 'pick_title': '비디오/오디오 선택', 'missing_file_title': '파일 없음', 'missing_file_message': '먼저 비디오/오디오 파일을 선택하세요.', 'preparing': '준비 중...', 'loading_model': 'AI 모델을 불러오는 중입니다. 첫 실행은 모델 다운로드 때문에 오래 걸릴 수 있습니다...', 'reading_media': '비디오/오디오를 직접 읽는 중...', 'direct_read_failed': '직접 읽기 실패, FFmpeg 대체 방식을 시도합니다...', 'transcribing': '음성을 인식하는 중...', 'detected_lang': '음성을 인식하는 중. 감지된 언어: {lang}', 'gpu_failed': 'GPU 오류 또는 CUDA 준비 안 됨, CPU로 전환합니다. 세부 정보: {error}', 'auto_device_failed': '자동 장치 선택 실패, CPU로 전환합니다. 세부 정보: {error}', 'ffmpeg_extract': '대체 방식: FFmpeg로 오디오 추출 중...', 'ffmpeg_error': 'FFmpeg 오디오 추출 오류:\n{error}', 'ffmpeg_missing': '이 파일을 직접 읽을 수 없고 FFmpeg도 설치되어 있지 않습니다.\n\n직접 읽기 오류:\n{error}\n\nFFmpeg 설치: winget install Gyan.FFmpeg', 'exported': '내보냄: {files}', 'transcribed_done': '인식 완료.', 'translating_clean': '번역 중입니다. 번역 영역에는 타임스탬프 없이 텍스트만 표시됩니다...', 'done_message': '완료. 파일은 output 폴더에 있습니다.', 'exported_list': '내보낸 파일', 'completed': '완료', 'missing_translate_lib': '번역 라이브러리가 없습니다. install_windows.bat를 실행해 deep-translator를 설치하세요.', 'translating_part': '번역 중 {i}/{total}...', 'no_data_title': '데이터 없음', 'no_text_to_save': '저장할 텍스트가 없습니다.', 'saved_title': '저장됨', 'no_srt_data': 'SRT로 내보낼 데이터가 없습니다. 먼저 비디오를 처리하세요.', 'saved_srt_title': 'SRT 저장됨', 'output_folder': 'output 폴더', 'updates_folder': 'updates 폴더', 'update_title': '업데이트', 'checking_update': '업데이트 확인 중...', 'update_available_title': '새 업데이트 있음', 'update_available_msg': '새 버전 v{version}이 있습니다.\n\n{notes}\n\n지금 다운로드할까요?', 'update_downloaded_title': '업데이트 다운로드됨', 'update_downloaded_msg': '업데이트 파일 다운로드 완료:\n{path}\n\nupdates 폴더를 열어 새 파일을 실행/압축 해제하세요.', 'newest_version': '이미 최신 버전입니다: v{version}.', 'update_ready_apply': '새 창에서 자동 업데이트 후 앱을 다시 엽니다.\n.venv를 삭제하지 마세요. 라이브러리는 유지됩니다.', 'settings_applied': '설정이 적용되었습니다.'}, 'zh': {'ready_status': '就绪', 'soft_sparkle_active': '柔和闪光已开启', 'soft_sparkle_paused': 'Sparkle FX 已暂停', 'soft_glow': '✦ 柔光', 'theme_swatches': ['背景', '卡片', '主色', '副色', '强调', '文字', '弱化', '边框'], 'busy_title': '正在运行', 'busy_processing': '应用正在处理当前文件。', 'busy_settings': '应用正在处理视频，请完成后再修改设置。', 'ui_error_title': '界面错误', 'pick_title': '选择视频/音频', 'missing_file_title': '缺少文件', 'missing_file_message': '请先选择视频/音频文件。', 'preparing': '正在准备...', 'loading_model': '正在加载/启动 AI 模型。首次运行可能需要下载模型...', 'reading_media': '正在直接读取视频/音频...', 'direct_read_failed': '直接读取失败，尝试 FFmpeg 备用方案...', 'transcribing': '正在识别语音...', 'detected_lang': '正在识别语音。检测到语言：{lang}', 'gpu_failed': 'GPU 错误或 CUDA 未就绪，切换到 CPU。详情：{error}', 'auto_device_failed': '自动选择设备失败，切换到 CPU。详情：{error}', 'ffmpeg_extract': '备用方案：正在用 FFmpeg 提取音频...', 'ffmpeg_error': 'FFmpeg 提取音频失败：\n{error}', 'ffmpeg_missing': '无法直接读取该文件，且未安装 FFmpeg 备用方案。\n\n直接读取错误：\n{error}\n\n安装 FFmpeg：winget install Gyan.FFmpeg', 'exported': '已导出：{files}', 'transcribed_done': '识别完成。', 'translating_clean': '正在翻译文本。译文区域只显示干净文本，不带时间戳...', 'done_message': '完成。文件在 output 文件夹中。', 'exported_list': '已导出', 'completed': '完成', 'missing_translate_lib': '缺少翻译库。请运行 install_windows.bat 安装 deep-translator。', 'translating_part': '正在翻译 {i}/{total}...', 'no_data_title': '没有数据', 'no_text_to_save': '没有可保存的文本。', 'saved_title': '已保存', 'no_srt_data': '没有可导出 SRT 的数据。请先处理视频。', 'saved_srt_title': 'SRT 已保存', 'output_folder': 'output 文件夹', 'updates_folder': 'updates 文件夹', 'update_title': '更新', 'checking_update': '正在检查更新...', 'update_available_title': '有新版本', 'update_available_msg': '发现新版本 v{version}。\n\n{notes}\n\n现在下载吗？', 'update_downloaded_title': '更新已下载', 'update_downloaded_msg': '更新文件已下载：\n{path}\n\n打开 updates 文件夹并运行/解压新文件。', 'newest_version': '你已经是最新版本：v{version}。', 'update_ready_apply': '应用将在新窗口中自动更新并重启。\n不要删除 .venv，库会保留。', 'settings_applied': '设置已应用。'}}
+for _lang, _items in EXTRA_I18N.items():
+    I18N.setdefault(_lang, {}).update(_items)
+I18N["vi"]["error_title"] = "Lỗi"
+I18N["en"]["error_title"] = "Error"
+I18N["ko"]["error_title"] = "오류"
+I18N["zh"]["error_title"] = "错误"
+I18N["vi"]["python_missing_update"] = "Đã tải bản cập nhật nhưng không tìm thấy Python để tự áp dụng. Mở thư mục updates rồi giải nén thủ công."
+I18N["en"]["python_missing_update"] = "Python was not found, so the update cannot be applied automatically. Open the updates folder and extract it manually."
+I18N["ko"]["python_missing_update"] = "Python을 찾을 수 없어 자동 업데이트를 적용할 수 없습니다. updates 폴더를 열고 수동으로 압축을 해제하세요."
+I18N["zh"]["python_missing_update"] = "未找到 Python，无法自动应用更新。请打开 updates 文件夹并手动解压。"
+I18N["vi"].update({"config_file": "File cần sửa", "url_404": "{purpose} lỗi 404: link update không tồn tại hoặc chưa upload file.", "url_http": "{purpose} lỗi HTTP {code}: {reason}", "url_dns": "{purpose} lỗi DNS: domain update không tồn tại/sai link/mất mạng.", "url_network": "{purpose} lỗi mạng: {reason}", "manifest_not_json": "{purpose} lỗi: manifest không phải JSON hợp lệ.", "generic_error": "{purpose} lỗi: {error}"})
+I18N["en"].update({"config_file": "Config file", "url_404": "{purpose} 404 error: update link does not exist or file has not been uploaded.", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS error: update domain does not exist, link is wrong, or network is down.", "url_network": "{purpose} network error: {reason}", "manifest_not_json": "{purpose} error: manifest is not valid JSON.", "generic_error": "{purpose} error: {error}"})
+I18N["ko"].update({"config_file": "수정할 파일", "url_404": "{purpose} 404 오류: 업데이트 링크가 없거나 파일이 업로드되지 않았습니다.", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS 오류: 업데이트 도메인이 없거나 링크가 잘못되었거나 네트워크가 끊겼습니다.", "url_network": "{purpose} 네트워크 오류: {reason}", "manifest_not_json": "{purpose} 오류: manifest가 올바른 JSON이 아닙니다.", "generic_error": "{purpose} 오류: {error}"})
+I18N["zh"].update({"config_file": "需要修改的文件", "url_404": "{purpose} 404 错误：更新链接不存在或文件尚未上传。", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS 错误：更新域名不存在、链接错误或网络不可用。", "url_network": "{purpose} 网络错误：{reason}", "manifest_not_json": "{purpose} 错误：manifest 不是有效 JSON。", "generic_error": "{purpose} 错误：{error}"})
+
 def get_settings_path() -> Path:
     return APP_DIR / SETTINGS_CONFIG_NAME
 
@@ -305,6 +326,56 @@ def apply_theme(theme_key: str):
     TEXTBOX_BG = theme["surface"]
     SUCCESS = theme.get("success", "#16A34A")
     WARNING = theme.get("warning", "#D97706")
+
+
+OPTION_TABLES = {
+    "vi": {
+        "source": [(None, "Tự động nhận diện"), ("vi", "Tiếng Việt"), ("en", "Tiếng Anh"), ("zh", "Tiếng Trung"), ("ja", "Tiếng Nhật"), ("ko", "Tiếng Hàn"), ("fr", "Tiếng Pháp"), ("de", "Tiếng Đức"), ("es", "Tiếng Tây Ban Nha"), ("th", "Tiếng Thái"), ("id", "Tiếng Indonesia")],
+        "translate": [(None, "Không dịch"), ("vi", "Dịch sang Tiếng Việt"), ("en", "Dịch sang Tiếng Anh"), ("zh-CN", "Dịch sang Tiếng Trung"), ("ja", "Dịch sang Tiếng Nhật"), ("ko", "Dịch sang Tiếng Hàn"), ("fr", "Dịch sang Tiếng Pháp"), ("de", "Dịch sang Tiếng Đức"), ("es", "Dịch sang Tiếng Tây Ban Nha"), ("th", "Dịch sang Tiếng Thái"), ("id", "Dịch sang Tiếng Indonesia")],
+        "model": [("tiny", "Nhanh nhất - tiny"), ("base", "Nhanh - base"), ("small", "Cân bằng - small"), ("medium", "Chính xác hơn - medium"), ("large-v3", "Rất chính xác - large-v3")],
+        "device": [("auto", "Tự động"), ("cpu", "CPU"), ("gpu", "GPU NVIDIA")],
+    },
+    "en": {
+        "source": [(None, "Auto detect"), ("vi", "Vietnamese"), ("en", "English"), ("zh", "Chinese"), ("ja", "Japanese"), ("ko", "Korean"), ("fr", "French"), ("de", "German"), ("es", "Spanish"), ("th", "Thai"), ("id", "Indonesian")],
+        "translate": [(None, "No translation"), ("vi", "Translate to Vietnamese"), ("en", "Translate to English"), ("zh-CN", "Translate to Chinese"), ("ja", "Translate to Japanese"), ("ko", "Translate to Korean"), ("fr", "Translate to French"), ("de", "Translate to German"), ("es", "Translate to Spanish"), ("th", "Translate to Thai"), ("id", "Translate to Indonesian")],
+        "model": [("tiny", "Fastest - tiny"), ("base", "Fast - base"), ("small", "Balanced - small"), ("medium", "More accurate - medium"), ("large-v3", "Very accurate - large-v3")],
+        "device": [("auto", "Auto"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
+    },
+    "ko": {
+        "source": [(None, "자동 감지"), ("vi", "베트남어"), ("en", "영어"), ("zh", "중국어"), ("ja", "일본어"), ("ko", "한국어"), ("fr", "프랑스어"), ("de", "독일어"), ("es", "스페인어"), ("th", "태국어"), ("id", "인도네시아어")],
+        "translate": [(None, "번역 안 함"), ("vi", "베트남어로 번역"), ("en", "영어로 번역"), ("zh-CN", "중국어로 번역"), ("ja", "일본어로 번역"), ("ko", "한국어로 번역"), ("fr", "프랑스어로 번역"), ("de", "독일어로 번역"), ("es", "스페인어로 번역"), ("th", "태국어로 번역"), ("id", "인도네시아어로 번역")],
+        "model": [("tiny", "가장 빠름 - tiny"), ("base", "빠름 - base"), ("small", "균형 - small"), ("medium", "더 정확함 - medium"), ("large-v3", "매우 정확함 - large-v3")],
+        "device": [("auto", "자동"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
+    },
+    "zh": {
+        "source": [(None, "自动识别"), ("vi", "越南语"), ("en", "英语"), ("zh", "中文"), ("ja", "日语"), ("ko", "韩语"), ("fr", "法语"), ("de", "德语"), ("es", "西班牙语"), ("th", "泰语"), ("id", "印尼语")],
+        "translate": [(None, "不翻译"), ("vi", "翻译成越南语"), ("en", "翻译成英语"), ("zh-CN", "翻译成中文"), ("ja", "翻译成日语"), ("ko", "翻译成韩语"), ("fr", "翻译成法语"), ("de", "翻译成德语"), ("es", "翻译成西班牙语"), ("th", "翻译成泰语"), ("id", "翻译成印尼语")],
+        "model": [("tiny", "最快 - tiny"), ("base", "快速 - base"), ("small", "平衡 - small"), ("medium", "更准确 - medium"), ("large-v3", "非常准确 - large-v3")],
+        "device": [("auto", "自动"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
+    },
+}
+
+def option_map(kind: str) -> dict:
+    table = OPTION_TABLES.get(APP_LANG, OPTION_TABLES["vi"]).get(kind, [])
+    return {label: value for value, label in table}
+
+def option_label(kind: str, value):
+    table = OPTION_TABLES.get(APP_LANG, OPTION_TABLES["vi"]).get(kind, [])
+    for code, label in table:
+        if code == value:
+            return label
+    return table[0][1] if table else ""
+
+def option_value(kind: str, label: str):
+    mapping = option_map(kind)
+    if label in mapping:
+        return mapping[label]
+    # fallback: scan every language so old labels still map correctly after language switch
+    for lang_table in OPTION_TABLES.values():
+        for code, any_label in lang_table.get(kind, []):
+            if any_label == label:
+                return code
+    return None
 
 
 def tr(key: str) -> str:
@@ -425,7 +496,7 @@ def extract_audio(input_file: Path, output_wav: Path, log):
         "-f", "wav",
         str(output_wav),
     ]
-    log("Đang fallback: tách audio bằng FFmpeg...")
+    log(tr("ffmpeg_extract"))
     proc = subprocess.run(
         cmd,
         stdout=subprocess.PIPE,
@@ -435,7 +506,7 @@ def extract_audio(input_file: Path, output_wav: Path, log):
         errors="ignore",
     )
     if proc.returncode != 0:
-        raise RuntimeError("FFmpeg lỗi khi tách audio:\n" + proc.stderr[-2500:])
+        raise RuntimeError(tr("ffmpeg_error").format(error=proc.stderr[-2500:]))
 
 
 class NeonButton(tk.Button):
@@ -504,13 +575,13 @@ class TOBOVietSubApp:
         self.q = queue.Queue()
         self.worker = None
         self.selected_file = tk.StringVar()
-        self.language = tk.StringVar(value="Tự động nhận diện")
-        self.translate_to = tk.StringVar(value="Không dịch")
-        self.model_size = tk.StringVar(value="Cân bằng - small")
-        self.device_mode = tk.StringVar(value="Tự động")
+        self.language = tk.StringVar(value=option_label("source", None))
+        self.translate_to = tk.StringVar(value=option_label("translate", None))
+        self.model_size = tk.StringVar(value=option_label("model", "small"))
+        self.device_mode = tk.StringVar(value=option_label("device", "auto"))
         self.export_format = tk.StringVar(value="TXT + SRT")
         self.sound_enabled = tk.BooleanVar(value=True)
-        self.status = tk.StringVar(value="Sẵn sàng")
+        self.status = tk.StringVar(value=tr("ready_status"))
         self.progress = tk.DoubleVar(value=0)
         self.last_text = ""
         self.last_translation = ""
@@ -688,7 +759,7 @@ class TOBOVietSubApp:
 
         self.header_status_label = tk.Label(
             aura_panel,
-            text="Soft sparkle active",
+            text=tr("soft_sparkle_active"),
             bg=SURFACE,
             fg=TEXT,
             font=("Segoe UI", 8, "bold"),
@@ -794,10 +865,10 @@ class TOBOVietSubApp:
         for col in range(5):
             options.columnconfigure(col, weight=1)
 
-        self.add_combo(options, tr("source_lang"), self.language, list(LANGUAGES.keys()), 0)
-        self.add_combo(options, tr("translate"), self.translate_to, list(TRANSLATE_LANGUAGES.keys()), 1)
-        self.add_combo(options, tr("model"), self.model_size, list(MODEL_SIZES.keys()), 2)
-        self.add_combo(options, tr("device"), self.device_mode, ["Tự động", "CPU", "GPU NVIDIA"], 3)
+        self.add_combo(options, tr("source_lang"), self.language, list(option_map("source").keys()), 0)
+        self.add_combo(options, tr("translate"), self.translate_to, list(option_map("translate").keys()), 1)
+        self.add_combo(options, tr("model"), self.model_size, list(option_map("model").keys()), 2)
+        self.add_combo(options, tr("device"), self.device_mode, list(option_map("device").keys()), 3)
         self.add_combo(options, tr("export"), self.export_format, list(EXPORT_FORMATS.keys()), 4)
 
         btns = tk.Frame(top, bg=SURFACE)
@@ -867,14 +938,14 @@ class TOBOVietSubApp:
             self.header_status_label = None
             self.build_ui()
             self.setup_sparkle_scene()
-            self.status.set("Sẵn sàng")
+            self.status.set(tr("ready_status"))
         except Exception as e:
-            messagebox.showerror("Lỗi giao diện", str(e))
+            messagebox.showerror(tr("ui_error_title"), str(e))
 
     def open_settings(self):
         self.play_click()
         if self.worker and self.worker.is_alive():
-            messagebox.showinfo(tr("settings"), "App đang xử lý video, xử lý xong rồi đổi giao diện cho an toàn.")
+            messagebox.showinfo(tr("busy_title"), tr("busy_settings"))
             return
 
         current = load_ui_settings()
@@ -915,7 +986,7 @@ class TOBOVietSubApp:
         preview.pack(fill="x", padx=14, pady=(0, 14))
 
         swatches = []
-        labels = [("bg", "Nền"), ("surface", "Card"), ("primary", "Primary"), ("secondary", "Secondary"), ("accent", "Accent"), ("text", "Text"), ("muted", "Muted"), ("border", "Border")]
+        labels = list(zip(["bg", "surface", "primary", "secondary", "accent", "text", "muted", "border"], tr("theme_swatches")))
 
         def draw_preview(*_):
             for child in preview.winfo_children():
@@ -941,11 +1012,19 @@ class TOBOVietSubApp:
 
         def apply_settings():
             global APP_LANG
+            old_source = option_value("source", self.language.get())
+            old_translate = option_value("translate", self.translate_to.get())
+            old_model = option_value("model", self.model_size.get()) or "small"
+            old_device = option_value("device", self.device_mode.get()) or "auto"
             lang_key = lang_reverse.get(lang_var.get(), "vi")
             theme_key = theme_var.get()
             save_ui_settings({"app_language": lang_key, "theme": theme_key})
             APP_LANG = lang_key
             apply_theme(theme_key)
+            self.language.set(option_label("source", old_source))
+            self.translate_to.set(option_label("translate", old_translate))
+            self.model_size.set(option_label("model", old_model))
+            self.device_mode.set(option_label("device", old_device))
             try:
                 win.grab_release()
             except Exception:
@@ -1061,7 +1140,7 @@ class TOBOVietSubApp:
             color = random.choice(palette)
             item = c.create_oval(x - base, y - base, x + base, y + base, fill=color, outline=color)
             self.sparkle_items.append({"item": item, "x": x, "y": y, "base": base, "phase": random.random() * math.tau})
-        self.sparkle_orbit = c.create_text(238, 88, text="✦ soft glow", fill=ACCENT, font=("Segoe UI", 9, "bold"))
+        self.sparkle_orbit = c.create_text(238, 88, text=tr("soft_glow"), fill=ACCENT, font=("Segoe UI", 9, "bold"))
 
     def animate_sparkles(self):
         try:
@@ -1080,7 +1159,7 @@ class TOBOVietSubApp:
                     color = palette[(idx + int(self.sparkle_tick / 5)) % len(palette)] if twinkle > 0.76 else BORDER
                     self.sparkle_canvas.itemconfig(sp["item"], fill=color, outline=color)
                 if self.header_status_label:
-                    label = "Soft sparkle active" if self.sparkle_tick % 10 < 5 else "Logo aura synced"
+                    label = tr("soft_sparkle_active") if self.sparkle_tick % 10 < 5 else tr("mode")
                     self.header_status_label.configure(text=label)
                 if hasattr(self, "sparkle_orbit"):
                     ox = 238 + math.sin(self.sparkle_tick / 8.0) * 5
@@ -1088,7 +1167,7 @@ class TOBOVietSubApp:
                     self.sparkle_canvas.coords(self.sparkle_orbit, ox, oy)
                     self.sparkle_canvas.itemconfig(self.sparkle_orbit, fill=palette[int(self.sparkle_tick / 6) % len(palette)])
             elif self.sparkle_canvas and self.header_status_label:
-                self.header_status_label.configure(text="Sparkle FX paused")
+                self.header_status_label.configure(text=tr("soft_sparkle_paused"))
         except Exception:
             pass
         self.root.after(140, self.animate_sparkles)
@@ -1147,23 +1226,23 @@ class TOBOVietSubApp:
         config_path = self.get_update_config_path()
         if isinstance(err, urllib.error.HTTPError):
             if err.code == 404:
-                return f"{purpose} lỗi 404: link update không tồn tại hoặc chưa upload file.\n\nFile cần sửa: {config_path}"
-            return f"{purpose} lỗi HTTP {err.code}: {err.reason}\n\nFile cần sửa: {config_path}"
+                return tr("url_404").format(purpose=purpose) + f"\n\n{tr("config_file")}: {config_path}"
+            return tr("url_http").format(purpose=purpose, code=err.code, reason=err.reason) + f"\n\n{tr("config_file")}: {config_path}"
         if isinstance(err, urllib.error.URLError):
             reason = getattr(err, "reason", err)
             reason_text = str(reason)
             if isinstance(reason, socket.gaierror) or "getaddrinfo failed" in reason_text.lower():
-                return f"{purpose} lỗi DNS: domain update không tồn tại/sai link/mất mạng.\n\nFile cần sửa: {config_path}"
-            return f"{purpose} lỗi mạng: {reason_text}\n\nFile cần sửa: {config_path}"
+                return tr("url_dns").format(purpose=purpose) + f"\n\n{tr("config_file")}: {config_path}"
+            return tr("url_network").format(purpose=purpose, reason=reason_text) + f"\n\n{tr("config_file")}: {config_path}"
         if isinstance(err, json.JSONDecodeError):
-            return f"{purpose} lỗi: manifest không phải JSON hợp lệ."
-        return f"{purpose} lỗi: {err}"
+            return tr("manifest_not_json").format(purpose=purpose)
+        return tr("generic_error").format(purpose=purpose, error=err)
 
     def check_update(self):
         if self.worker and self.worker.is_alive():
-            messagebox.showinfo("Đang chạy", "App đang xử lý file rồi, để nó xong đã.")
+            messagebox.showinfo(tr("busy_title"), tr("busy_processing"))
             return
-        self.status.set("Đang kiểm tra cập nhật...")
+        self.status.set(tr("checking_update"))
         threading.Thread(target=self.check_update_worker, daemon=True).start()
 
     def check_update_worker(self):
@@ -1172,32 +1251,32 @@ class TOBOVietSubApp:
             manifest_url = (cfg.get("manifest_url") or "").strip()
             config_path = self.get_update_config_path()
             if not manifest_url:
-                self.q.put(("update_info", f"Chưa cấu hình link cập nhật.\n\nFile cần sửa: {config_path}"))
+                self.q.put(("update_info", f"manifest_url is empty.\n\nConfig file: {config_path}"))
                 return
             if self.is_placeholder_url(manifest_url):
-                self.q.put(("update_info", f"manifest_url đang là link mẫu. Thay bằng link JSON thật.\n\nLink hiện tại: {manifest_url}"))
+                self.q.put(("update_info", f"manifest_url is still a placeholder. Replace it with a real JSON link.\n\nCurrent link: {manifest_url}"))
                 return
             if not (manifest_url.startswith("http://") or manifest_url.startswith("https://") or manifest_url.startswith("file://")):
-                self.q.put(("update_info", f"manifest_url không hợp lệ: {manifest_url}"))
+                self.q.put(("update_info", f"Invalid manifest_url: {manifest_url}"))
                 return
             try:
                 req = urllib.request.Request(manifest_url, headers={"User-Agent": f"{APP_NAME}/{CURRENT_VERSION}"})
                 with urllib.request.urlopen(req, timeout=20) as resp:
                     manifest = json.loads(resp.read().decode("utf-8"))
             except Exception as e:
-                self.q.put(("update_info", self.explain_url_error(e, "Kiểm tra cập nhật")))
+                self.q.put(("update_info", self.explain_url_error(e, tr("update_title"))))
                 return
             latest_version = str(manifest.get("version", "")).strip()
             download_url = str(manifest.get("url") or manifest.get("zip_url") or manifest.get("exe_url") or "").strip()
             notes = str(manifest.get("notes", "")).strip()
             if not latest_version or not download_url:
-                raise RuntimeError("Manifest update thiếu version hoặc url/zip_url/exe_url.")
+                raise RuntimeError("Update manifest is missing version or url/zip_url/exe_url.")
             if self.version_tuple(latest_version) <= self.version_tuple(CURRENT_VERSION):
-                self.q.put(("update_info", f"Bạn đang dùng bản mới nhất rồi: v{CURRENT_VERSION}."))
+                self.q.put(("update_info", tr("newest_version").format(version=CURRENT_VERSION)))
                 return
             self.q.put(("update_available", {"version": latest_version, "url": download_url, "notes": notes}))
         except Exception as e:
-            self.q.put(("update_info", f"Kiểm tra cập nhật lỗi: {e}"))
+            self.q.put(("update_info", f"{tr("update_title")}: {e}"))
 
     def download_update(self, info: dict):
         threading.Thread(target=self.download_update_worker, args=(info,), daemon=True).start()
@@ -1207,10 +1286,10 @@ class TOBOVietSubApp:
             version = safe_filename(info.get("version", "new"))
             url = (info.get("url") or "").strip()
             if not url:
-                raise RuntimeError("Thiếu link tải bản cập nhật.")
+                raise RuntimeError("Missing update download URL.")
             suffix = ".exe" if url.lower().split("?")[0].endswith(".exe") else ".zip"
             target = UPDATES_DIR / f"TOBO_VietSub_update_{version}{suffix}"
-            self.q.put(("status", f"Đang tải bản cập nhật v{version}..."))
+            self.q.put(("status", f"{tr("update_title")} v{version}..."))
             self.q.put(("progress", 5))
             try:
                 req = urllib.request.Request(url, headers={"User-Agent": f"{APP_NAME}/{CURRENT_VERSION}"})
@@ -1231,7 +1310,7 @@ class TOBOVietSubApp:
                         target.unlink()
                     except Exception:
                         pass
-                self.q.put(("update_info", self.explain_url_error(e, "Tải cập nhật")))
+                self.q.put(("update_info", self.explain_url_error(e, tr("update_title"))))
                 return
             self.q.put(("progress", 100))
             if suffix == ".zip":
@@ -1239,7 +1318,7 @@ class TOBOVietSubApp:
             else:
                 self.q.put(("update_downloaded", str(target)))
         except Exception as e:
-            self.q.put(("update_info", f"Tải cập nhật lỗi: {e}"))
+            self.q.put(("update_info", f"{tr("update_title")}: {e}"))
 
     def find_update_python(self) -> str | None:
         candidates = []
@@ -1266,15 +1345,14 @@ class TOBOVietSubApp:
             except Exception:
                 pass
         if not helper.exists():
-            messagebox.showerror("Cập nhật", "Thiếu file tobo_update_helper.py nên chưa thể tự cài cập nhật.")
+            messagebox.showerror(tr("update_title"), "Missing tobo_update_helper.py")
             return
 
         py_cmd = self.find_update_python()
         if not py_cmd:
             messagebox.showinfo(
-                "Cập nhật",
-                "Đã tải bản cập nhật nhưng không tìm thấy Python để tự áp dụng.\n"
-                "Mở thư mục updates rồi giải nén thủ công."
+                tr("update_title"),
+                tr("python_missing_update")
             )
             try:
                 os.startfile(str(UPDATES_DIR))
@@ -1289,13 +1367,12 @@ class TOBOVietSubApp:
             else:
                 subprocess.Popen(args)
             messagebox.showinfo(
-                "Cập nhật",
-                "App sẽ tự cập nhật trong cửa sổ mới rồi mở lại.\n"
-                "Đừng xóa .venv, thư viện sẽ được giữ nguyên."
+                tr("update_title"),
+                tr("update_ready_apply")
             )
             self.root.after(500, self.root.destroy)
         except Exception as e:
-            messagebox.showerror("Cập nhật", f"Không chạy được trình cập nhật tự động:\n{e}")
+            messagebox.showerror(tr("update_title"), f"{e}")
 
     def default_background_config_text(self) -> str:
         return json.dumps(
@@ -1436,7 +1513,7 @@ class TOBOVietSubApp:
 
     def pick_file(self):
         path = filedialog.askopenfilename(
-            title="Chọn video/audio",
+            title=tr("pick_title"),
             filetypes=[("Media files", AUDIO_VIDEO_EXTENSIONS), ("All files", "*.*")],
         )
         if path:
@@ -1447,22 +1524,22 @@ class TOBOVietSubApp:
 
     def start(self):
         if self.worker and self.worker.is_alive():
-            messagebox.showinfo("Đang chạy", "App đang xử lý file hiện tại.")
+            messagebox.showinfo(tr("busy_title"), tr("busy_processing"))
             return
         file_path = self.selected_file.get().strip()
         if not file_path or not Path(file_path).exists():
-            messagebox.showerror("Thiếu file", "Bạn hãy chọn video/audio trước.")
+            messagebox.showerror(tr("missing_file_title"), tr("missing_file_message"))
             return
         settings = {
-            "model_name": MODEL_SIZES[self.model_size.get()],
-            "device_choice": self.device_mode.get(),
-            "source_lang": LANGUAGES[self.language.get()],
-            "target_lang": TRANSLATE_LANGUAGES[self.translate_to.get()],
+            "model_name": option_value("model", self.model_size.get()) or "small",
+            "device_choice": option_value("device", self.device_mode.get()) or "auto",
+            "source_lang": option_value("source", self.language.get()),
+            "target_lang": option_value("translate", self.translate_to.get()),
             "export_format": EXPORT_FORMATS[self.export_format.get()],
         }
         self.start_btn.config(state="disabled")
         self.progress.set(3)
-        self.status.set("Đang chuẩn bị...")
+        self.status.set(tr("preparing"))
         self.text_original.delete("1.0", "end")
         self.text_translated.delete("1.0", "end")
         self.last_text = ""
@@ -1474,25 +1551,25 @@ class TOBOVietSubApp:
 
     def create_model(self, model_name: str, device_choice: str):
         from faster_whisper import WhisperModel
-        if device_choice == "GPU NVIDIA":
+        if device_choice == "gpu":
             try:
                 return WhisperModel(model_name, device="cuda", compute_type="float16")
             except Exception as e:
-                self.log(f"GPU lỗi hoặc chưa đủ CUDA, chuyển sang CPU. Chi tiết: {e}")
+                self.log(tr("gpu_failed").format(error=e))
                 return WhisperModel(model_name, device="cpu", compute_type="int8")
-        if device_choice == "CPU":
+        if device_choice == "cpu":
             return WhisperModel(model_name, device="cpu", compute_type="int8")
         try:
             return WhisperModel(model_name, device="auto", compute_type="auto")
         except Exception as e:
-            self.log(f"Tự động chọn thiết bị lỗi, chuyển sang CPU. Chi tiết: {e}")
+            self.log(tr("auto_device_failed").format(error=e))
             return WhisperModel(model_name, device="cpu", compute_type="int8")
 
     def transcribe_source(self, model, media_path: Path, lang: str | None):
         segments, info = model.transcribe(str(media_path), language=lang, beam_size=5, vad_filter=True, word_timestamps=False)
         duration = float(getattr(info, "duration", 0) or 0)
         detected_language = getattr(info, "language", None)
-        self.log(f"Đang nhận diện giọng nói. Ngôn ngữ phát hiện: {detected_language}" if detected_language else "Đang nhận diện giọng nói...")
+        self.log(tr("detected_lang").format(lang=detected_language) if detected_language else tr("transcribing"))
         rows = []
         pending_lines = []
         for count, seg in enumerate(segments, start=1):
@@ -1516,21 +1593,21 @@ class TOBOVietSubApp:
         audio_path = None
         try:
             self.q.put(("progress", 8))
-            self.log("Đang tải/khởi động AI model. Lần đầu có thể lâu vì phải tải model...")
+            self.log(tr("loading_model"))
             model = self.create_model(settings["model_name"], settings["device_choice"])
             rows = None
             direct_error = None
             try:
                 self.q.put(("progress", 18))
-                self.log("Đang đọc trực tiếp video/audio...")
+                self.log(tr("reading_media"))
                 rows = self.transcribe_source(model, input_file, settings["source_lang"])
             except Exception as e:
                 direct_error = e
                 self.q.put(("clear_original", None))
-                self.log("Đọc trực tiếp lỗi, thử fallback FFmpeg...")
+                self.log(tr("direct_read_failed"))
             if rows is None:
                 if not check_ffmpeg():
-                    raise RuntimeError("Không đọc trực tiếp được file này và máy chưa có FFmpeg để fallback.\n\n" f"Lỗi đọc trực tiếp:\n{direct_error}\n\nCài FFmpeg: winget install Gyan.FFmpeg")
+                    raise RuntimeError(tr("ffmpeg_missing").format(error=direct_error))
                 audio_path = TEMP_DIR / f"{safe_filename(input_file.stem)}_{int(time.time())}.wav"
                 extract_audio(input_file, audio_path, self.log)
                 self.q.put(("progress", 22))
@@ -1554,11 +1631,11 @@ class TOBOVietSubApp:
                 written_files.append(out_srt.name)
 
             self.q.put(("progress", 88))
-            self.log("Đã xuất: " + ", ".join(written_files) if written_files else "Đã nhận diện xong.")
+            self.log(tr("exported").format(files=", ".join(written_files)) if written_files else tr("transcribed_done"))
 
             target_lang = settings["target_lang"]
             if target_lang:
-                self.log("Đang dịch văn bản. Ô dịch chỉ hiện text sạch, không kèm timestamp...")
+                self.log(tr("translating_clean"))
                 translated_rows = self.translate_rows(rows, target_lang)
                 self.last_translated_rows = translated_rows
                 display_translation = "\n".join(row["text"] for row in translated_rows if row.get("text"))
@@ -1575,9 +1652,9 @@ class TOBOVietSubApp:
                     written_files.append(trans_srt.name)
 
             self.q.put(("progress", 100))
-            done_msg = "Hoàn tất. File nằm trong thư mục output."
+            done_msg = tr("done_message")
             if written_files:
-                done_msg += "\n\nĐã xuất:\n- " + "\n- ".join(written_files)
+                done_msg += "\n\n" + tr("exported_list") + ":\n- " + "\n- ".join(written_files)
             self.q.put(("done", done_msg))
         except Exception as e:
             self.q.put(("error", str(e)))
@@ -1604,7 +1681,7 @@ class TOBOVietSubApp:
         try:
             from deep_translator import GoogleTranslator
         except Exception:
-            raise RuntimeError("Chưa có thư viện dịch. Hãy chạy install_windows.bat để cài deep-translator.")
+            raise RuntimeError(tr("missing_translate_lib"))
         if not rows:
             return []
         translator = GoogleTranslator(source="auto", target=target_lang)
@@ -1625,7 +1702,7 @@ class TOBOVietSubApp:
         if current:
             chunks.append(current)
         for i, chunk in enumerate(chunks, start=1):
-            self.log(f"Đang dịch phần {i}/{len(chunks)}...")
+            self.log(tr("translating_part").format(i=i, total=len(chunks)))
             source_lines = [text for _, text in chunk]
             source_blob = "\n".join(source_lines)
             try:
@@ -1678,21 +1755,19 @@ class TOBOVietSubApp:
                         if self.video_bg_status:
                             self.video_bg_status.configure(text=f"Lỗi render nền: {e}")
                 elif typ == "update_info":
-                    self.status.set("Sẵn sàng")
+                    self.status.set(tr("ready_status"))
                     self.start_btn.config(state="normal")
-                    messagebox.showinfo("Cập nhật", value)
+                    messagebox.showinfo(tr("update_title"), value)
                 elif typ == "update_available":
-                    self.status.set("Có bản cập nhật mới")
-                    msg = f"Có bản mới v{value.get('version')}.\n\n{value.get('notes') or 'Không có ghi chú.'}\n\nTải về ngay không?"
-                    if messagebox.askyesno("Có bản cập nhật mới", msg):
+                    self.status.set(tr("update_available_title"))
+                    msg = tr("update_available_msg").format(version=value.get("version"), notes=value.get("notes") or "")
+                    if messagebox.askyesno(tr("update_available_title"), msg):
                         self.download_update(value)
                 elif typ == "update_ready_to_apply":
-                    self.status.set("Đã tải bản cập nhật")
+                    self.status.set(tr("update_downloaded_title"))
                     if messagebox.askyesno(
-                        "Cài cập nhật",
-                        "Đã tải xong bản cập nhật.\n\n"
-                        "Cài luôn bây giờ không?\n"
-                        "App sẽ giữ nguyên .venv, thư viện, output, temp và chỉ ghi đè file app mới."
+                        tr("update_title"),
+                        tr("update_ready_apply")
                     ):
                         self.apply_update_zip(value)
                     else:
@@ -1701,20 +1776,20 @@ class TOBOVietSubApp:
                         except Exception:
                             pass
                 elif typ == "update_downloaded":
-                    self.status.set("Đã tải bản cập nhật")
-                    messagebox.showinfo("Đã tải cập nhật", f"Đã tải xong file cập nhật:\n{value}\n\nMở thư mục updates, giải nén/chạy file mới để cập nhật.")
+                    self.status.set(tr("update_downloaded_title"))
+                    messagebox.showinfo(tr("update_downloaded_title"), tr("update_downloaded_msg").format(path=value))
                     try:
                         os.startfile(str(UPDATES_DIR))
                     except Exception:
                         pass
                 elif typ == "done":
-                    self.status.set("Hoàn tất")
+                    self.status.set(tr("completed"))
                     self.start_btn.config(state="normal")
-                    messagebox.showinfo("Hoàn tất", value)
+                    messagebox.showinfo(tr("completed"), value)
                 elif typ == "error":
-                    self.status.set("Có lỗi")
+                    self.status.set(tr("error_title") if tr("error_title") != "error_title" else "Error")
                     self.start_btn.config(state="normal")
-                    messagebox.showerror("Lỗi", value)
+                    messagebox.showerror(tr("error_title") if tr("error_title") != "error_title" else "Error", value)
         except queue.Empty:
             pass
         self.root.after(100, self.poll_queue)
@@ -1723,7 +1798,7 @@ class TOBOVietSubApp:
         original = self.text_original.get("1.0", "end").strip()
         translated = self.text_translated.get("1.0", "end").strip()
         if not original and not translated:
-            messagebox.showinfo("Chưa có dữ liệu", "Chưa có văn bản để lưu.")
+            messagebox.showinfo(tr("no_data_title"), tr("no_text_to_save"))
             return
         path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("TXT", "*.txt")])
         if not path:
@@ -1732,32 +1807,32 @@ class TOBOVietSubApp:
         if translated:
             content += "\n\n===== BẢN DỊCH =====\n\n" + translated
         Path(path).write_text(content, encoding="utf-8")
-        messagebox.showinfo("Đã lưu", path)
+        messagebox.showinfo(tr("saved_title"), path)
 
     def save_srt_manual(self):
         rows = self.last_translated_rows if self.last_translated_rows else self.last_rows
         if not rows:
-            messagebox.showinfo("Chưa có dữ liệu", "Chưa có dữ liệu để xuất SRT. Hãy xử lý video trước.")
+            messagebox.showinfo(tr("no_data_title"), tr("no_srt_data"))
             return
         path = filedialog.asksaveasfilename(defaultextension=".srt", filetypes=[("SRT", "*.srt")])
         if not path:
             return
         Path(path).write_text(self.rows_to_srt(rows), encoding="utf-8-sig")
-        messagebox.showinfo("Đã lưu SRT", path)
+        messagebox.showinfo(tr("saved_srt_title"), path)
 
     def open_output(self):
         OUTPUT_DIR.mkdir(exist_ok=True)
         try:
             os.startfile(str(OUTPUT_DIR))
         except Exception:
-            messagebox.showinfo("Thư mục output", str(OUTPUT_DIR))
+            messagebox.showinfo(tr("output_folder"), str(OUTPUT_DIR))
 
     def open_updates_folder(self):
         UPDATES_DIR.mkdir(exist_ok=True)
         try:
             os.startfile(str(UPDATES_DIR))
         except Exception:
-            messagebox.showinfo("Thư mục updates", str(UPDATES_DIR))
+            messagebox.showinfo(tr("updates_folder"), str(UPDATES_DIR))
 
     def clear_text(self):
         self.text_original.delete("1.0", "end")
@@ -1767,7 +1842,7 @@ class TOBOVietSubApp:
         self.last_rows = []
         self.last_translated_rows = []
         self.progress.set(0)
-        self.status.set("Sẵn sàng")
+        self.status.set(tr("ready_status"))
 
 
 def main():
