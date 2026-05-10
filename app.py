@@ -31,7 +31,7 @@ else:
 TEMP_DIR = APP_DIR / "temp"
 OUTPUT_DIR = APP_DIR / "output"
 UPDATES_DIR = APP_DIR / "updates"
-CURRENT_VERSION = "1.6.6"
+CURRENT_VERSION = "1.6.9"
 APP_NAME = "TOBO VietSub"
 TEMP_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -123,10 +123,10 @@ I18N = {
         "control": "TOBO AI CONTROL",
         "mode": "AI LIGHT MODE",
         "settings": "Cài đặt",
-        "update_center": "Update Center",
-        "update_desc": "Cập nhật tại chỗ, giữ nguyên thư viện và dữ liệu đã cài.",
+        "update_center": "Please support me by buying me a cup of coffee 😘",
+        "update_desc": "Cảm ơn bạn đã ủng hộ TOBO VietSub.",
         "update": "↻ Cập nhật",
-        "updates": "📁 Updates",
+        "updates": "☕ Ủng hộ",
         "sparkle": "Sparkle FX",
         "sound": "Âm click",
         "ready": "In-place update ready",
@@ -159,10 +159,10 @@ I18N = {
         "control": "TOBO AI CONTROL",
         "mode": "AI LIGHT MODE",
         "settings": "Settings",
-        "update_center": "Update Center",
-        "update_desc": "Update in-place while keeping installed libraries and data.",
+        "update_center": "Please support me by buying me a cup of coffee 😘",
+        "update_desc": "Thank you for supporting TOBO VietSub.",
         "update": "↻ Update",
-        "updates": "📁 Updates",
+        "updates": "☕ Ủng hộ",
         "sparkle": "Sparkle FX",
         "sound": "Click sound",
         "ready": "In-place update ready",
@@ -195,10 +195,10 @@ I18N = {
         "control": "TOBO AI CONTROL",
         "mode": "AI LIGHT MODE",
         "settings": "설정",
-        "update_center": "업데이트 센터",
-        "update_desc": "설치된 라이브러리와 데이터를 유지하며 업데이트합니다.",
+        "update_center": "Please support me by buying me a cup of coffee 😘",
+        "update_desc": "TOBO VietSub를 응원해 주셔서 감사합니다.",
         "update": "↻ 업데이트",
-        "updates": "📁 Updates",
+        "updates": "☕ Ủng hộ",
         "sparkle": "Sparkle FX",
         "sound": "클릭음",
         "ready": "제자리 업데이트 준비됨",
@@ -231,10 +231,10 @@ I18N = {
         "control": "TOBO AI CONTROL",
         "mode": "AI LIGHT MODE",
         "settings": "设置",
-        "update_center": "更新中心",
-        "update_desc": "原地更新，保留已安装库和数据。",
+        "update_center": "Please support me by buying me a cup of coffee 😘",
+        "update_desc": "感谢你支持 TOBO VietSub。",
         "update": "↻ 更新",
-        "updates": "📁 Updates",
+        "updates": "☕ Ủng hộ",
         "sparkle": "Sparkle FX",
         "sound": "点击音",
         "ready": "原地更新已就绪",
@@ -710,16 +710,18 @@ class TOBOVietSubApp:
         self.sparkle_items = []
         self.sparkle_tick = 0
         self.header_status_label = None
-        self.video_bg_enabled = tk.BooleanVar(value=False)
+        self.video_bg_enabled = tk.BooleanVar(value=True)
         self.video_bg_label = None
         self.video_bg_status = None
         self.video_bg_images = []
+        self.video_bg_index = 0
+        self.video_bg_delay_ms = 90
+        self.video_bg_size = (304, 112)
         self.setup_branding()
         self.build_ui()
         self.root.after(100, self.poll_queue)
         self.root.after(220, self.animate_pulse)
-        self.root.after(350, self.setup_sparkle_scene)
-        self.root.after(420, self.animate_sparkles)
+        self.root.after(600, self.start_video_background)
 
     def play_click(self):
         if not self.sound_enabled.get():
@@ -846,43 +848,23 @@ class TOBOVietSubApp:
         card_body = tk.Frame(control_card, bg=SURFACE)
         card_body.pack(fill="both", expand=True, padx=14, pady=12)
 
-        aura_panel = tk.Frame(card_body, bg=SURFACE_2, width=304, height=112, highlightthickness=1, highlightbackground=BORDER)
-        aura_panel.pack(side="left", fill="y")
-        aura_panel.pack_propagate(False)
+        video_panel = tk.Frame(card_body, bg=SURFACE_2, width=304, height=112, highlightthickness=1, highlightbackground=BORDER)
+        video_panel.pack(side="left", fill="y")
+        video_panel.pack_propagate(False)
 
-        self.sparkle_canvas = tk.Canvas(
-            aura_panel,
-            width=304,
-            height=112,
+        self.video_bg_label = tk.Label(
+            video_panel,
+            text="Loading video...",
             bg=SURFACE_2,
-            highlightthickness=0,
-            bd=0,
+            fg=TEXT_MUTED,
+            font=("Segoe UI", 9, "bold"),
+            justify="center",
         )
-        self.sparkle_canvas.pack(fill="both", expand=True)
+        self.video_bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-        badge = tk.Label(
-            aura_panel,
-            text=tr("mode"),
-            bg=SURFACE,
-            fg=ACCENT,
-            font=("Segoe UI", 8, "bold"),
-            padx=9,
-            pady=3,
-        )
-        badge.place(x=12, y=10)
+        self.video_bg_status = None
 
-        self.header_status_label = tk.Label(
-            aura_panel,
-            text=tr("soft_sparkle_active"),
-            bg=SURFACE,
-            fg=TEXT,
-            font=("Segoe UI", 8, "bold"),
-            padx=9,
-            pady=3,
-        )
-        self.header_status_label.place(x=12, rely=1, y=-12, anchor="sw")
-
-        control_panel = tk.Frame(card_body, bg=SURFACE, width=220)
+        control_panel = tk.Frame(card_body, bg=SURFACE, width=250)
         control_panel.pack(side="left", fill="both", expand=True, padx=(16, 0))
 
         tk.Label(
@@ -890,7 +872,9 @@ class TOBOVietSubApp:
             text=tr("update_center"),
             bg=SURFACE,
             fg=TEXT,
-            font=("Segoe UI Variable Display", 15, "bold"),
+            font=("Segoe UI Variable Display", 11, "bold"),
+            justify="left",
+            wraplength=238,
         ).pack(anchor="w")
         tk.Label(
             control_panel,
@@ -898,14 +882,14 @@ class TOBOVietSubApp:
             bg=SURFACE,
             fg=TEXT_MUTED,
             justify="left",
-            wraplength=218,
-            font=("Segoe UI", 9),
-        ).pack(anchor="w", pady=(4, 10))
+            wraplength=238,
+            font=("Segoe UI", 8),
+        ).pack(anchor="w", pady=(3, 6))
 
         action_row = tk.Frame(control_panel, bg=SURFACE)
         action_row.pack(fill="x")
         NeonButton(action_row, tr("update"), self.check_update, variant="primary", sound_callback=self.play_click).pack(side="left")
-        NeonButton(action_row, tr("updates"), self.open_updates_folder, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(8, 0))
+        NeonButton(action_row, tr("updates"), self.show_support_qr, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(8, 0))
 
         toggle_row = tk.Frame(control_panel, bg=SURFACE)
         toggle_row.pack(fill="x", pady=(12, 0))
@@ -1597,13 +1581,13 @@ class TOBOVietSubApp:
         return json.dumps(
             {
                 "enabled": True,
-                "video_url": DEFAULT_BACKGROUND_VIDEO_URL,
-                "cache_file": "assets/background_cloudfront.mp4",
-                "max_frames": 90,
-                "width": 360,
-                "height": 128,
+                "video_url": "",
+                "cache_file": "assets/support_coffee.mp4",
+                "max_frames": 120,
+                "width": 304,
+                "height": 112,
                 "fps": 12,
-                "note": "TOBO VietSub se tu tai MP4 nay ve cache tren may cua ban de lam nen dong nhe."
+                "note": "Header video clip for the TOBO support/coffee panel."
             },
             ensure_ascii=False,
             indent=2,
@@ -1636,7 +1620,9 @@ class TOBOVietSubApp:
             return json.loads(self.default_background_config_text())
 
     def start_video_background(self):
-        return
+        if not self.video_bg_label:
+            return
+        threading.Thread(target=self.video_background_worker, daemon=True).start()
 
     def resolve_background_video_file(self, cfg: dict) -> Path | None:
         cache_name = str(cfg.get("cache_file") or "assets/background_cloudfront.mp4").replace("\\", "/").strip("/")
@@ -1700,11 +1686,10 @@ class TOBOVietSubApp:
                     continue
                 img = frame.to_image().convert("RGB")
                 img = img.resize(self.video_bg_size, Image.LANCZOS)
-                img = ImageEnhance.Brightness(img).enhance(0.52)
-                img = ImageEnhance.Contrast(img).enhance(1.25)
-                # phủ nhẹ màu neon để hợp UI dark/future
-                overlay = Image.new("RGB", img.size, (8, 11, 24))
-                img = Image.blend(img, overlay, 0.22)
+                img = ImageEnhance.Brightness(img).enhance(0.88)
+                img = ImageEnhance.Contrast(img).enhance(1.08)
+                overlay = Image.new("RGB", img.size, (255, 247, 237))
+                img = Image.blend(img, overlay, 0.06)
                 frames.append(img)
                 if len(frames) >= max_frames:
                     break
@@ -2096,8 +2081,6 @@ class TOBOVietSubApp:
                     try:
                         from PIL import ImageTk
                         self.video_bg_images = [ImageTk.PhotoImage(img) for img in value]
-                        if self.video_bg_status:
-                            self.video_bg_status.configure(text=f"Video nền: {len(self.video_bg_images)} frames")
                         self.animate_video_background()
                     except Exception as e:
                         if self.video_bg_status:
@@ -2190,6 +2173,63 @@ class TOBOVietSubApp:
             os.startfile(str(target))
         except Exception:
             messagebox.showinfo(tr("output_folder"), str(target))
+
+    def show_support_qr(self):
+        win = tk.Toplevel(self.root)
+        win.title("Ủng hộ TOBO VietSub")
+        win.geometry("420x520")
+        win.minsize(380, 460)
+        win.configure(bg=SURFACE)
+        try:
+            win.iconphoto(True, self._icon_photo)
+        except Exception:
+            pass
+
+        tk.Label(
+            win,
+            text="☕ Please support me",
+            bg=SURFACE,
+            fg=TEXT,
+            font=("Segoe UI Variable Display", 18, "bold"),
+        ).pack(anchor="w", padx=22, pady=(22, 4))
+        tk.Label(
+            win,
+            text="Bạn có thể đặt mã QR vào file assets/support_qr.png. Bản sau chỉ cần thay ảnh QR là nút này tự hiện.",
+            bg=SURFACE,
+            fg=TEXT_MUTED,
+            justify="left",
+            wraplength=360,
+            font=("Segoe UI", 10),
+        ).pack(anchor="w", padx=22, pady=(0, 16))
+
+        qr_box = tk.Frame(win, bg=CARD, highlightthickness=1, highlightbackground=BORDER)
+        qr_box.pack(fill="both", expand=True, padx=22, pady=(0, 16))
+
+        qr_path = APP_DIR / "assets" / "support_qr.png"
+        bundled_qr = BUNDLE_DIR / "assets" / "support_qr.png"
+        if not qr_path.exists() and bundled_qr.exists():
+            qr_path = bundled_qr
+
+        self.support_qr_image = None
+        if qr_path.exists():
+            try:
+                from PIL import Image, ImageTk
+                img = Image.open(qr_path).convert("RGBA")
+                img.thumbnail((300, 300))
+                self.support_qr_image = ImageTk.PhotoImage(img)
+                tk.Label(qr_box, image=self.support_qr_image, bg=CARD, bd=0).pack(expand=True)
+            except Exception as e:
+                tk.Label(qr_box, text=f"Không đọc được QR:\n{e}", bg=CARD, fg=TEXT_MUTED, font=("Segoe UI", 10)).pack(expand=True)
+        else:
+            canvas = tk.Canvas(qr_box, width=260, height=260, bg=CARD, highlightthickness=0)
+            canvas.pack(expand=True)
+            canvas.create_rectangle(28, 28, 232, 232, outline=BORDER, width=2)
+            canvas.create_text(130, 112, text="QR", fill=TEXT, font=("Segoe UI", 36, "bold"))
+            canvas.create_text(130, 154, text="assets/support_qr.png", fill=TEXT_MUTED, font=("Segoe UI", 10))
+
+        bottom = tk.Frame(win, bg=SURFACE)
+        bottom.pack(fill="x", padx=22, pady=(0, 20))
+        NeonButton(bottom, "Đóng", win.destroy, variant="ghost", sound_callback=self.play_click).pack(side="right")
 
     def open_updates_folder(self):
         UPDATES_DIR.mkdir(exist_ok=True)

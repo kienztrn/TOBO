@@ -111,3 +111,10 @@ BAN v1.6.6:
 - Them o Ten folder xuat: file TXT/SRT/Voice TXT se duoc gom vao output/<ten_folder>.
 - Them nut Cach dung / Ban cap nhat trong cua so Cai dat.
 - Giu auto-update in-place: khong xoa .venv, khong cai lai thu vien, khong dong output/temp/updates.
+
+
+V1.6.9 HOTFIX:
+- Bo chu VIDEO va text debug frames tren header video.
+- Doi nut Updates thanh nut Ung ho.
+- Bam Ung ho se mo popup QR placeholder. Sau nay dat ma QR vao assets/support_qr.png.
+- Fix layout nut header de khong bi cat hien thi.

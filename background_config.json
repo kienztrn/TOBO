@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "video_url": "",
+  "cache_file": "assets/support_coffee.mp4",
+  "max_frames": 120,
+  "width": 304,
+  "height": 112,
+  "fps": 12,
+  "note": "Header video clip for the TOBO support/coffee panel."
+}
