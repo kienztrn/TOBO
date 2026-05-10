@@ -1,6 +1,6 @@
 
 ============================================================
-TOBO VIETSUB v1.6.5 - DELAY TAG UPDATE
+TOBO VIETSUB v1.6.0 - AUTO UPDATE IN-PLACE
 ============================================================
 
 Ban nay them auto-update dung kieu:
@@ -100,10 +100,8 @@ BAN v1.6.4:
 - Cac lua chon ngon ngu nguon/dich/model/thiet bi cung hien theo ngon ngu app.
 - Auto-update in-place van giu .venv, thu vien, output, temp va updates.
 
-
-Tinh nang moi v1.6.5:
-- Ban dich tu dong them delay tag truoc moi dong theo moc bat dau cua ban goc.
-- Vi du: [0:00:00.370 → 0:00:02.370] ... se thanh:
-  <#00.370#> Xin chao, ban kinh doanh gi?
-- SRT van dung timestamp chuan cua phu de, khong bi chen tag.
-- TXT ban dich se co tag de dua vao tool/video workflow can delay cue.
+BAN v1.6.5:
+- Them tuy chon Delay <#s#> de chen lenh nghi vao ban dich.
+- Delay duoc tinh tu timestamp cua ban goc: segment duration + khoang lang giua cac cau.
+- Xuat them file *_voice_timing.txt de dua vao tool doc/giong noi canh nhip theo video.
+- Them nut "Xuat Voice TXT".

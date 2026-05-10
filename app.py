@@ -146,7 +146,7 @@ I18N = {
         "original": "Văn bản gốc",
         "original_hint": "Có timestamp để kiểm tra transcript",
         "translation": "Bản dịch",
-        "translation_hint": "Bản dịch có delay tag <#ss.mmm#> để canh lời",
+        "translation_hint": "Bản dịch sạch hoặc kèm <#giây#> nếu bật Delay",
         "app_language": "Ngôn ngữ app",
         "theme": "Bảng màu giao diện",
         "apply": "Áp dụng",
@@ -182,7 +182,7 @@ I18N = {
         "original": "Original text",
         "original_hint": "Timestamped transcript for checking",
         "translation": "Translation",
-        "translation_hint": "Translation includes delay tag <#ss.mmm#>",
+        "translation_hint": "Clean translation or <#seconds#> pauses when Delay is on",
         "app_language": "App language",
         "theme": "UI color theme",
         "apply": "Apply",
@@ -218,7 +218,7 @@ I18N = {
         "original": "원본 텍스트",
         "original_hint": "확인용 타임스탬프 포함",
         "translation": "번역문",
-        "translation_hint": "초 단위 없이 깔끔한 번역문만 표시",
+        "translation_hint": "Delay가 켜지면 <#초#> 지연을 포함합니다",
         "app_language": "앱 언어",
         "theme": "UI 색상 테마",
         "apply": "적용",
@@ -254,7 +254,7 @@ I18N = {
         "original": "原文",
         "original_hint": "带时间戳，方便检查",
         "translation": "译文",
-        "translation_hint": "译文前添加延迟标签 <#ss.mmm#>",
+        "translation_hint": "开启延迟时会加入 <#秒#> 停顿",
         "app_language": "应用语言",
         "theme": "界面颜色主题",
         "apply": "应用",
@@ -265,7 +265,7 @@ I18N = {
 }
 
 
-EXTRA_I18N = {'vi': {'ready_status': 'Sẵn sàng', 'soft_sparkle_active': 'Lấp lánh nhẹ đang bật', 'soft_sparkle_paused': 'Sparkle FX đã tắt', 'soft_glow': '✦ ánh sáng mềm', 'theme_swatches': ['Nền', 'Card', 'Chính', 'Phụ', 'Nhấn', 'Chữ', 'Mờ', 'Viền'], 'busy_title': 'Đang chạy', 'busy_processing': 'App đang xử lý file hiện tại.', 'busy_settings': 'App đang xử lý video, xử lý xong rồi đổi cài đặt cho an toàn.', 'ui_error_title': 'Lỗi giao diện', 'pick_title': 'Chọn video/audio', 'missing_file_title': 'Thiếu file', 'missing_file_message': 'Bạn hãy chọn video/audio trước.', 'preparing': 'Đang chuẩn bị...', 'loading_model': 'Đang tải/khởi động AI model. Lần đầu có thể lâu vì phải tải model...', 'reading_media': 'Đang đọc trực tiếp video/audio...', 'direct_read_failed': 'Đọc trực tiếp lỗi, thử fallback FFmpeg...', 'transcribing': 'Đang nhận diện giọng nói...', 'detected_lang': 'Đang nhận diện giọng nói. Ngôn ngữ phát hiện: {lang}', 'gpu_failed': 'GPU lỗi hoặc chưa đủ CUDA, chuyển sang CPU. Chi tiết: {error}', 'auto_device_failed': 'Tự động chọn thiết bị lỗi, chuyển sang CPU. Chi tiết: {error}', 'ffmpeg_extract': 'Đang fallback: tách audio bằng FFmpeg...', 'ffmpeg_error': 'FFmpeg lỗi khi tách audio:\n{error}', 'ffmpeg_missing': 'Không đọc trực tiếp được file này và máy chưa có FFmpeg để fallback.\n\nLỗi đọc trực tiếp:\n{error}\n\nCài FFmpeg: winget install Gyan.FFmpeg', 'exported': 'Đã xuất: {files}', 'transcribed_done': 'Đã nhận diện xong.', 'translating_clean': 'Đang dịch văn bản. Ô dịch sẽ thêm delay tag <#ss.mmm#> trước từng câu...', 'done_message': 'Hoàn tất. File nằm trong thư mục output.', 'exported_list': 'Đã xuất', 'completed': 'Hoàn tất', 'missing_translate_lib': 'Chưa có thư viện dịch. Hãy chạy install_windows.bat để cài deep-translator.', 'translating_part': 'Đang dịch phần {i}/{total}...', 'no_data_title': 'Chưa có dữ liệu', 'no_text_to_save': 'Chưa có văn bản để lưu.', 'saved_title': 'Đã lưu', 'no_srt_data': 'Chưa có dữ liệu để xuất SRT. Hãy xử lý video trước.', 'saved_srt_title': 'Đã lưu SRT', 'output_folder': 'Thư mục output', 'updates_folder': 'Thư mục updates', 'update_title': 'Cập nhật', 'checking_update': 'Đang kiểm tra cập nhật...', 'update_available_title': 'Có bản cập nhật mới', 'update_available_msg': 'Có bản mới v{version}.\n\n{notes}\n\nTải về ngay không?', 'update_downloaded_title': 'Đã tải cập nhật', 'update_downloaded_msg': 'Đã tải xong file cập nhật:\n{path}\n\nMở thư mục updates, giải nén/chạy file mới để cập nhật.', 'newest_version': 'Bạn đang dùng bản mới nhất rồi: v{version}.', 'update_ready_apply': 'App sẽ tự cập nhật trong cửa sổ mới rồi mở lại.\nĐừng xóa .venv, thư viện sẽ được giữ nguyên.', 'settings_applied': 'Đã áp dụng cài đặt.'}, 'en': {'ready_status': 'Ready', 'soft_sparkle_active': 'Soft sparkle active', 'soft_sparkle_paused': 'Sparkle FX paused', 'soft_glow': '✦ soft glow', 'theme_swatches': ['Background', 'Card', 'Primary', 'Secondary', 'Accent', 'Text', 'Muted', 'Border'], 'busy_title': 'Running', 'busy_processing': 'The app is processing the current file.', 'busy_settings': 'The app is processing a video. Change settings after it finishes.', 'ui_error_title': 'UI error', 'pick_title': 'Choose video/audio', 'missing_file_title': 'Missing file', 'missing_file_message': 'Please choose a video/audio file first.', 'preparing': 'Preparing...', 'loading_model': 'Loading/starting AI model. First run may take longer because the model must download...', 'reading_media': 'Reading video/audio directly...', 'direct_read_failed': 'Direct reading failed, trying FFmpeg fallback...', 'transcribing': 'Transcribing speech...', 'detected_lang': 'Transcribing speech. Detected language: {lang}', 'gpu_failed': 'GPU failed or CUDA is not ready, switching to CPU. Details: {error}', 'auto_device_failed': 'Auto device selection failed, switching to CPU. Details: {error}', 'ffmpeg_extract': 'Fallback: extracting audio with FFmpeg...', 'ffmpeg_error': 'FFmpeg failed while extracting audio:\n{error}', 'ffmpeg_missing': 'This file could not be read directly and FFmpeg is not installed for fallback.\n\nDirect read error:\n{error}\n\nInstall FFmpeg: winget install Gyan.FFmpeg', 'exported': 'Exported: {files}', 'transcribed_done': 'Transcription finished.', 'translating_clean': 'Translating text. The translation panel shows clean text without timestamps...', 'done_message': 'Done. Files are in the output folder.', 'exported_list': 'Exported', 'completed': 'Completed', 'missing_translate_lib': 'Translation library is missing. Run install_windows.bat to install deep-translator.', 'translating_part': 'Translating part {i}/{total}...', 'no_data_title': 'No data', 'no_text_to_save': 'No text to save yet.', 'saved_title': 'Saved', 'no_srt_data': 'No data to export SRT. Process a video first.', 'saved_srt_title': 'SRT saved', 'output_folder': 'Output folder', 'updates_folder': 'Updates folder', 'update_title': 'Update', 'checking_update': 'Checking for updates...', 'update_available_title': 'New update available', 'update_available_msg': 'A new version v{version} is available.\n\n{notes}\n\nDownload now?', 'update_downloaded_title': 'Update downloaded', 'update_downloaded_msg': 'Update file downloaded:\n{path}\n\nOpen the updates folder and run/extract the new file.', 'newest_version': 'You are already on the latest version: v{version}.', 'update_ready_apply': 'The app will update itself in a new window and restart.\nDo not delete .venv; libraries will be preserved.', 'settings_applied': 'Settings applied.'}, 'ko': {'ready_status': '준비됨', 'soft_sparkle_active': '부드러운 반짝임 켜짐', 'soft_sparkle_paused': 'Sparkle FX 꺼짐', 'soft_glow': '✦ 부드러운 빛', 'theme_swatches': ['배경', '카드', '메인', '보조', '강조', '텍스트', '희미함', '테두리'], 'busy_title': '실행 중', 'busy_processing': '현재 파일을 처리 중입니다.', 'busy_settings': '비디오 처리 중입니다. 완료 후 설정을 변경하세요.', 'ui_error_title': 'UI 오류', 'pick_title': '비디오/오디오 선택', 'missing_file_title': '파일 없음', 'missing_file_message': '먼저 비디오/오디오 파일을 선택하세요.', 'preparing': '준비 중...', 'loading_model': 'AI 모델을 불러오는 중입니다. 첫 실행은 모델 다운로드 때문에 오래 걸릴 수 있습니다...', 'reading_media': '비디오/오디오를 직접 읽는 중...', 'direct_read_failed': '직접 읽기 실패, FFmpeg 대체 방식을 시도합니다...', 'transcribing': '음성을 인식하는 중...', 'detected_lang': '음성을 인식하는 중. 감지된 언어: {lang}', 'gpu_failed': 'GPU 오류 또는 CUDA 준비 안 됨, CPU로 전환합니다. 세부 정보: {error}', 'auto_device_failed': '자동 장치 선택 실패, CPU로 전환합니다. 세부 정보: {error}', 'ffmpeg_extract': '대체 방식: FFmpeg로 오디오 추출 중...', 'ffmpeg_error': 'FFmpeg 오디오 추출 오류:\n{error}', 'ffmpeg_missing': '이 파일을 직접 읽을 수 없고 FFmpeg도 설치되어 있지 않습니다.\n\n직접 읽기 오류:\n{error}\n\nFFmpeg 설치: winget install Gyan.FFmpeg', 'exported': '내보냄: {files}', 'transcribed_done': '인식 완료.', 'translating_clean': '번역 중입니다. 번역 영역에는 타임스탬프 없이 텍스트만 표시됩니다...', 'done_message': '완료. 파일은 output 폴더에 있습니다.', 'exported_list': '내보낸 파일', 'completed': '완료', 'missing_translate_lib': '번역 라이브러리가 없습니다. install_windows.bat를 실행해 deep-translator를 설치하세요.', 'translating_part': '번역 중 {i}/{total}...', 'no_data_title': '데이터 없음', 'no_text_to_save': '저장할 텍스트가 없습니다.', 'saved_title': '저장됨', 'no_srt_data': 'SRT로 내보낼 데이터가 없습니다. 먼저 비디오를 처리하세요.', 'saved_srt_title': 'SRT 저장됨', 'output_folder': 'output 폴더', 'updates_folder': 'updates 폴더', 'update_title': '업데이트', 'checking_update': '업데이트 확인 중...', 'update_available_title': '새 업데이트 있음', 'update_available_msg': '새 버전 v{version}이 있습니다.\n\n{notes}\n\n지금 다운로드할까요?', 'update_downloaded_title': '업데이트 다운로드됨', 'update_downloaded_msg': '업데이트 파일 다운로드 완료:\n{path}\n\nupdates 폴더를 열어 새 파일을 실행/압축 해제하세요.', 'newest_version': '이미 최신 버전입니다: v{version}.', 'update_ready_apply': '새 창에서 자동 업데이트 후 앱을 다시 엽니다.\n.venv를 삭제하지 마세요. 라이브러리는 유지됩니다.', 'settings_applied': '설정이 적용되었습니다.'}, 'zh': {'ready_status': '就绪', 'soft_sparkle_active': '柔和闪光已开启', 'soft_sparkle_paused': 'Sparkle FX 已暂停', 'soft_glow': '✦ 柔光', 'theme_swatches': ['背景', '卡片', '主色', '副色', '强调', '文字', '弱化', '边框'], 'busy_title': '正在运行', 'busy_processing': '应用正在处理当前文件。', 'busy_settings': '应用正在处理视频，请完成后再修改设置。', 'ui_error_title': '界面错误', 'pick_title': '选择视频/音频', 'missing_file_title': '缺少文件', 'missing_file_message': '请先选择视频/音频文件。', 'preparing': '正在准备...', 'loading_model': '正在加载/启动 AI 模型。首次运行可能需要下载模型...', 'reading_media': '正在直接读取视频/音频...', 'direct_read_failed': '直接读取失败，尝试 FFmpeg 备用方案...', 'transcribing': '正在识别语音...', 'detected_lang': '正在识别语音。检测到语言：{lang}', 'gpu_failed': 'GPU 错误或 CUDA 未就绪，切换到 CPU。详情：{error}', 'auto_device_failed': '自动选择设备失败，切换到 CPU。详情：{error}', 'ffmpeg_extract': '备用方案：正在用 FFmpeg 提取音频...', 'ffmpeg_error': 'FFmpeg 提取音频失败：\n{error}', 'ffmpeg_missing': '无法直接读取该文件，且未安装 FFmpeg 备用方案。\n\n直接读取错误：\n{error}\n\n安装 FFmpeg：winget install Gyan.FFmpeg', 'exported': '已导出：{files}', 'transcribed_done': '识别完成。', 'translating_clean': '正在翻译文本。译文区域只显示干净文本，不带时间戳...', 'done_message': '完成。文件在 output 文件夹中。', 'exported_list': '已导出', 'completed': '完成', 'missing_translate_lib': '缺少翻译库。请运行 install_windows.bat 安装 deep-translator。', 'translating_part': '正在翻译 {i}/{total}...', 'no_data_title': '没有数据', 'no_text_to_save': '没有可保存的文本。', 'saved_title': '已保存', 'no_srt_data': '没有可导出 SRT 的数据。请先处理视频。', 'saved_srt_title': 'SRT 已保存', 'output_folder': 'output 文件夹', 'updates_folder': 'updates 文件夹', 'update_title': '更新', 'checking_update': '正在检查更新...', 'update_available_title': '有新版本', 'update_available_msg': '发现新版本 v{version}。\n\n{notes}\n\n现在下载吗？', 'update_downloaded_title': '更新已下载', 'update_downloaded_msg': '更新文件已下载：\n{path}\n\n打开 updates 文件夹并运行/解压新文件。', 'newest_version': '你已经是最新版本：v{version}。', 'update_ready_apply': '应用将在新窗口中自动更新并重启。\n不要删除 .venv，库会保留。', 'settings_applied': '设置已应用。'}}
+EXTRA_I18N = {'vi': {'ready_status': 'Sẵn sàng', 'soft_sparkle_active': 'Lấp lánh nhẹ đang bật', 'soft_sparkle_paused': 'Sparkle FX đã tắt', 'soft_glow': '✦ ánh sáng mềm', 'theme_swatches': ['Nền', 'Card', 'Chính', 'Phụ', 'Nhấn', 'Chữ', 'Mờ', 'Viền'], 'busy_title': 'Đang chạy', 'busy_processing': 'App đang xử lý file hiện tại.', 'busy_settings': 'App đang xử lý video, xử lý xong rồi đổi cài đặt cho an toàn.', 'ui_error_title': 'Lỗi giao diện', 'pick_title': 'Chọn video/audio', 'missing_file_title': 'Thiếu file', 'missing_file_message': 'Bạn hãy chọn video/audio trước.', 'preparing': 'Đang chuẩn bị...', 'loading_model': 'Đang tải/khởi động AI model. Lần đầu có thể lâu vì phải tải model...', 'reading_media': 'Đang đọc trực tiếp video/audio...', 'direct_read_failed': 'Đọc trực tiếp lỗi, thử fallback FFmpeg...', 'transcribing': 'Đang nhận diện giọng nói...', 'detected_lang': 'Đang nhận diện giọng nói. Ngôn ngữ phát hiện: {lang}', 'gpu_failed': 'GPU lỗi hoặc chưa đủ CUDA, chuyển sang CPU. Chi tiết: {error}', 'auto_device_failed': 'Tự động chọn thiết bị lỗi, chuyển sang CPU. Chi tiết: {error}', 'ffmpeg_extract': 'Đang fallback: tách audio bằng FFmpeg...', 'ffmpeg_error': 'FFmpeg lỗi khi tách audio:\n{error}', 'ffmpeg_missing': 'Không đọc trực tiếp được file này và máy chưa có FFmpeg để fallback.\n\nLỗi đọc trực tiếp:\n{error}\n\nCài FFmpeg: winget install Gyan.FFmpeg', 'exported': 'Đã xuất: {files}', 'transcribed_done': 'Đã nhận diện xong.', 'translating_clean': 'Đang dịch văn bản. Ô dịch chỉ hiện text sạch, không kèm timestamp...', 'done_message': 'Hoàn tất. File nằm trong thư mục output.', 'exported_list': 'Đã xuất', 'completed': 'Hoàn tất', 'missing_translate_lib': 'Chưa có thư viện dịch. Hãy chạy install_windows.bat để cài deep-translator.', 'translating_part': 'Đang dịch phần {i}/{total}...', 'no_data_title': 'Chưa có dữ liệu', 'no_text_to_save': 'Chưa có văn bản để lưu.', 'saved_title': 'Đã lưu', 'no_srt_data': 'Chưa có dữ liệu để xuất SRT. Hãy xử lý video trước.', 'saved_srt_title': 'Đã lưu SRT', 'output_folder': 'Thư mục output', 'updates_folder': 'Thư mục updates', 'update_title': 'Cập nhật', 'checking_update': 'Đang kiểm tra cập nhật...', 'update_available_title': 'Có bản cập nhật mới', 'update_available_msg': 'Có bản mới v{version}.\n\n{notes}\n\nTải về ngay không?', 'update_downloaded_title': 'Đã tải cập nhật', 'update_downloaded_msg': 'Đã tải xong file cập nhật:\n{path}\n\nMở thư mục updates, giải nén/chạy file mới để cập nhật.', 'newest_version': 'Bạn đang dùng bản mới nhất rồi: v{version}.', 'update_ready_apply': 'App sẽ tự cập nhật trong cửa sổ mới rồi mở lại.\nĐừng xóa .venv, thư viện sẽ được giữ nguyên.', 'settings_applied': 'Đã áp dụng cài đặt.'}, 'en': {'ready_status': 'Ready', 'soft_sparkle_active': 'Soft sparkle active', 'soft_sparkle_paused': 'Sparkle FX paused', 'soft_glow': '✦ soft glow', 'theme_swatches': ['Background', 'Card', 'Primary', 'Secondary', 'Accent', 'Text', 'Muted', 'Border'], 'busy_title': 'Running', 'busy_processing': 'The app is processing the current file.', 'busy_settings': 'The app is processing a video. Change settings after it finishes.', 'ui_error_title': 'UI error', 'pick_title': 'Choose video/audio', 'missing_file_title': 'Missing file', 'missing_file_message': 'Please choose a video/audio file first.', 'preparing': 'Preparing...', 'loading_model': 'Loading/starting AI model. First run may take longer because the model must download...', 'reading_media': 'Reading video/audio directly...', 'direct_read_failed': 'Direct reading failed, trying FFmpeg fallback...', 'transcribing': 'Transcribing speech...', 'detected_lang': 'Transcribing speech. Detected language: {lang}', 'gpu_failed': 'GPU failed or CUDA is not ready, switching to CPU. Details: {error}', 'auto_device_failed': 'Auto device selection failed, switching to CPU. Details: {error}', 'ffmpeg_extract': 'Fallback: extracting audio with FFmpeg...', 'ffmpeg_error': 'FFmpeg failed while extracting audio:\n{error}', 'ffmpeg_missing': 'This file could not be read directly and FFmpeg is not installed for fallback.\n\nDirect read error:\n{error}\n\nInstall FFmpeg: winget install Gyan.FFmpeg', 'exported': 'Exported: {files}', 'transcribed_done': 'Transcription finished.', 'translating_clean': 'Translating text. The translation panel shows clean text without timestamps...', 'done_message': 'Done. Files are in the output folder.', 'exported_list': 'Exported', 'completed': 'Completed', 'missing_translate_lib': 'Translation library is missing. Run install_windows.bat to install deep-translator.', 'translating_part': 'Translating part {i}/{total}...', 'no_data_title': 'No data', 'no_text_to_save': 'No text to save yet.', 'saved_title': 'Saved', 'no_srt_data': 'No data to export SRT. Process a video first.', 'saved_srt_title': 'SRT saved', 'output_folder': 'Output folder', 'updates_folder': 'Updates folder', 'update_title': 'Update', 'checking_update': 'Checking for updates...', 'update_available_title': 'New update available', 'update_available_msg': 'A new version v{version} is available.\n\n{notes}\n\nDownload now?', 'update_downloaded_title': 'Update downloaded', 'update_downloaded_msg': 'Update file downloaded:\n{path}\n\nOpen the updates folder and run/extract the new file.', 'newest_version': 'You are already on the latest version: v{version}.', 'update_ready_apply': 'The app will update itself in a new window and restart.\nDo not delete .venv; libraries will be preserved.', 'settings_applied': 'Settings applied.'}, 'ko': {'ready_status': '준비됨', 'soft_sparkle_active': '부드러운 반짝임 켜짐', 'soft_sparkle_paused': 'Sparkle FX 꺼짐', 'soft_glow': '✦ 부드러운 빛', 'theme_swatches': ['배경', '카드', '메인', '보조', '강조', '텍스트', '희미함', '테두리'], 'busy_title': '실행 중', 'busy_processing': '현재 파일을 처리 중입니다.', 'busy_settings': '비디오 처리 중입니다. 완료 후 설정을 변경하세요.', 'ui_error_title': 'UI 오류', 'pick_title': '비디오/오디오 선택', 'missing_file_title': '파일 없음', 'missing_file_message': '먼저 비디오/오디오 파일을 선택하세요.', 'preparing': '준비 중...', 'loading_model': 'AI 모델을 불러오는 중입니다. 첫 실행은 모델 다운로드 때문에 오래 걸릴 수 있습니다...', 'reading_media': '비디오/오디오를 직접 읽는 중...', 'direct_read_failed': '직접 읽기 실패, FFmpeg 대체 방식을 시도합니다...', 'transcribing': '음성을 인식하는 중...', 'detected_lang': '음성을 인식하는 중. 감지된 언어: {lang}', 'gpu_failed': 'GPU 오류 또는 CUDA 준비 안 됨, CPU로 전환합니다. 세부 정보: {error}', 'auto_device_failed': '자동 장치 선택 실패, CPU로 전환합니다. 세부 정보: {error}', 'ffmpeg_extract': '대체 방식: FFmpeg로 오디오 추출 중...', 'ffmpeg_error': 'FFmpeg 오디오 추출 오류:\n{error}', 'ffmpeg_missing': '이 파일을 직접 읽을 수 없고 FFmpeg도 설치되어 있지 않습니다.\n\n직접 읽기 오류:\n{error}\n\nFFmpeg 설치: winget install Gyan.FFmpeg', 'exported': '내보냄: {files}', 'transcribed_done': '인식 완료.', 'translating_clean': '번역 중입니다. 번역 영역에는 타임스탬프 없이 텍스트만 표시됩니다...', 'done_message': '완료. 파일은 output 폴더에 있습니다.', 'exported_list': '내보낸 파일', 'completed': '완료', 'missing_translate_lib': '번역 라이브러리가 없습니다. install_windows.bat를 실행해 deep-translator를 설치하세요.', 'translating_part': '번역 중 {i}/{total}...', 'no_data_title': '데이터 없음', 'no_text_to_save': '저장할 텍스트가 없습니다.', 'saved_title': '저장됨', 'no_srt_data': 'SRT로 내보낼 데이터가 없습니다. 먼저 비디오를 처리하세요.', 'saved_srt_title': 'SRT 저장됨', 'output_folder': 'output 폴더', 'updates_folder': 'updates 폴더', 'update_title': '업데이트', 'checking_update': '업데이트 확인 중...', 'update_available_title': '새 업데이트 있음', 'update_available_msg': '새 버전 v{version}이 있습니다.\n\n{notes}\n\n지금 다운로드할까요?', 'update_downloaded_title': '업데이트 다운로드됨', 'update_downloaded_msg': '업데이트 파일 다운로드 완료:\n{path}\n\nupdates 폴더를 열어 새 파일을 실행/압축 해제하세요.', 'newest_version': '이미 최신 버전입니다: v{version}.', 'update_ready_apply': '새 창에서 자동 업데이트 후 앱을 다시 엽니다.\n.venv를 삭제하지 마세요. 라이브러리는 유지됩니다.', 'settings_applied': '설정이 적용되었습니다.'}, 'zh': {'ready_status': '就绪', 'soft_sparkle_active': '柔和闪光已开启', 'soft_sparkle_paused': 'Sparkle FX 已暂停', 'soft_glow': '✦ 柔光', 'theme_swatches': ['背景', '卡片', '主色', '副色', '强调', '文字', '弱化', '边框'], 'busy_title': '正在运行', 'busy_processing': '应用正在处理当前文件。', 'busy_settings': '应用正在处理视频，请完成后再修改设置。', 'ui_error_title': '界面错误', 'pick_title': '选择视频/音频', 'missing_file_title': '缺少文件', 'missing_file_message': '请先选择视频/音频文件。', 'preparing': '正在准备...', 'loading_model': '正在加载/启动 AI 模型。首次运行可能需要下载模型...', 'reading_media': '正在直接读取视频/音频...', 'direct_read_failed': '直接读取失败，尝试 FFmpeg 备用方案...', 'transcribing': '正在识别语音...', 'detected_lang': '正在识别语音。检测到语言：{lang}', 'gpu_failed': 'GPU 错误或 CUDA 未就绪，切换到 CPU。详情：{error}', 'auto_device_failed': '自动选择设备失败，切换到 CPU。详情：{error}', 'ffmpeg_extract': '备用方案：正在用 FFmpeg 提取音频...', 'ffmpeg_error': 'FFmpeg 提取音频失败：\n{error}', 'ffmpeg_missing': '无法直接读取该文件，且未安装 FFmpeg 备用方案。\n\n直接读取错误：\n{error}\n\n安装 FFmpeg：winget install Gyan.FFmpeg', 'exported': '已导出：{files}', 'transcribed_done': '识别完成。', 'translating_clean': '正在翻译文本。译文区域只显示干净文本，不带时间戳...', 'done_message': '完成。文件在 output 文件夹中。', 'exported_list': '已导出', 'completed': '完成', 'missing_translate_lib': '缺少翻译库。请运行 install_windows.bat 安装 deep-translator。', 'translating_part': '正在翻译 {i}/{total}...', 'no_data_title': '没有数据', 'no_text_to_save': '没有可保存的文本。', 'saved_title': '已保存', 'no_srt_data': '没有可导出 SRT 的数据。请先处理视频。', 'saved_srt_title': 'SRT 已保存', 'output_folder': 'output 文件夹', 'updates_folder': 'updates 文件夹', 'update_title': '更新', 'checking_update': '正在检查更新...', 'update_available_title': '有新版本', 'update_available_msg': '发现新版本 v{version}。\n\n{notes}\n\n现在下载吗？', 'update_downloaded_title': '更新已下载', 'update_downloaded_msg': '更新文件已下载：\n{path}\n\n打开 updates 文件夹并运行/解压新文件。', 'newest_version': '你已经是最新版本：v{version}。', 'update_ready_apply': '应用将在新窗口中自动更新并重启。\n不要删除 .venv，库会保留。', 'settings_applied': '设置已应用。'}}
 for _lang, _items in EXTRA_I18N.items():
     I18N.setdefault(_lang, {}).update(_items)
 I18N["vi"]["error_title"] = "Lỗi"
@@ -276,6 +276,10 @@ I18N["vi"]["python_missing_update"] = "Đã tải bản cập nhật nhưng khô
 I18N["en"]["python_missing_update"] = "Python was not found, so the update cannot be applied automatically. Open the updates folder and extract it manually."
 I18N["ko"]["python_missing_update"] = "Python을 찾을 수 없어 자동 업데이트를 적용할 수 없습니다. updates 폴더를 열고 수동으로 압축을 해제하세요."
 I18N["zh"]["python_missing_update"] = "未找到 Python，无法自动应用更新。请打开 updates 文件夹并手动解压。"
+I18N["vi"].update({"delay_tags": "Delay <#s#>", "export_voice": "⏱ Xuất Voice TXT", "no_voice_data": "Chưa có bản dịch có delay. Hãy dịch video trước.", "saved_voice_title": "Đã lưu Voice TXT", "timed_translation_hint": "Bản dịch có chèn <#giây#> để canh nhịp theo video", "translating_timed": "Đang tính độ trễ <#giây#> theo timestamp gốc...", "voice_file_suffix": "voice_timing"})
+I18N["en"].update({"delay_tags": "Delay <#s#>", "export_voice": "⏱ Export Voice TXT", "no_voice_data": "No timed translation yet. Translate a video first.", "saved_voice_title": "Voice TXT saved", "timed_translation_hint": "Translation with <#seconds#> pauses aligned to the source video", "translating_timed": "Calculating <#seconds#> pauses from source timestamps...", "voice_file_suffix": "voice_timing"})
+I18N["ko"].update({"delay_tags": "지연 <#초#>", "export_voice": "⏱ Voice TXT 내보내기", "no_voice_data": "지연이 포함된 번역이 없습니다. 먼저 비디오를 번역하세요.", "saved_voice_title": "Voice TXT 저장됨", "timed_translation_hint": "원본 영상 타임라인에 맞춘 <#초#> 지연 번역", "translating_timed": "원본 타임스탬프로 <#초#> 지연을 계산 중...", "voice_file_suffix": "voice_timing"})
+I18N["zh"].update({"delay_tags": "延迟 <#秒#>", "export_voice": "⏱ 导出 Voice TXT", "no_voice_data": "还没有带延迟的译文。请先翻译视频。", "saved_voice_title": "Voice TXT 已保存", "timed_translation_hint": "根据原视频时间轴插入 <#秒#> 停顿的译文", "translating_timed": "正在根据原始时间戳计算 <#秒#> 停顿...", "voice_file_suffix": "voice_timing"})
 I18N["vi"].update({"config_file": "File cần sửa", "url_404": "{purpose} lỗi 404: link update không tồn tại hoặc chưa upload file.", "url_http": "{purpose} lỗi HTTP {code}: {reason}", "url_dns": "{purpose} lỗi DNS: domain update không tồn tại/sai link/mất mạng.", "url_network": "{purpose} lỗi mạng: {reason}", "manifest_not_json": "{purpose} lỗi: manifest không phải JSON hợp lệ.", "generic_error": "{purpose} lỗi: {error}"})
 I18N["en"].update({"config_file": "Config file", "url_404": "{purpose} 404 error: update link does not exist or file has not been uploaded.", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS error: update domain does not exist, link is wrong, or network is down.", "url_network": "{purpose} network error: {reason}", "manifest_not_json": "{purpose} error: manifest is not valid JSON.", "generic_error": "{purpose} error: {error}"})
 I18N["ko"].update({"config_file": "수정할 파일", "url_404": "{purpose} 404 오류: 업데이트 링크가 없거나 파일이 업로드되지 않았습니다.", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS 오류: 업데이트 도메인이 없거나 링크가 잘못되었거나 네트워크가 끊겼습니다.", "url_network": "{purpose} 네트워크 오류: {reason}", "manifest_not_json": "{purpose} 오류: manifest가 올바른 JSON이 아닙니다.", "generic_error": "{purpose} 오류: {error}"})
@@ -455,26 +459,6 @@ def format_srt_timestamp(seconds: float) -> str:
     return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
 
 
-
-def format_delay_tag(seconds: float) -> str:
-    """Return total-second cue for translated text: <#00.370#>, <#02.370#>, <#65.120#>."""
-    seconds = max(0, float(seconds or 0))
-    total_ms = int(round(seconds * 1000))
-    whole = total_ms // 1000
-    ms = total_ms % 1000
-    # User-facing delay cue: total seconds, zero-padded to 2 digits for short clips.
-    return f"{whole:02d}.{ms:03d}"
-
-
-def rows_to_delay_text(rows: list[dict]) -> str:
-    lines = []
-    for row in rows:
-        text = (row.get("text") or "").strip()
-        if not text:
-            continue
-        lines.append(f"<#{format_delay_tag(row.get('start', 0))}#> {text}")
-    return "\n".join(lines)
-
 def safe_filename(name: str) -> str:
     bad_chars = '<>:"/\\|?*'
     cleaned = "".join("_" if ch in bad_chars else ch for ch in name).strip()
@@ -600,11 +584,14 @@ class TOBOVietSubApp:
         self.model_size = tk.StringVar(value=option_label("model", "small"))
         self.device_mode = tk.StringVar(value=option_label("device", "auto"))
         self.export_format = tk.StringVar(value="TXT + SRT")
+        self.delay_tags_enabled = tk.BooleanVar(value=True)
         self.sound_enabled = tk.BooleanVar(value=True)
         self.status = tk.StringVar(value=tr("ready_status"))
         self.progress = tk.DoubleVar(value=0)
         self.last_text = ""
         self.last_translation = ""
+        self.last_clean_translation = ""
+        self.last_timed_translation = ""
         self.last_rows = []
         self.last_translated_rows = []
         self._icon_photo = None
@@ -897,8 +884,22 @@ class TOBOVietSubApp:
         self.start_btn.pack(side="left")
         NeonButton(btns, tr("save_txt"), self.save_text, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("export_srt"), self.save_srt_manual, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+        NeonButton(btns, tr("export_voice"), self.save_voice_timing_manual, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("output"), self.open_output, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("clear"), self.clear_text, variant="dark", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+
+        tk.Checkbutton(
+            btns,
+            text=tr("delay_tags"),
+            variable=self.delay_tags_enabled,
+            bg=SURFACE,
+            fg=TEXT_MUTED,
+            activebackground=SURFACE,
+            activeforeground=TEXT,
+            selectcolor=ENTRY_BG,
+            font=("Segoe UI", 10),
+            relief="flat",
+        ).pack(side="right", padx=(0, 14))
 
         tk.Checkbutton(
             btns,
@@ -1556,6 +1557,7 @@ class TOBOVietSubApp:
             "source_lang": option_value("source", self.language.get()),
             "target_lang": option_value("translate", self.translate_to.get()),
             "export_format": EXPORT_FORMATS[self.export_format.get()],
+            "delay_tags_enabled": bool(self.delay_tags_enabled.get()),
         }
         self.start_btn.config(state="disabled")
         self.progress.set(3)
@@ -1564,6 +1566,8 @@ class TOBOVietSubApp:
         self.text_translated.delete("1.0", "end")
         self.last_text = ""
         self.last_translation = ""
+        self.last_clean_translation = ""
+        self.last_timed_translation = ""
         self.last_rows = []
         self.last_translated_rows = []
         self.worker = threading.Thread(target=self.process_file, args=(Path(file_path), settings), daemon=True)
@@ -1658,14 +1662,29 @@ class TOBOVietSubApp:
                 self.log(tr("translating_clean"))
                 translated_rows = self.translate_rows(rows, target_lang)
                 self.last_translated_rows = translated_rows
-                display_translation = rows_to_delay_text(translated_rows)
+                clean_translation = "\n".join(row["text"] for row in translated_rows if row.get("text"))
+                self.last_clean_translation = clean_translation
+                display_translation = clean_translation
+
+                if settings.get("delay_tags_enabled", True):
+                    self.log(tr("translating_timed"))
+                    timed_translation = self.rows_to_voice_timing_text(translated_rows, target_lang)
+                    self.last_timed_translation = timed_translation
+                    display_translation = timed_translation
+                else:
+                    self.last_timed_translation = ""
+
                 self.last_translation = display_translation
                 self.q.put(("set_translation", display_translation))
 
                 if export_format in ("txt", "both"):
                     trans_txt = OUTPUT_DIR / f"{safe_stem}_translated_{target_lang.replace('-', '_')}.txt"
-                    trans_txt.write_text(display_translation, encoding="utf-8")
+                    trans_txt.write_text(clean_translation, encoding="utf-8")
                     written_files.append(trans_txt.name)
+                    if self.last_timed_translation:
+                        voice_txt = OUTPUT_DIR / f"{safe_stem}_translated_{target_lang.replace('-', '_')}_{tr('voice_file_suffix')}.txt"
+                        voice_txt.write_text(self.last_timed_translation, encoding="utf-8")
+                        written_files.append(voice_txt.name)
                 if export_format in ("srt", "both"):
                     trans_srt = OUTPUT_DIR / f"{safe_stem}_translated_{target_lang.replace('-', '_')}.srt"
                     trans_srt.write_text(self.rows_to_srt(translated_rows), encoding="utf-8-sig")
@@ -1696,6 +1715,48 @@ class TOBOVietSubApp:
                 continue
             blocks.append(f"{idx}\n{format_srt_timestamp(row.get('start', 0))} --> {format_srt_timestamp(row.get('end', 0))}\n{text}")
         return "\n\n".join(blocks) + ("\n" if blocks else "")
+
+    def estimate_tts_seconds(self, text: str, target_lang: str | None = None) -> float:
+        clean = (text or "").strip()
+        if not clean:
+            return 0.0
+        cjk_chars = sum(1 for ch in clean if "\u4e00" <= ch <= "\u9fff" or "\u3040" <= ch <= "\u30ff" or "\uac00" <= ch <= "\ud7af")
+        compact_len = len(clean.replace(" ", ""))
+        if cjk_chars >= max(2, compact_len * 0.45) or target_lang in {"zh", "zh-CN", "ja", "ko"}:
+            base = max(0.45, max(1, cjk_chars) / 4.2)
+        else:
+            words = [w for w in clean.replace("\n", " ").split(" ") if w.strip()]
+            base = max(0.55, len(words) / 2.65)
+        punctuation_pause = sum(clean.count(ch) for ch in ",.;:!?，。！？、") * 0.10
+        return min(20.0, base + punctuation_pause)
+
+    def rows_to_voice_timing_text(self, rows: list[dict], target_lang: str | None = None) -> str:
+        lines = []
+        if not rows:
+            return ""
+        first_start = max(0.0, float(rows[0].get("start", 0) or 0))
+        if first_start >= 0.15:
+            lines.append(f"<#{first_start:.2f}#>")
+        for idx, row in enumerate(rows):
+            text = (row.get("text") or "").strip()
+            if not text:
+                continue
+            start = float(row.get("start", 0) or 0)
+            end = max(start, float(row.get("end", start) or start))
+            segment_duration = max(0.0, end - start)
+            next_start = None
+            for nxt in rows[idx + 1:]:
+                if (nxt.get("text") or "").strip():
+                    next_start = float(nxt.get("start", end) or end)
+                    break
+            gap_to_next = max(0.0, (next_start - end) if next_start is not None else 0.0)
+            estimated_speech = self.estimate_tts_seconds(text, target_lang)
+            delay = max(0.0, segment_duration - estimated_speech) + gap_to_next
+            if delay >= 0.10:
+                lines.append(f"{text}<#{delay:.2f}#>")
+            else:
+                lines.append(text)
+        return "\n".join(lines)
 
     def translate_rows(self, rows: list[dict], target_lang: str) -> list[dict]:
         try:
@@ -1840,6 +1901,21 @@ class TOBOVietSubApp:
         Path(path).write_text(self.rows_to_srt(rows), encoding="utf-8-sig")
         messagebox.showinfo(tr("saved_srt_title"), path)
 
+    def save_voice_timing_manual(self):
+        content = self.last_timed_translation.strip() if self.last_timed_translation else ""
+        if not content:
+            rows = self.last_translated_rows if self.last_translated_rows else []
+            if rows:
+                content = self.rows_to_voice_timing_text(rows, None)
+        if not content:
+            messagebox.showinfo(tr("no_data_title"), tr("no_voice_data"))
+            return
+        path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("TXT", "*.txt")])
+        if not path:
+            return
+        Path(path).write_text(content, encoding="utf-8")
+        messagebox.showinfo(tr("saved_voice_title"), path)
+
     def open_output(self):
         OUTPUT_DIR.mkdir(exist_ok=True)
         try:
@@ -1859,6 +1935,8 @@ class TOBOVietSubApp:
         self.text_translated.delete("1.0", "end")
         self.last_text = ""
         self.last_translation = ""
+        self.last_clean_translation = ""
+        self.last_timed_translation = ""
         self.last_rows = []
         self.last_translated_rows = []
         self.progress.set(0)
