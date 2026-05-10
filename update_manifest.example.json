@@ -1,11 +1,5 @@
 {
-<<<<<<< HEAD
   "version": "1.6.5",
   "url": "https://github.com/kienztrn/TOBO/archive/refs/heads/main.zip",
   "notes": "Thêm delay tag <#ss.mmm#> trước từng dòng bản dịch, lấy theo timestamp bắt đầu của bản gốc. Giữ auto-update in-place, không xóa .venv/thư viện."
-=======
-  "version": "1.6.4",
-  "url": "https://github.com/kienztrn/TOBO/archive/refs/heads/main.zip",
-  "notes": "Thêm theme 10 Dark Orange và sửa đổi ngôn ngữ app để toàn bộ UI, nút, combobox, trạng thái và hộp thoại đổi theo ngôn ngữ đã chọn."
->>>>>>> 82631c17a4c13f3bf1ab1aaff064d42545c9735c
 }

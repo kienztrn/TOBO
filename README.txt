@@ -1,10 +1,6 @@
 
 ============================================================
-<<<<<<< HEAD
 TOBO VIETSUB v1.6.5 - DELAY TAG UPDATE
-=======
-TOBO VIETSUB v1.6.0 - AUTO UPDATE IN-PLACE
->>>>>>> 82631c17a4c13f3bf1ab1aaff064d42545c9735c
 ============================================================
 
 Ban nay them auto-update dung kieu:
@@ -103,7 +99,6 @@ BAN v1.6.4:
 - Sua ngon ngu app: doi ngon ngu se doi dong bo UI chinh, nut bam, combobox, status, dialog va cua so cai dat.
 - Cac lua chon ngon ngu nguon/dich/model/thiet bi cung hien theo ngon ngu app.
 - Auto-update in-place van giu .venv, thu vien, output, temp va updates.
-<<<<<<< HEAD
 
 
 Tinh nang moi v1.6.5:
@@ -112,5 +107,3 @@ Tinh nang moi v1.6.5:
   <#00.370#> Xin chao, ban kinh doanh gi?
 - SRT van dung timestamp chuan cua phu de, khong bi chen tag.
 - TXT ban dich se co tag de dua vao tool/video workflow can delay cue.
-=======
->>>>>>> 82631c17a4c13f3bf1ab1aaff064d42545c9735c
