@@ -1,5 +1,5 @@
 {
-  "version": "1.6.5",
+  "version": "1.6.6",
   "url": "https://github.com/kienztrn/TOBO/archive/refs/heads/main.zip",
-  "notes": "Thêm Delay <#giây#> cho bản dịch: tính pause từ timestamp gốc để tạo Voice TXT canh nhịp theo video. Giữ auto-update in-place, không xóa .venv/thư viện."
+  "notes": "Thêm phong cách dịch cho phim hoạt hình/phim ngoại quốc, ô tên folder xuất riêng, và mục Cách dùng/Bản cập nhật trong Cài đặt. Giữ auto-update in-place, không xóa .venv/thư viện."
 }

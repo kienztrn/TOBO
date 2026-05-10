@@ -1,6 +1,6 @@
 
 ============================================================
-TOBO VIETSUB v1.6.0 - AUTO UPDATE IN-PLACE
+TOBO VIETSUB v1.6.6 - AUTO UPDATE IN-PLACE
 ============================================================
 
 Ban nay them auto-update dung kieu:
@@ -105,3 +105,9 @@ BAN v1.6.5:
 - Delay duoc tinh tu timestamp cua ban goc: segment duration + khoang lang giua cac cau.
 - Xuat them file *_voice_timing.txt de dua vao tool doc/giong noi canh nhip theo video.
 - Them nut "Xuat Voice TXT".
+
+BAN v1.6.6:
+- Them lua chon Phong cach dich: Tu nhien, Hai huoc, Nghiem tuc, Kinh di, Lang man, Khoa hoc vien tuong, Hoat hinh vui nhon, Hanh dong.
+- Them o Ten folder xuat: file TXT/SRT/Voice TXT se duoc gom vao output/<ten_folder>.
+- Them nut Cach dung / Ban cap nhat trong cua so Cai dat.
+- Giu auto-update in-place: khong xoa .venv, khong cai lai thu vien, khong dong output/temp/updates.

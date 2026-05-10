@@ -31,7 +31,7 @@ else:
 TEMP_DIR = APP_DIR / "temp"
 OUTPUT_DIR = APP_DIR / "output"
 UPDATES_DIR = APP_DIR / "updates"
-CURRENT_VERSION = "1.6.5"
+CURRENT_VERSION = "1.6.6"
 APP_NAME = "TOBO VietSub"
 TEMP_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -280,6 +280,87 @@ I18N["vi"].update({"delay_tags": "Delay <#s#>", "export_voice": "⏱ Xuất Voic
 I18N["en"].update({"delay_tags": "Delay <#s#>", "export_voice": "⏱ Export Voice TXT", "no_voice_data": "No timed translation yet. Translate a video first.", "saved_voice_title": "Voice TXT saved", "timed_translation_hint": "Translation with <#seconds#> pauses aligned to the source video", "translating_timed": "Calculating <#seconds#> pauses from source timestamps...", "voice_file_suffix": "voice_timing"})
 I18N["ko"].update({"delay_tags": "지연 <#초#>", "export_voice": "⏱ Voice TXT 내보내기", "no_voice_data": "지연이 포함된 번역이 없습니다. 먼저 비디오를 번역하세요.", "saved_voice_title": "Voice TXT 저장됨", "timed_translation_hint": "원본 영상 타임라인에 맞춘 <#초#> 지연 번역", "translating_timed": "원본 타임스탬프로 <#초#> 지연을 계산 중...", "voice_file_suffix": "voice_timing"})
 I18N["zh"].update({"delay_tags": "延迟 <#秒#>", "export_voice": "⏱ 导出 Voice TXT", "no_voice_data": "还没有带延迟的译文。请先翻译视频。", "saved_voice_title": "Voice TXT 已保存", "timed_translation_hint": "根据原视频时间轴插入 <#秒#> 停顿的译文", "translating_timed": "正在根据原始时间戳计算 <#秒#> 停顿...", "voice_file_suffix": "voice_timing"})
+
+I18N["vi"].update({
+    "translation_style": "Phong cách dịch",
+    "output_folder_name": "Tên folder xuất",
+    "output_folder_placeholder": "VD: phim_meo_tap_01",
+    "style_natural": "Tự nhiên",
+    "style_humorous": "Hài hước",
+    "style_serious": "Nghiêm túc",
+    "style_horror": "Kinh dị",
+    "style_romantic": "Lãng mạn",
+    "style_scifi": "Khoa học viễn tưởng",
+    "style_cartoon": "Hoạt hình vui nhộn",
+    "style_action": "Hành động",
+    "style_note": "Style dịch dùng hậu xử lý để câu thoại mềm và hợp phim hơn.",
+    "export_folder_note": "Nếu nhập tên folder, toàn bộ file xuất sẽ nằm trong output/folder đó.",
+    "help_button": "📘 Cách dùng / Bản cập nhật",
+    "help_title": "Mô tả app, cách dùng và bản cập nhật",
+    "help_body": "TOBO VietSub là app nhận diện lời thoại từ video/audio, dịch văn bản, xuất TXT/SRT và tạo Voice TXT có delay <#giây#>.\n\nCách dùng nhanh:\n1. Chọn video/audio.\n2. Chọn ngôn ngữ gốc hoặc để tự động.\n3. Chọn ngôn ngữ dịch.\n4. Chọn phong cách dịch phù hợp phim: hài hước, nghiêm túc, kinh dị, lãng mạn, khoa học...\n5. Nhập tên folder xuất nếu muốn gom file cho gọn.\n6. Bấm Bắt đầu xử lý.\n\nBản v1.6.6:\n- Thêm phong cách dịch cho phim hoạt hình/phim ngoại quốc.\n- Thêm ô tên folder xuất riêng.\n- Thêm mục mô tả app/cách dùng/bản cập nhật trong Cài đặt.\n- Giữ auto-update in-place, không xóa .venv và không cài lại thư viện.",
+    "open_export_folder": "Mở folder xuất",
+    "style_applied_status": "Đang áp dụng phong cách dịch: {style}",
+})
+I18N["en"].update({
+    "translation_style": "Translation style",
+    "output_folder_name": "Output folder name",
+    "output_folder_placeholder": "E.g. cartoon_episode_01",
+    "style_natural": "Natural",
+    "style_humorous": "Humorous",
+    "style_serious": "Serious",
+    "style_horror": "Horror",
+    "style_romantic": "Romantic",
+    "style_scifi": "Sci-fi",
+    "style_cartoon": "Playful cartoon",
+    "style_action": "Action",
+    "style_note": "Translation style uses post-processing to make dialogue softer and more movie-like.",
+    "export_folder_note": "If you enter a folder name, all exported files go into output/that folder.",
+    "help_button": "📘 Help / Changelog",
+    "help_title": "App description, usage and changelog",
+    "help_body": "TOBO VietSub transcribes dialogue from video/audio, translates text, exports TXT/SRT, and creates Voice TXT with <#seconds#> delay tags.\n\nQuick use:\n1. Pick a video/audio file.\n2. Choose source language or auto detect.\n3. Choose target translation language.\n4. Pick a translation style: humorous, serious, horror, romantic, sci-fi...\n5. Enter an output folder name if you want files grouped cleanly.\n6. Click Start.\n\nv1.6.6:\n- Added translation style for cartoons/foreign films.\n- Added custom output folder name.\n- Added help/changelog inside Settings.\n- Keeps in-place auto-update without deleting .venv or reinstalling libraries.",
+    "open_export_folder": "Open export folder",
+    "style_applied_status": "Applying translation style: {style}",
+})
+I18N["ko"].update({
+    "translation_style": "번역 스타일",
+    "output_folder_name": "출력 폴더 이름",
+    "output_folder_placeholder": "예: cartoon_episode_01",
+    "style_natural": "자연스럽게",
+    "style_humorous": "유머러스",
+    "style_serious": "진지하게",
+    "style_horror": "공포",
+    "style_romantic": "로맨틱",
+    "style_scifi": "SF",
+    "style_cartoon": "카툰/장난스럽게",
+    "style_action": "액션",
+    "style_note": "번역 스타일은 후처리로 대사를 더 부드럽고 영화답게 만듭니다.",
+    "export_folder_note": "폴더 이름을 입력하면 모든 출력 파일이 output/해당 폴더에 저장됩니다.",
+    "help_button": "📘 사용법 / 업데이트 내역",
+    "help_title": "앱 설명, 사용법 및 업데이트 내역",
+    "help_body": "TOBO VietSub는 비디오/오디오 대사를 인식하고 번역하며 TXT/SRT 및 <#초#> 지연 태그가 있는 Voice TXT를 생성합니다.\n\n빠른 사용법:\n1. 비디오/오디오를 선택합니다.\n2. 원본 언어를 선택하거나 자동 감지를 둡니다.\n3. 번역 언어를 선택합니다.\n4. 유머, 진지함, 공포, 로맨스, SF 등 번역 스타일을 고릅니다.\n5. 파일을 정리할 출력 폴더 이름을 입력합니다.\n6. 시작을 누릅니다.\n\nv1.6.6:\n- 만화/해외 영화용 번역 스타일 추가.\n- 사용자 지정 출력 폴더 추가.\n- 설정 안에 도움말/업데이트 내역 추가.\n- .venv 및 라이브러리를 유지하는 제자리 업데이트 유지.",
+    "open_export_folder": "출력 폴더 열기",
+    "style_applied_status": "번역 스타일 적용 중: {style}",
+})
+I18N["zh"].update({
+    "translation_style": "翻译风格",
+    "output_folder_name": "输出文件夹名称",
+    "output_folder_placeholder": "例如：cartoon_episode_01",
+    "style_natural": "自然",
+    "style_humorous": "幽默",
+    "style_serious": "严肃",
+    "style_horror": "恐怖",
+    "style_romantic": "浪漫",
+    "style_scifi": "科幻",
+    "style_cartoon": "卡通活泼",
+    "style_action": "动作",
+    "style_note": "翻译风格会通过后处理让对白更柔和、更像影视台词。",
+    "export_folder_note": "输入文件夹名称后，所有导出文件会进入 output/该文件夹。",
+    "help_button": "📘 使用说明 / 更新日志",
+    "help_title": "应用说明、使用方法和更新日志",
+    "help_body": "TOBO VietSub 可从视频/音频识别对白，翻译文本，导出 TXT/SRT，并生成带 <#秒#> 延迟标签的 Voice TXT。\n\n快速使用：\n1. 选择视频/音频。\n2. 选择源语言或自动识别。\n3. 选择目标翻译语言。\n4. 选择翻译风格：幽默、严肃、恐怖、浪漫、科幻等。\n5. 输入输出文件夹名称，方便整理。\n6. 点击开始。\n\nv1.6.6：\n- 添加适合动画/外国影片的翻译风格。\n- 添加自定义输出文件夹。\n- 在设置中添加帮助/更新日志。\n- 保留原地自动更新，不删除 .venv，不重新安装库。",
+    "open_export_folder": "打开输出文件夹",
+    "style_applied_status": "正在应用翻译风格：{style}",
+})
 I18N["vi"].update({"config_file": "File cần sửa", "url_404": "{purpose} lỗi 404: link update không tồn tại hoặc chưa upload file.", "url_http": "{purpose} lỗi HTTP {code}: {reason}", "url_dns": "{purpose} lỗi DNS: domain update không tồn tại/sai link/mất mạng.", "url_network": "{purpose} lỗi mạng: {reason}", "manifest_not_json": "{purpose} lỗi: manifest không phải JSON hợp lệ.", "generic_error": "{purpose} lỗi: {error}"})
 I18N["en"].update({"config_file": "Config file", "url_404": "{purpose} 404 error: update link does not exist or file has not been uploaded.", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS error: update domain does not exist, link is wrong, or network is down.", "url_network": "{purpose} network error: {reason}", "manifest_not_json": "{purpose} error: manifest is not valid JSON.", "generic_error": "{purpose} error: {error}"})
 I18N["ko"].update({"config_file": "수정할 파일", "url_404": "{purpose} 404 오류: 업데이트 링크가 없거나 파일이 업로드되지 않았습니다.", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS 오류: 업데이트 도메인이 없거나 링크가 잘못되었거나 네트워크가 끊겼습니다.", "url_network": "{purpose} 네트워크 오류: {reason}", "manifest_not_json": "{purpose} 오류: manifest가 올바른 JSON이 아닙니다.", "generic_error": "{purpose} 오류: {error}"})
@@ -358,6 +439,30 @@ OPTION_TABLES = {
         "device": [("auto", "自动"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
     },
 }
+
+
+STYLE_OPTION_TABLES = {
+    "vi": [("natural", I18N["vi"]["style_natural"]), ("humorous", I18N["vi"]["style_humorous"]), ("serious", I18N["vi"]["style_serious"]), ("horror", I18N["vi"]["style_horror"]), ("romantic", I18N["vi"]["style_romantic"]), ("sci_fi", I18N["vi"]["style_scifi"]), ("cartoon", I18N["vi"]["style_cartoon"]), ("action", I18N["vi"]["style_action"])],
+    "en": [("natural", I18N["en"]["style_natural"]), ("humorous", I18N["en"]["style_humorous"]), ("serious", I18N["en"]["style_serious"]), ("horror", I18N["en"]["style_horror"]), ("romantic", I18N["en"]["style_romantic"]), ("sci_fi", I18N["en"]["style_scifi"]), ("cartoon", I18N["en"]["style_cartoon"]), ("action", I18N["en"]["style_action"])],
+    "ko": [("natural", I18N["ko"]["style_natural"]), ("humorous", I18N["ko"]["style_humorous"]), ("serious", I18N["ko"]["style_serious"]), ("horror", I18N["ko"]["style_horror"]), ("romantic", I18N["ko"]["style_romantic"]), ("sci_fi", I18N["ko"]["style_scifi"]), ("cartoon", I18N["ko"]["style_cartoon"]), ("action", I18N["ko"]["style_action"])],
+    "zh": [("natural", I18N["zh"]["style_natural"]), ("humorous", I18N["zh"]["style_humorous"]), ("serious", I18N["zh"]["style_serious"]), ("horror", I18N["zh"]["style_horror"]), ("romantic", I18N["zh"]["style_romantic"]), ("sci_fi", I18N["zh"]["style_scifi"]), ("cartoon", I18N["zh"]["style_cartoon"]), ("action", I18N["zh"]["style_action"])],
+}
+
+def style_options() -> list[str]:
+    return [label for _, label in STYLE_OPTION_TABLES.get(APP_LANG, STYLE_OPTION_TABLES["vi"])]
+
+def style_label(value: str) -> str:
+    for code, label in STYLE_OPTION_TABLES.get(APP_LANG, STYLE_OPTION_TABLES["vi"]):
+        if code == value:
+            return label
+    return STYLE_OPTION_TABLES.get(APP_LANG, STYLE_OPTION_TABLES["vi"])[0][1]
+
+def style_value(label: str) -> str:
+    for table in STYLE_OPTION_TABLES.values():
+        for code, any_label in table:
+            if any_label == label:
+                return code
+    return "natural"
 
 def option_map(kind: str) -> dict:
     table = OPTION_TABLES.get(APP_LANG, OPTION_TABLES["vi"]).get(kind, [])
@@ -584,6 +689,8 @@ class TOBOVietSubApp:
         self.model_size = tk.StringVar(value=option_label("model", "small"))
         self.device_mode = tk.StringVar(value=option_label("device", "auto"))
         self.export_format = tk.StringVar(value="TXT + SRT")
+        self.translation_style = tk.StringVar(value=style_label("natural"))
+        self.output_folder_name = tk.StringVar(value="")
         self.delay_tags_enabled = tk.BooleanVar(value=True)
         self.sound_enabled = tk.BooleanVar(value=True)
         self.status = tk.StringVar(value=tr("ready_status"))
@@ -878,6 +985,28 @@ class TOBOVietSubApp:
         self.add_combo(options, tr("device"), self.device_mode, list(option_map("device").keys()), 3)
         self.add_combo(options, tr("export"), self.export_format, list(EXPORT_FORMATS.keys()), 4)
 
+        advanced_options = tk.Frame(top, bg=SURFACE)
+        advanced_options.pack(fill="x", padx=16, pady=(0, 14))
+        advanced_options.columnconfigure(0, weight=1)
+        advanced_options.columnconfigure(1, weight=2)
+        self.add_combo(advanced_options, tr("translation_style"), self.translation_style, style_options(), 0)
+        folder_frame = tk.Frame(advanced_options, bg=SURFACE)
+        folder_frame.grid(row=0, column=1, sticky="ew", padx=(10, 0))
+        tk.Label(folder_frame, text=tr("output_folder_name"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 9, "bold")).pack(anchor="w")
+        self.output_folder_entry = tk.Entry(
+            folder_frame,
+            textvariable=self.output_folder_name,
+            bg=ENTRY_BG,
+            fg=TEXT,
+            insertbackground=TEXT,
+            relief="flat",
+            font=("Segoe UI", 10),
+            highlightthickness=1,
+            highlightbackground=BORDER,
+            highlightcolor=ACCENT_2,
+        )
+        self.output_folder_entry.pack(fill="x", pady=(6, 0), ipady=6)
+
         btns = tk.Frame(top, bg=SURFACE)
         btns.pack(fill="x", padx=16, pady=(0, 16))
         self.start_btn = NeonButton(btns, tr("start"), self.start, variant="primary", sound_callback=self.play_click)
@@ -1037,6 +1166,7 @@ class TOBOVietSubApp:
             old_translate = option_value("translate", self.translate_to.get())
             old_model = option_value("model", self.model_size.get()) or "small"
             old_device = option_value("device", self.device_mode.get()) or "auto"
+            old_style = style_value(self.translation_style.get()) if hasattr(self, "translation_style") else "natural"
             lang_key = lang_reverse.get(lang_var.get(), "vi")
             theme_key = theme_var.get()
             save_ui_settings({"app_language": lang_key, "theme": theme_key})
@@ -1046,6 +1176,8 @@ class TOBOVietSubApp:
             self.translate_to.set(option_label("translate", old_translate))
             self.model_size.set(option_label("model", old_model))
             self.device_mode.set(option_label("device", old_device))
+            if hasattr(self, "translation_style"):
+                self.translation_style.set(style_label(old_style))
             try:
                 win.grab_release()
             except Exception:
@@ -1073,6 +1205,24 @@ class TOBOVietSubApp:
         ).pack(side="left")
         tk.Button(
             btn_row,
+            text=tr("help_button"),
+            command=self.open_help_window,
+            bg=SURFACE,
+            fg=TEXT,
+            activebackground=SURFACE_2,
+            activeforeground=TEXT,
+            relief="flat",
+            bd=0,
+            padx=18,
+            pady=10,
+            cursor="hand2",
+            font=("Segoe UI", 10, "bold"),
+            highlightthickness=1,
+            highlightbackground=BORDER,
+        ).pack(side="left", padx=(10, 0))
+
+        tk.Button(
+            btn_row,
             text=tr("close"),
             command=win.destroy,
             bg=SURFACE,
@@ -1088,6 +1238,54 @@ class TOBOVietSubApp:
             highlightthickness=1,
             highlightbackground=BORDER,
         ).pack(side="left", padx=(10, 0))
+
+    def open_help_window(self):
+        self.play_click()
+        win = tk.Toplevel(self.root)
+        win.title(tr("help_title"))
+        win.geometry("620x560")
+        win.configure(bg=BG_COLOR)
+        try:
+            win.transient(self.root)
+        except Exception:
+            pass
+        wrap = tk.Frame(win, bg=BG_COLOR)
+        wrap.pack(fill="both", expand=True, padx=18, pady=18)
+        tk.Label(wrap, text=tr("help_title"), bg=BG_COLOR, fg=TEXT, font=("Segoe UI Variable Display", 18, "bold")).pack(anchor="w", pady=(0, 10))
+        body = tk.Text(
+            wrap,
+            wrap="word",
+            bg=TEXTBOX_BG,
+            fg=TEXT,
+            insertbackground=TEXT,
+            font=("Segoe UI", 10),
+            relief="flat",
+            bd=0,
+            highlightthickness=1,
+            highlightbackground=BORDER,
+            padx=12,
+            pady=12,
+        )
+        body.pack(fill="both", expand=True)
+        body.insert("1.0", tr("help_body"))
+        body.configure(state="disabled")
+        btns = tk.Frame(wrap, bg=BG_COLOR)
+        btns.pack(fill="x", pady=(12, 0))
+        tk.Button(
+            btns,
+            text=tr("close"),
+            command=win.destroy,
+            bg=ACCENT,
+            fg="#FFFFFF",
+            activebackground=ACCENT_3,
+            activeforeground="#FFFFFF",
+            relief="flat",
+            bd=0,
+            padx=18,
+            pady=10,
+            cursor="hand2",
+            font=("Segoe UI", 10, "bold"),
+        ).pack(side="left")
 
     def setup_styles(self):
         style = ttk.Style()
@@ -1558,6 +1756,9 @@ class TOBOVietSubApp:
             "target_lang": option_value("translate", self.translate_to.get()),
             "export_format": EXPORT_FORMATS[self.export_format.get()],
             "delay_tags_enabled": bool(self.delay_tags_enabled.get()),
+            "translation_style": style_value(self.translation_style.get()),
+            "translation_style_label": self.translation_style.get(),
+            "output_folder_name": self.output_folder_name.get().strip(),
         }
         self.start_btn.config(state="disabled")
         self.progress.set(3)
@@ -1642,17 +1843,18 @@ class TOBOVietSubApp:
             self.last_text = original_text
             safe_stem = safe_filename(input_file.stem)
             export_format = settings["export_format"]
+            export_dir = self.resolve_export_dir(settings.get("output_folder_name", ""))
             written_files = []
 
             if export_format in ("txt", "both"):
-                out_txt = OUTPUT_DIR / f"{safe_stem}_transcript.txt"
+                out_txt = export_dir / f"{safe_stem}_transcript.txt"
                 out_txt.write_text(original_text, encoding="utf-8")
-                written_files.append(out_txt.name)
+                written_files.append(str(out_txt.relative_to(OUTPUT_DIR)) if out_txt.is_relative_to(OUTPUT_DIR) else out_txt.name)
 
             if export_format in ("srt", "both"):
-                out_srt = OUTPUT_DIR / f"{safe_stem}_transcript.srt"
+                out_srt = export_dir / f"{safe_stem}_transcript.srt"
                 out_srt.write_text(self.rows_to_srt(rows), encoding="utf-8-sig")
-                written_files.append(out_srt.name)
+                written_files.append(str(out_srt.relative_to(OUTPUT_DIR)) if out_srt.is_relative_to(OUTPUT_DIR) else out_srt.name)
 
             self.q.put(("progress", 88))
             self.log(tr("exported").format(files=", ".join(written_files)) if written_files else tr("transcribed_done"))
@@ -1660,7 +1862,7 @@ class TOBOVietSubApp:
             target_lang = settings["target_lang"]
             if target_lang:
                 self.log(tr("translating_clean"))
-                translated_rows = self.translate_rows(rows, target_lang)
+                translated_rows = self.translate_rows(rows, target_lang, settings.get("translation_style", "natural"))
                 self.last_translated_rows = translated_rows
                 clean_translation = "\n".join(row["text"] for row in translated_rows if row.get("text"))
                 self.last_clean_translation = clean_translation
@@ -1678,17 +1880,17 @@ class TOBOVietSubApp:
                 self.q.put(("set_translation", display_translation))
 
                 if export_format in ("txt", "both"):
-                    trans_txt = OUTPUT_DIR / f"{safe_stem}_translated_{target_lang.replace('-', '_')}.txt"
+                    trans_txt = export_dir / f"{safe_stem}_translated_{target_lang.replace('-', '_')}.txt"
                     trans_txt.write_text(clean_translation, encoding="utf-8")
-                    written_files.append(trans_txt.name)
+                    written_files.append(str(trans_txt.relative_to(OUTPUT_DIR)) if trans_txt.is_relative_to(OUTPUT_DIR) else trans_txt.name)
                     if self.last_timed_translation:
-                        voice_txt = OUTPUT_DIR / f"{safe_stem}_translated_{target_lang.replace('-', '_')}_{tr('voice_file_suffix')}.txt"
+                        voice_txt = export_dir / f"{safe_stem}_translated_{target_lang.replace('-', '_')}_{tr('voice_file_suffix')}.txt"
                         voice_txt.write_text(self.last_timed_translation, encoding="utf-8")
-                        written_files.append(voice_txt.name)
+                        written_files.append(str(voice_txt.relative_to(OUTPUT_DIR)) if voice_txt.is_relative_to(OUTPUT_DIR) else voice_txt.name)
                 if export_format in ("srt", "both"):
-                    trans_srt = OUTPUT_DIR / f"{safe_stem}_translated_{target_lang.replace('-', '_')}.srt"
+                    trans_srt = export_dir / f"{safe_stem}_translated_{target_lang.replace('-', '_')}.srt"
                     trans_srt.write_text(self.rows_to_srt(translated_rows), encoding="utf-8-sig")
-                    written_files.append(trans_srt.name)
+                    written_files.append(str(trans_srt.relative_to(OUTPUT_DIR)) if trans_srt.is_relative_to(OUTPUT_DIR) else trans_srt.name)
 
             self.q.put(("progress", 100))
             done_msg = tr("done_message")
@@ -1703,6 +1905,68 @@ class TOBOVietSubApp:
                     audio_path.unlink(missing_ok=True)
                 except Exception:
                     pass
+
+    def resolve_export_dir(self, folder_name: str) -> Path:
+        name = safe_filename((folder_name or "").strip())
+        if not name:
+            target = OUTPUT_DIR
+        else:
+            target = OUTPUT_DIR / name
+        target.mkdir(parents=True, exist_ok=True)
+        return target
+
+    def stylize_translation_text(self, text: str, style_code: str, target_lang: str) -> str:
+        raw = (text or "").strip()
+        if not raw or style_code in ("", "natural", None):
+            return raw
+        lang = "vi" if target_lang == "vi" else ("zh" if target_lang in {"zh", "zh-CN"} else target_lang)
+        end_punct = raw.endswith((".", "!", "?", "…", "。", "！", "？"))
+
+        def finish(s: str, punct: str = "!") -> str:
+            s = s.strip()
+            if not s:
+                return s
+            return s if s.endswith((".", "!", "?", "…", "。", "！", "？")) else s + punct
+
+        if lang == "vi":
+            replacements = {
+                "humorous": [("không", "không vậy trời"), ("được rồi", "ok luôn nè"), ("xin chào", "hí lô")],
+                "cartoon": [("không", "không nha"), ("được rồi", "được rồi nè"), ("tại sao", "sao vậy ta")],
+                "serious": [("ok", "được"), ("ừ", "vâng"), ("nha", "")],
+                "horror": [("ai", "kẻ nào"), ("ở đâu", "ở nơi nào"), ("không", "không...")],
+                "romantic": [("xin chào", "chào bạn"), ("cảm ơn", "cảm ơn nhé"), ("được", "được chứ")],
+                "sci_fi": [("được rồi", "hệ thống xác nhận"), ("bắt đầu", "kích hoạt"), ("tôi", "tôi")],
+                "action": [("đi", "đi ngay"), ("chạy", "chạy mau"), ("được rồi", "rõ")],
+            }
+            out = raw
+            for a, b in replacements.get(style_code, []):
+                out = out.replace(a, b).replace(a.capitalize(), b.capitalize())
+            if style_code == "humorous" and not end_punct:
+                out = finish(out, "!")
+            elif style_code == "cartoon" and not out.endswith(("~", "!", "?")):
+                out = out + " nha!"
+            elif style_code == "horror" and not out.endswith("..."):
+                out = out + "..."
+            elif style_code == "romantic" and not out.endswith((" nhé.", " nhé!", " nhé")):
+                out = finish(out, ".")
+            elif style_code == "sci_fi" and len(out) < 70:
+                out = finish(out, ".")
+            elif style_code == "action":
+                out = finish(out, "!")
+            return out
+
+        # Light style cues for other output languages. Keep it conservative so the translation stays usable.
+        if style_code == "humorous":
+            return finish(raw, "!")
+        if style_code == "cartoon":
+            return finish(raw, "!")
+        if style_code == "horror":
+            return raw + ("..." if not raw.endswith("...") else "")
+        if style_code == "romantic":
+            return finish(raw, ".")
+        if style_code == "action":
+            return finish(raw, "!")
+        return raw
 
     def format_segment_line(self, row: dict, text: str) -> str:
         return f"[{format_timestamp(row['start'])} → {format_timestamp(row['end'])}] {text.strip()}"
@@ -1758,7 +2022,7 @@ class TOBOVietSubApp:
                 lines.append(text)
         return "\n".join(lines)
 
-    def translate_rows(self, rows: list[dict], target_lang: str) -> list[dict]:
+    def translate_rows(self, rows: list[dict], target_lang: str, style_code: str = "natural") -> list[dict]:
         try:
             from deep_translator import GoogleTranslator
         except Exception:
@@ -1766,6 +2030,8 @@ class TOBOVietSubApp:
         if not rows:
             return []
         translator = GoogleTranslator(source="auto", target=target_lang)
+        if style_code and style_code != "natural":
+            self.log(tr("style_applied_status").format(style=style_label(style_code)))
         translated_texts = [""] * len(rows)
         chunks = []
         current = []
@@ -1803,7 +2069,8 @@ class TOBOVietSubApp:
             self.q.put(("progress", min(98, 88 + int(i / max(1, len(chunks)) * 10))))
         translated_rows = []
         for idx, row in enumerate(rows):
-            translated_rows.append({"start": row["start"], "end": row["end"], "text": translated_texts[idx] or row["text"]})
+            styled_text = self.stylize_translation_text(translated_texts[idx] or row["text"], style_code, target_lang)
+            translated_rows.append({"start": row["start"], "end": row["end"], "text": styled_text})
         return translated_rows
 
     def poll_queue(self):
@@ -1917,11 +2184,12 @@ class TOBOVietSubApp:
         messagebox.showinfo(tr("saved_voice_title"), path)
 
     def open_output(self):
-        OUTPUT_DIR.mkdir(exist_ok=True)
+        target = self.resolve_export_dir(self.output_folder_name.get().strip()) if hasattr(self, "output_folder_name") and self.output_folder_name.get().strip() else OUTPUT_DIR
+        target.mkdir(exist_ok=True)
         try:
-            os.startfile(str(OUTPUT_DIR))
+            os.startfile(str(target))
         except Exception:
-            messagebox.showinfo(tr("output_folder"), str(OUTPUT_DIR))
+            messagebox.showinfo(tr("output_folder"), str(target))
 
     def open_updates_folder(self):
         UPDATES_DIR.mkdir(exist_ok=True)
