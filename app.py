@@ -1,0 +1,1875 @@
+import os
+import sys
+import subprocess
+import threading
+import queue
+import time
+import json
+import urllib.request
+import urllib.error
+import urllib.parse
+import socket
+import random
+import math
+from pathlib import Path
+from datetime import timedelta
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+
+try:
+    import winsound
+except Exception:
+    winsound = None
+
+if getattr(sys, "frozen", False):
+    APP_DIR = Path(sys.executable).resolve().parent
+    BUNDLE_DIR = Path(getattr(sys, "_MEIPASS", APP_DIR))
+else:
+    APP_DIR = Path(__file__).resolve().parent
+    BUNDLE_DIR = APP_DIR
+
+TEMP_DIR = APP_DIR / "temp"
+OUTPUT_DIR = APP_DIR / "output"
+UPDATES_DIR = APP_DIR / "updates"
+CURRENT_VERSION = "1.6.5"
+APP_NAME = "TOBO VietSub"
+TEMP_DIR.mkdir(exist_ok=True)
+OUTPUT_DIR.mkdir(exist_ok=True)
+UPDATES_DIR.mkdir(exist_ok=True)
+
+ASSETS_DIR = BUNDLE_DIR / "assets"
+APP_ICON_PNG = ASSETS_DIR / "app_logo.png"
+APP_LOGO_PNG = ASSETS_DIR / "app_logo_128.png"
+BACKGROUND_CONFIG_NAME = "background_config.json"
+DEFAULT_BACKGROUND_VIDEO_URL = ""
+
+# Apple/AI light palette inspired by the cat logo
+BG_COLOR = "#F8F6FF"
+BG_2 = "#FFFFFF"
+SURFACE = "#FFFFFF"
+SURFACE_2 = "#F1ECFF"
+CARD = "#FFFFFF"
+ACCENT = "#9B72FF"
+ACCENT_2 = "#00B8D9"
+ACCENT_3 = "#FF8BD8"
+TEXT = "#1E1935"
+TEXT_MUTED = "#6F6790"
+TEXT_DIM = "#9A91B8"
+BORDER = "#E3D9FF"
+ENTRY_BG = "#FFFFFF"
+TEXTBOX_BG = "#FFFFFF"
+SUCCESS = "#11A36A"
+WARNING = "#D97706"
+
+SETTINGS_CONFIG_NAME = "tobo_ui_settings.json"
+
+THEME_PRESETS = {
+    "1. Kem cam đào": {
+        "bg": "#FFF7ED", "surface": "#FFFBF5", "primary": "#F97316", "secondary": "#FB7185",
+        "accent": "#FACC15", "text": "#292524", "muted": "#78716C", "border": "#FED7AA",
+    },
+    "2. Apple Light": {
+        "bg": "#F8FAFC", "surface": "#FFFFFF", "primary": "#111827", "secondary": "#CBD5E1",
+        "accent": "#007AFF", "text": "#1E293B", "muted": "#64748B", "border": "#E5E7EB",
+    },
+    "3. Apple Light Soft": {
+        "bg": "#F8FAFC", "surface": "#FFFFFF", "primary": "#111827", "secondary": "#CBD5E1",
+        "accent": "#007AFF", "text": "#1E293B", "muted": "#64748B", "border": "#E5E7EB",
+    },
+    "4. Peach Cream": {
+        "bg": "#FFF7ED", "surface": "#FFFBF5", "primary": "#F97316", "secondary": "#FB7185",
+        "accent": "#FACC15", "text": "#292524", "muted": "#78716C", "border": "#FED7AA",
+    },
+    "5. Pink Neon Soft": {
+        "bg": "#FFF1F7", "surface": "#FFFFFF", "primary": "#DB2777", "secondary": "#9333EA",
+        "accent": "#F472B6", "text": "#2E1065", "muted": "#7E6A8A", "border": "#FBCFE8",
+    },
+    "6. Blue Cloud": {
+        "bg": "#F8FBFF", "surface": "#FFFFFF", "primary": "#3B82F6", "secondary": "#60A5FA",
+        "accent": "#93C5FD", "text": "#1E3A8A", "muted": "#64748B", "border": "#DBEAFE",
+    },
+    "7. Golden Warm": {
+        "bg": "#FFFBEB", "surface": "#FFFFFF", "primary": "#F59E0B", "secondary": "#FBBF24",
+        "accent": "#FDE68A", "text": "#78350F", "muted": "#71635A", "border": "#FDE68A",
+    },
+    "8. Shopee Peach": {
+        "bg": "#FFF7F2", "surface": "#FFFFFF", "primary": "#EE4D2D", "secondary": "#FF6B81",
+        "accent": "#FFB86B", "text": "#431407", "muted": "#7C6A63", "border": "#FFD6C2",
+    },
+    "9. Coffee Gold": {
+        "bg": "#FAF7F2", "surface": "#FFFFFF", "primary": "#A16207", "secondary": "#D97706",
+        "accent": "#FCD34D", "text": "#292524", "muted": "#78716C", "border": "#E7E0D5",
+    },
+    "10. Dark Orange": {
+        "bg": "#0F0A05", "surface": "#1A120B", "primary": "#F97316", "secondary": "#FB923C",
+        "accent": "#FACC15", "text": "#FFF7ED", "muted": "#C4A484", "border": "#7C2D12",
+        "success": "#22C55E", "warning": "#F59E0B",
+    },
+}
+
+LANG_OPTIONS = {
+    "vi": "Tiếng Việt",
+    "en": "English",
+    "ko": "한국어",
+    "zh": "中文",
+}
+
+APP_LANG = "vi"
+CURRENT_THEME_KEY = "2. Apple Light"
+
+I18N = {
+    "vi": {
+        "subtitle": "Studio phụ đề AI • dịch văn bản sạch • xuất TXT/SRT • cập nhật tại chỗ",
+        "control": "TOBO AI CONTROL",
+        "mode": "AI LIGHT MODE",
+        "settings": "Cài đặt",
+        "update_center": "Update Center",
+        "update_desc": "Cập nhật tại chỗ, giữ nguyên thư viện và dữ liệu đã cài.",
+        "update": "↻ Cập nhật",
+        "updates": "📁 Updates",
+        "sparkle": "Sparkle FX",
+        "sound": "Âm click",
+        "ready": "In-place update ready",
+        "keep_libs": "Không xóa .venv • không tải lại thư viện",
+        "pick": "＋ Chọn video/audio",
+        "source_lang": "Ngôn ngữ gốc",
+        "translate": "Dịch",
+        "model": "Model AI",
+        "device": "Thiết bị",
+        "export": "Xuất file",
+        "start": "▶ Bắt đầu xử lý",
+        "save_txt": "💾 Lưu TXT",
+        "export_srt": "🎬 Xuất SRT",
+        "output": "📁 Output",
+        "clear": "🧹 Xóa",
+        "status": "SYSTEM STATUS",
+        "original": "Văn bản gốc",
+        "original_hint": "Có timestamp để kiểm tra transcript",
+        "translation": "Bản dịch",
+        "translation_hint": "Bản dịch có delay tag <#ss.mmm#> để canh lời",
+        "app_language": "Ngôn ngữ app",
+        "theme": "Bảng màu giao diện",
+        "apply": "Áp dụng",
+        "close": "Đóng",
+        "settings_title": "Cài đặt TOBO VietSub",
+        "theme_note": "Đổi theme sẽ áp dụng ngay, không cần cài lại thư viện.",
+    },
+    "en": {
+        "subtitle": "AI subtitle studio • clean translation • TXT/SRT export • in-place updater",
+        "control": "TOBO AI CONTROL",
+        "mode": "AI LIGHT MODE",
+        "settings": "Settings",
+        "update_center": "Update Center",
+        "update_desc": "Update in-place while keeping installed libraries and data.",
+        "update": "↻ Update",
+        "updates": "📁 Updates",
+        "sparkle": "Sparkle FX",
+        "sound": "Click sound",
+        "ready": "In-place update ready",
+        "keep_libs": "Keep .venv • no library reinstall",
+        "pick": "＋ Pick video/audio",
+        "source_lang": "Source language",
+        "translate": "Translate",
+        "model": "AI model",
+        "device": "Device",
+        "export": "Export file",
+        "start": "▶ Start",
+        "save_txt": "💾 Save TXT",
+        "export_srt": "🎬 Export SRT",
+        "output": "📁 Output",
+        "clear": "🧹 Clear",
+        "status": "SYSTEM STATUS",
+        "original": "Original text",
+        "original_hint": "Timestamped transcript for checking",
+        "translation": "Translation",
+        "translation_hint": "Translation includes delay tag <#ss.mmm#>",
+        "app_language": "App language",
+        "theme": "UI color theme",
+        "apply": "Apply",
+        "close": "Close",
+        "settings_title": "TOBO VietSub Settings",
+        "theme_note": "Theme changes apply instantly. Libraries stay untouched.",
+    },
+    "ko": {
+        "subtitle": "AI 자막 스튜디오 • 깔끔한 번역 • TXT/SRT 내보내기 • 제자리 업데이트",
+        "control": "TOBO AI CONTROL",
+        "mode": "AI LIGHT MODE",
+        "settings": "설정",
+        "update_center": "업데이트 센터",
+        "update_desc": "설치된 라이브러리와 데이터를 유지하며 업데이트합니다.",
+        "update": "↻ 업데이트",
+        "updates": "📁 Updates",
+        "sparkle": "Sparkle FX",
+        "sound": "클릭음",
+        "ready": "제자리 업데이트 준비됨",
+        "keep_libs": ".venv 유지 • 라이브러리 재설치 없음",
+        "pick": "＋ 비디오/오디오 선택",
+        "source_lang": "원본 언어",
+        "translate": "번역",
+        "model": "AI 모델",
+        "device": "장치",
+        "export": "파일 내보내기",
+        "start": "▶ 시작",
+        "save_txt": "💾 TXT 저장",
+        "export_srt": "🎬 SRT 내보내기",
+        "output": "📁 Output",
+        "clear": "🧹 지우기",
+        "status": "SYSTEM STATUS",
+        "original": "원본 텍스트",
+        "original_hint": "확인용 타임스탬프 포함",
+        "translation": "번역문",
+        "translation_hint": "초 단위 없이 깔끔한 번역문만 표시",
+        "app_language": "앱 언어",
+        "theme": "UI 색상 테마",
+        "apply": "적용",
+        "close": "닫기",
+        "settings_title": "TOBO VietSub 설정",
+        "theme_note": "테마는 즉시 적용됩니다. 라이브러리는 그대로 유지됩니다.",
+    },
+    "zh": {
+        "subtitle": "AI 字幕工作室 • 干净翻译 • 导出 TXT/SRT • 原地更新",
+        "control": "TOBO AI CONTROL",
+        "mode": "AI LIGHT MODE",
+        "settings": "设置",
+        "update_center": "更新中心",
+        "update_desc": "原地更新，保留已安装库和数据。",
+        "update": "↻ 更新",
+        "updates": "📁 Updates",
+        "sparkle": "Sparkle FX",
+        "sound": "点击音",
+        "ready": "原地更新已就绪",
+        "keep_libs": "保留 .venv • 不重新安装库",
+        "pick": "＋ 选择视频/音频",
+        "source_lang": "源语言",
+        "translate": "翻译",
+        "model": "AI 模型",
+        "device": "设备",
+        "export": "导出文件",
+        "start": "▶ 开始处理",
+        "save_txt": "💾 保存 TXT",
+        "export_srt": "🎬 导出 SRT",
+        "output": "📁 Output",
+        "clear": "🧹 清空",
+        "status": "SYSTEM STATUS",
+        "original": "原文",
+        "original_hint": "带时间戳，方便检查",
+        "translation": "译文",
+        "translation_hint": "译文前添加延迟标签 <#ss.mmm#>",
+        "app_language": "应用语言",
+        "theme": "界面颜色主题",
+        "apply": "应用",
+        "close": "关闭",
+        "settings_title": "TOBO VietSub 设置",
+        "theme_note": "主题会立即应用，不会重新安装库。",
+    },
+}
+
+
+EXTRA_I18N = {'vi': {'ready_status': 'Sẵn sàng', 'soft_sparkle_active': 'Lấp lánh nhẹ đang bật', 'soft_sparkle_paused': 'Sparkle FX đã tắt', 'soft_glow': '✦ ánh sáng mềm', 'theme_swatches': ['Nền', 'Card', 'Chính', 'Phụ', 'Nhấn', 'Chữ', 'Mờ', 'Viền'], 'busy_title': 'Đang chạy', 'busy_processing': 'App đang xử lý file hiện tại.', 'busy_settings': 'App đang xử lý video, xử lý xong rồi đổi cài đặt cho an toàn.', 'ui_error_title': 'Lỗi giao diện', 'pick_title': 'Chọn video/audio', 'missing_file_title': 'Thiếu file', 'missing_file_message': 'Bạn hãy chọn video/audio trước.', 'preparing': 'Đang chuẩn bị...', 'loading_model': 'Đang tải/khởi động AI model. Lần đầu có thể lâu vì phải tải model...', 'reading_media': 'Đang đọc trực tiếp video/audio...', 'direct_read_failed': 'Đọc trực tiếp lỗi, thử fallback FFmpeg...', 'transcribing': 'Đang nhận diện giọng nói...', 'detected_lang': 'Đang nhận diện giọng nói. Ngôn ngữ phát hiện: {lang}', 'gpu_failed': 'GPU lỗi hoặc chưa đủ CUDA, chuyển sang CPU. Chi tiết: {error}', 'auto_device_failed': 'Tự động chọn thiết bị lỗi, chuyển sang CPU. Chi tiết: {error}', 'ffmpeg_extract': 'Đang fallback: tách audio bằng FFmpeg...', 'ffmpeg_error': 'FFmpeg lỗi khi tách audio:\n{error}', 'ffmpeg_missing': 'Không đọc trực tiếp được file này và máy chưa có FFmpeg để fallback.\n\nLỗi đọc trực tiếp:\n{error}\n\nCài FFmpeg: winget install Gyan.FFmpeg', 'exported': 'Đã xuất: {files}', 'transcribed_done': 'Đã nhận diện xong.', 'translating_clean': 'Đang dịch văn bản. Ô dịch sẽ thêm delay tag <#ss.mmm#> trước từng câu...', 'done_message': 'Hoàn tất. File nằm trong thư mục output.', 'exported_list': 'Đã xuất', 'completed': 'Hoàn tất', 'missing_translate_lib': 'Chưa có thư viện dịch. Hãy chạy install_windows.bat để cài deep-translator.', 'translating_part': 'Đang dịch phần {i}/{total}...', 'no_data_title': 'Chưa có dữ liệu', 'no_text_to_save': 'Chưa có văn bản để lưu.', 'saved_title': 'Đã lưu', 'no_srt_data': 'Chưa có dữ liệu để xuất SRT. Hãy xử lý video trước.', 'saved_srt_title': 'Đã lưu SRT', 'output_folder': 'Thư mục output', 'updates_folder': 'Thư mục updates', 'update_title': 'Cập nhật', 'checking_update': 'Đang kiểm tra cập nhật...', 'update_available_title': 'Có bản cập nhật mới', 'update_available_msg': 'Có bản mới v{version}.\n\n{notes}\n\nTải về ngay không?', 'update_downloaded_title': 'Đã tải cập nhật', 'update_downloaded_msg': 'Đã tải xong file cập nhật:\n{path}\n\nMở thư mục updates, giải nén/chạy file mới để cập nhật.', 'newest_version': 'Bạn đang dùng bản mới nhất rồi: v{version}.', 'update_ready_apply': 'App sẽ tự cập nhật trong cửa sổ mới rồi mở lại.\nĐừng xóa .venv, thư viện sẽ được giữ nguyên.', 'settings_applied': 'Đã áp dụng cài đặt.'}, 'en': {'ready_status': 'Ready', 'soft_sparkle_active': 'Soft sparkle active', 'soft_sparkle_paused': 'Sparkle FX paused', 'soft_glow': '✦ soft glow', 'theme_swatches': ['Background', 'Card', 'Primary', 'Secondary', 'Accent', 'Text', 'Muted', 'Border'], 'busy_title': 'Running', 'busy_processing': 'The app is processing the current file.', 'busy_settings': 'The app is processing a video. Change settings after it finishes.', 'ui_error_title': 'UI error', 'pick_title': 'Choose video/audio', 'missing_file_title': 'Missing file', 'missing_file_message': 'Please choose a video/audio file first.', 'preparing': 'Preparing...', 'loading_model': 'Loading/starting AI model. First run may take longer because the model must download...', 'reading_media': 'Reading video/audio directly...', 'direct_read_failed': 'Direct reading failed, trying FFmpeg fallback...', 'transcribing': 'Transcribing speech...', 'detected_lang': 'Transcribing speech. Detected language: {lang}', 'gpu_failed': 'GPU failed or CUDA is not ready, switching to CPU. Details: {error}', 'auto_device_failed': 'Auto device selection failed, switching to CPU. Details: {error}', 'ffmpeg_extract': 'Fallback: extracting audio with FFmpeg...', 'ffmpeg_error': 'FFmpeg failed while extracting audio:\n{error}', 'ffmpeg_missing': 'This file could not be read directly and FFmpeg is not installed for fallback.\n\nDirect read error:\n{error}\n\nInstall FFmpeg: winget install Gyan.FFmpeg', 'exported': 'Exported: {files}', 'transcribed_done': 'Transcription finished.', 'translating_clean': 'Translating text. The translation panel shows clean text without timestamps...', 'done_message': 'Done. Files are in the output folder.', 'exported_list': 'Exported', 'completed': 'Completed', 'missing_translate_lib': 'Translation library is missing. Run install_windows.bat to install deep-translator.', 'translating_part': 'Translating part {i}/{total}...', 'no_data_title': 'No data', 'no_text_to_save': 'No text to save yet.', 'saved_title': 'Saved', 'no_srt_data': 'No data to export SRT. Process a video first.', 'saved_srt_title': 'SRT saved', 'output_folder': 'Output folder', 'updates_folder': 'Updates folder', 'update_title': 'Update', 'checking_update': 'Checking for updates...', 'update_available_title': 'New update available', 'update_available_msg': 'A new version v{version} is available.\n\n{notes}\n\nDownload now?', 'update_downloaded_title': 'Update downloaded', 'update_downloaded_msg': 'Update file downloaded:\n{path}\n\nOpen the updates folder and run/extract the new file.', 'newest_version': 'You are already on the latest version: v{version}.', 'update_ready_apply': 'The app will update itself in a new window and restart.\nDo not delete .venv; libraries will be preserved.', 'settings_applied': 'Settings applied.'}, 'ko': {'ready_status': '준비됨', 'soft_sparkle_active': '부드러운 반짝임 켜짐', 'soft_sparkle_paused': 'Sparkle FX 꺼짐', 'soft_glow': '✦ 부드러운 빛', 'theme_swatches': ['배경', '카드', '메인', '보조', '강조', '텍스트', '희미함', '테두리'], 'busy_title': '실행 중', 'busy_processing': '현재 파일을 처리 중입니다.', 'busy_settings': '비디오 처리 중입니다. 완료 후 설정을 변경하세요.', 'ui_error_title': 'UI 오류', 'pick_title': '비디오/오디오 선택', 'missing_file_title': '파일 없음', 'missing_file_message': '먼저 비디오/오디오 파일을 선택하세요.', 'preparing': '준비 중...', 'loading_model': 'AI 모델을 불러오는 중입니다. 첫 실행은 모델 다운로드 때문에 오래 걸릴 수 있습니다...', 'reading_media': '비디오/오디오를 직접 읽는 중...', 'direct_read_failed': '직접 읽기 실패, FFmpeg 대체 방식을 시도합니다...', 'transcribing': '음성을 인식하는 중...', 'detected_lang': '음성을 인식하는 중. 감지된 언어: {lang}', 'gpu_failed': 'GPU 오류 또는 CUDA 준비 안 됨, CPU로 전환합니다. 세부 정보: {error}', 'auto_device_failed': '자동 장치 선택 실패, CPU로 전환합니다. 세부 정보: {error}', 'ffmpeg_extract': '대체 방식: FFmpeg로 오디오 추출 중...', 'ffmpeg_error': 'FFmpeg 오디오 추출 오류:\n{error}', 'ffmpeg_missing': '이 파일을 직접 읽을 수 없고 FFmpeg도 설치되어 있지 않습니다.\n\n직접 읽기 오류:\n{error}\n\nFFmpeg 설치: winget install Gyan.FFmpeg', 'exported': '내보냄: {files}', 'transcribed_done': '인식 완료.', 'translating_clean': '번역 중입니다. 번역 영역에는 타임스탬프 없이 텍스트만 표시됩니다...', 'done_message': '완료. 파일은 output 폴더에 있습니다.', 'exported_list': '내보낸 파일', 'completed': '완료', 'missing_translate_lib': '번역 라이브러리가 없습니다. install_windows.bat를 실행해 deep-translator를 설치하세요.', 'translating_part': '번역 중 {i}/{total}...', 'no_data_title': '데이터 없음', 'no_text_to_save': '저장할 텍스트가 없습니다.', 'saved_title': '저장됨', 'no_srt_data': 'SRT로 내보낼 데이터가 없습니다. 먼저 비디오를 처리하세요.', 'saved_srt_title': 'SRT 저장됨', 'output_folder': 'output 폴더', 'updates_folder': 'updates 폴더', 'update_title': '업데이트', 'checking_update': '업데이트 확인 중...', 'update_available_title': '새 업데이트 있음', 'update_available_msg': '새 버전 v{version}이 있습니다.\n\n{notes}\n\n지금 다운로드할까요?', 'update_downloaded_title': '업데이트 다운로드됨', 'update_downloaded_msg': '업데이트 파일 다운로드 완료:\n{path}\n\nupdates 폴더를 열어 새 파일을 실행/압축 해제하세요.', 'newest_version': '이미 최신 버전입니다: v{version}.', 'update_ready_apply': '새 창에서 자동 업데이트 후 앱을 다시 엽니다.\n.venv를 삭제하지 마세요. 라이브러리는 유지됩니다.', 'settings_applied': '설정이 적용되었습니다.'}, 'zh': {'ready_status': '就绪', 'soft_sparkle_active': '柔和闪光已开启', 'soft_sparkle_paused': 'Sparkle FX 已暂停', 'soft_glow': '✦ 柔光', 'theme_swatches': ['背景', '卡片', '主色', '副色', '强调', '文字', '弱化', '边框'], 'busy_title': '正在运行', 'busy_processing': '应用正在处理当前文件。', 'busy_settings': '应用正在处理视频，请完成后再修改设置。', 'ui_error_title': '界面错误', 'pick_title': '选择视频/音频', 'missing_file_title': '缺少文件', 'missing_file_message': '请先选择视频/音频文件。', 'preparing': '正在准备...', 'loading_model': '正在加载/启动 AI 模型。首次运行可能需要下载模型...', 'reading_media': '正在直接读取视频/音频...', 'direct_read_failed': '直接读取失败，尝试 FFmpeg 备用方案...', 'transcribing': '正在识别语音...', 'detected_lang': '正在识别语音。检测到语言：{lang}', 'gpu_failed': 'GPU 错误或 CUDA 未就绪，切换到 CPU。详情：{error}', 'auto_device_failed': '自动选择设备失败，切换到 CPU。详情：{error}', 'ffmpeg_extract': '备用方案：正在用 FFmpeg 提取音频...', 'ffmpeg_error': 'FFmpeg 提取音频失败：\n{error}', 'ffmpeg_missing': '无法直接读取该文件，且未安装 FFmpeg 备用方案。\n\n直接读取错误：\n{error}\n\n安装 FFmpeg：winget install Gyan.FFmpeg', 'exported': '已导出：{files}', 'transcribed_done': '识别完成。', 'translating_clean': '正在翻译文本。译文区域只显示干净文本，不带时间戳...', 'done_message': '完成。文件在 output 文件夹中。', 'exported_list': '已导出', 'completed': '完成', 'missing_translate_lib': '缺少翻译库。请运行 install_windows.bat 安装 deep-translator。', 'translating_part': '正在翻译 {i}/{total}...', 'no_data_title': '没有数据', 'no_text_to_save': '没有可保存的文本。', 'saved_title': '已保存', 'no_srt_data': '没有可导出 SRT 的数据。请先处理视频。', 'saved_srt_title': 'SRT 已保存', 'output_folder': 'output 文件夹', 'updates_folder': 'updates 文件夹', 'update_title': '更新', 'checking_update': '正在检查更新...', 'update_available_title': '有新版本', 'update_available_msg': '发现新版本 v{version}。\n\n{notes}\n\n现在下载吗？', 'update_downloaded_title': '更新已下载', 'update_downloaded_msg': '更新文件已下载：\n{path}\n\n打开 updates 文件夹并运行/解压新文件。', 'newest_version': '你已经是最新版本：v{version}。', 'update_ready_apply': '应用将在新窗口中自动更新并重启。\n不要删除 .venv，库会保留。', 'settings_applied': '设置已应用。'}}
+for _lang, _items in EXTRA_I18N.items():
+    I18N.setdefault(_lang, {}).update(_items)
+I18N["vi"]["error_title"] = "Lỗi"
+I18N["en"]["error_title"] = "Error"
+I18N["ko"]["error_title"] = "오류"
+I18N["zh"]["error_title"] = "错误"
+I18N["vi"]["python_missing_update"] = "Đã tải bản cập nhật nhưng không tìm thấy Python để tự áp dụng. Mở thư mục updates rồi giải nén thủ công."
+I18N["en"]["python_missing_update"] = "Python was not found, so the update cannot be applied automatically. Open the updates folder and extract it manually."
+I18N["ko"]["python_missing_update"] = "Python을 찾을 수 없어 자동 업데이트를 적용할 수 없습니다. updates 폴더를 열고 수동으로 압축을 해제하세요."
+I18N["zh"]["python_missing_update"] = "未找到 Python，无法自动应用更新。请打开 updates 文件夹并手动解压。"
+I18N["vi"].update({"config_file": "File cần sửa", "url_404": "{purpose} lỗi 404: link update không tồn tại hoặc chưa upload file.", "url_http": "{purpose} lỗi HTTP {code}: {reason}", "url_dns": "{purpose} lỗi DNS: domain update không tồn tại/sai link/mất mạng.", "url_network": "{purpose} lỗi mạng: {reason}", "manifest_not_json": "{purpose} lỗi: manifest không phải JSON hợp lệ.", "generic_error": "{purpose} lỗi: {error}"})
+I18N["en"].update({"config_file": "Config file", "url_404": "{purpose} 404 error: update link does not exist or file has not been uploaded.", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS error: update domain does not exist, link is wrong, or network is down.", "url_network": "{purpose} network error: {reason}", "manifest_not_json": "{purpose} error: manifest is not valid JSON.", "generic_error": "{purpose} error: {error}"})
+I18N["ko"].update({"config_file": "수정할 파일", "url_404": "{purpose} 404 오류: 업데이트 링크가 없거나 파일이 업로드되지 않았습니다.", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS 오류: 업데이트 도메인이 없거나 링크가 잘못되었거나 네트워크가 끊겼습니다.", "url_network": "{purpose} 네트워크 오류: {reason}", "manifest_not_json": "{purpose} 오류: manifest가 올바른 JSON이 아닙니다.", "generic_error": "{purpose} 오류: {error}"})
+I18N["zh"].update({"config_file": "需要修改的文件", "url_404": "{purpose} 404 错误：更新链接不存在或文件尚未上传。", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS 错误：更新域名不存在、链接错误或网络不可用。", "url_network": "{purpose} 网络错误：{reason}", "manifest_not_json": "{purpose} 错误：manifest 不是有效 JSON。", "generic_error": "{purpose} 错误：{error}"})
+
+def get_settings_path() -> Path:
+    return APP_DIR / SETTINGS_CONFIG_NAME
+
+
+def load_ui_settings() -> dict:
+    defaults = {"app_language": "vi", "theme": CURRENT_THEME_KEY}
+    path = get_settings_path()
+    if not path.exists():
+        return defaults
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, dict):
+            return defaults
+        defaults.update({k: v for k, v in data.items() if k in defaults})
+        return defaults
+    except Exception:
+        return defaults
+
+
+def save_ui_settings(data: dict):
+    path = get_settings_path()
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def apply_theme(theme_key: str):
+    global BG_COLOR, BG_2, SURFACE, SURFACE_2, CARD, ACCENT, ACCENT_2, ACCENT_3
+    global TEXT, TEXT_MUTED, TEXT_DIM, BORDER, ENTRY_BG, TEXTBOX_BG, SUCCESS, WARNING, CURRENT_THEME_KEY
+    theme = THEME_PRESETS.get(theme_key) or THEME_PRESETS.get(CURRENT_THEME_KEY) or next(iter(THEME_PRESETS.values()))
+    CURRENT_THEME_KEY = theme_key if theme_key in THEME_PRESETS else CURRENT_THEME_KEY
+    BG_COLOR = theme["bg"]
+    BG_2 = theme["bg"]
+    SURFACE = theme["surface"]
+    SURFACE_2 = theme["surface"]
+    CARD = theme["surface"]
+    ACCENT = theme["primary"]
+    ACCENT_2 = theme["accent"]
+    ACCENT_3 = theme["secondary"]
+    TEXT = theme["text"]
+    TEXT_MUTED = theme["muted"]
+    TEXT_DIM = theme["muted"]
+    BORDER = theme["border"]
+    ENTRY_BG = theme["surface"]
+    TEXTBOX_BG = theme["surface"]
+    SUCCESS = theme.get("success", "#16A34A")
+    WARNING = theme.get("warning", "#D97706")
+
+
+OPTION_TABLES = {
+    "vi": {
+        "source": [(None, "Tự động nhận diện"), ("vi", "Tiếng Việt"), ("en", "Tiếng Anh"), ("zh", "Tiếng Trung"), ("ja", "Tiếng Nhật"), ("ko", "Tiếng Hàn"), ("fr", "Tiếng Pháp"), ("de", "Tiếng Đức"), ("es", "Tiếng Tây Ban Nha"), ("th", "Tiếng Thái"), ("id", "Tiếng Indonesia")],
+        "translate": [(None, "Không dịch"), ("vi", "Dịch sang Tiếng Việt"), ("en", "Dịch sang Tiếng Anh"), ("zh-CN", "Dịch sang Tiếng Trung"), ("ja", "Dịch sang Tiếng Nhật"), ("ko", "Dịch sang Tiếng Hàn"), ("fr", "Dịch sang Tiếng Pháp"), ("de", "Dịch sang Tiếng Đức"), ("es", "Dịch sang Tiếng Tây Ban Nha"), ("th", "Dịch sang Tiếng Thái"), ("id", "Dịch sang Tiếng Indonesia")],
+        "model": [("tiny", "Nhanh nhất - tiny"), ("base", "Nhanh - base"), ("small", "Cân bằng - small"), ("medium", "Chính xác hơn - medium"), ("large-v3", "Rất chính xác - large-v3")],
+        "device": [("auto", "Tự động"), ("cpu", "CPU"), ("gpu", "GPU NVIDIA")],
+    },
+    "en": {
+        "source": [(None, "Auto detect"), ("vi", "Vietnamese"), ("en", "English"), ("zh", "Chinese"), ("ja", "Japanese"), ("ko", "Korean"), ("fr", "French"), ("de", "German"), ("es", "Spanish"), ("th", "Thai"), ("id", "Indonesian")],
+        "translate": [(None, "No translation"), ("vi", "Translate to Vietnamese"), ("en", "Translate to English"), ("zh-CN", "Translate to Chinese"), ("ja", "Translate to Japanese"), ("ko", "Translate to Korean"), ("fr", "Translate to French"), ("de", "Translate to German"), ("es", "Translate to Spanish"), ("th", "Translate to Thai"), ("id", "Translate to Indonesian")],
+        "model": [("tiny", "Fastest - tiny"), ("base", "Fast - base"), ("small", "Balanced - small"), ("medium", "More accurate - medium"), ("large-v3", "Very accurate - large-v3")],
+        "device": [("auto", "Auto"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
+    },
+    "ko": {
+        "source": [(None, "자동 감지"), ("vi", "베트남어"), ("en", "영어"), ("zh", "중국어"), ("ja", "일본어"), ("ko", "한국어"), ("fr", "프랑스어"), ("de", "독일어"), ("es", "스페인어"), ("th", "태국어"), ("id", "인도네시아어")],
+        "translate": [(None, "번역 안 함"), ("vi", "베트남어로 번역"), ("en", "영어로 번역"), ("zh-CN", "중국어로 번역"), ("ja", "일본어로 번역"), ("ko", "한국어로 번역"), ("fr", "프랑스어로 번역"), ("de", "독일어로 번역"), ("es", "스페인어로 번역"), ("th", "태국어로 번역"), ("id", "인도네시아어로 번역")],
+        "model": [("tiny", "가장 빠름 - tiny"), ("base", "빠름 - base"), ("small", "균형 - small"), ("medium", "더 정확함 - medium"), ("large-v3", "매우 정확함 - large-v3")],
+        "device": [("auto", "자동"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
+    },
+    "zh": {
+        "source": [(None, "自动识别"), ("vi", "越南语"), ("en", "英语"), ("zh", "中文"), ("ja", "日语"), ("ko", "韩语"), ("fr", "法语"), ("de", "德语"), ("es", "西班牙语"), ("th", "泰语"), ("id", "印尼语")],
+        "translate": [(None, "不翻译"), ("vi", "翻译成越南语"), ("en", "翻译成英语"), ("zh-CN", "翻译成中文"), ("ja", "翻译成日语"), ("ko", "翻译成韩语"), ("fr", "翻译成法语"), ("de", "翻译成德语"), ("es", "翻译成西班牙语"), ("th", "翻译成泰语"), ("id", "翻译成印尼语")],
+        "model": [("tiny", "最快 - tiny"), ("base", "快速 - base"), ("small", "平衡 - small"), ("medium", "更准确 - medium"), ("large-v3", "非常准确 - large-v3")],
+        "device": [("auto", "自动"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
+    },
+}
+
+def option_map(kind: str) -> dict:
+    table = OPTION_TABLES.get(APP_LANG, OPTION_TABLES["vi"]).get(kind, [])
+    return {label: value for value, label in table}
+
+def option_label(kind: str, value):
+    table = OPTION_TABLES.get(APP_LANG, OPTION_TABLES["vi"]).get(kind, [])
+    for code, label in table:
+        if code == value:
+            return label
+    return table[0][1] if table else ""
+
+def option_value(kind: str, label: str):
+    mapping = option_map(kind)
+    if label in mapping:
+        return mapping[label]
+    # fallback: scan every language so old labels still map correctly after language switch
+    for lang_table in OPTION_TABLES.values():
+        for code, any_label in lang_table.get(kind, []):
+            if any_label == label:
+                return code
+    return None
+
+
+def tr(key: str) -> str:
+    table = I18N.get(APP_LANG) or I18N["vi"]
+    return table.get(key, I18N["vi"].get(key, key))
+
+
+_loaded_ui = load_ui_settings()
+APP_LANG = _loaded_ui.get("app_language", "vi") if _loaded_ui.get("app_language") in LANG_OPTIONS else "vi"
+apply_theme(_loaded_ui.get("theme", CURRENT_THEME_KEY))
+
+LANGUAGES = {
+    "Tự động nhận diện": None,
+    "Tiếng Việt": "vi",
+    "Tiếng Anh": "en",
+    "Tiếng Trung": "zh",
+    "Tiếng Nhật": "ja",
+    "Tiếng Hàn": "ko",
+    "Tiếng Pháp": "fr",
+    "Tiếng Đức": "de",
+    "Tiếng Tây Ban Nha": "es",
+    "Tiếng Thái": "th",
+    "Tiếng Indonesia": "id",
+}
+
+TRANSLATE_LANGUAGES = {
+    "Không dịch": None,
+    "Dịch sang Tiếng Việt": "vi",
+    "Dịch sang Tiếng Anh": "en",
+    "Dịch sang Tiếng Trung": "zh-CN",
+    "Dịch sang Tiếng Nhật": "ja",
+    "Dịch sang Tiếng Hàn": "ko",
+    "Dịch sang Tiếng Pháp": "fr",
+    "Dịch sang Tiếng Đức": "de",
+    "Dịch sang Tiếng Tây Ban Nha": "es",
+    "Dịch sang Tiếng Thái": "th",
+    "Dịch sang Tiếng Indonesia": "id",
+}
+
+MODEL_SIZES = {
+    "Nhanh nhất - tiny": "tiny",
+    "Nhanh - base": "base",
+    "Cân bằng - small": "small",
+    "Chính xác hơn - medium": "medium",
+    "Rất chính xác - large-v3": "large-v3",
+}
+
+EXPORT_FORMATS = {
+    "TXT": "txt",
+    "SRT": "srt",
+    "TXT + SRT": "both",
+}
+
+AUDIO_VIDEO_EXTENSIONS = "*.mp4 *.mkv *.mov *.avi *.webm *.mp3 *.wav *.m4a *.aac *.flac *.ogg"
+
+
+def format_timestamp(seconds: float) -> str:
+    seconds = max(0, float(seconds or 0))
+    ms = int(round((seconds - int(seconds)) * 1000))
+    if ms >= 1000:
+        seconds += 1
+        ms = 0
+    td = timedelta(seconds=int(seconds))
+    return f"{td}.{ms:03d}"
+
+
+def format_srt_timestamp(seconds: float) -> str:
+    seconds = max(0, float(seconds or 0))
+    ms = int(round((seconds - int(seconds)) * 1000))
+    total = int(seconds)
+    if ms >= 1000:
+        total += 1
+        ms = 0
+    h = total // 3600
+    m = (total % 3600) // 60
+    s = total % 60
+    return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
+
+
+
+def format_delay_tag(seconds: float) -> str:
+    """Return total-second cue for translated text: <#00.370#>, <#02.370#>, <#65.120#>."""
+    seconds = max(0, float(seconds or 0))
+    total_ms = int(round(seconds * 1000))
+    whole = total_ms // 1000
+    ms = total_ms % 1000
+    # User-facing delay cue: total seconds, zero-padded to 2 digits for short clips.
+    return f"{whole:02d}.{ms:03d}"
+
+
+def rows_to_delay_text(rows: list[dict]) -> str:
+    lines = []
+    for row in rows:
+        text = (row.get("text") or "").strip()
+        if not text:
+            continue
+        lines.append(f"<#{format_delay_tag(row.get('start', 0))}#> {text}")
+    return "\n".join(lines)
+
+def safe_filename(name: str) -> str:
+    bad_chars = '<>:"/\\|?*'
+    cleaned = "".join("_" if ch in bad_chars else ch for ch in name).strip()
+    return cleaned or f"media_{int(time.time())}"
+
+
+def ffmpeg_path() -> str:
+    candidates = [
+        APP_DIR / "ffmpeg" / "bin" / "ffmpeg.exe",
+        BUNDLE_DIR / "ffmpeg" / "bin" / "ffmpeg.exe",
+    ]
+    for local in candidates:
+        if local.exists():
+            return str(local)
+    return "ffmpeg"
+
+
+def check_ffmpeg() -> bool:
+    try:
+        subprocess.run(
+            [ffmpeg_path(), "-version"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=True,
+        )
+        return True
+    except Exception:
+        return False
+
+
+def extract_audio(input_file: Path, output_wav: Path, log):
+    cmd = [
+        ffmpeg_path(),
+        "-y",
+        "-i", str(input_file),
+        "-vn",
+        "-ac", "1",
+        "-ar", "16000",
+        "-f", "wav",
+        str(output_wav),
+    ]
+    log(tr("ffmpeg_extract"))
+    proc = subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="ignore",
+    )
+    if proc.returncode != 0:
+        raise RuntimeError(tr("ffmpeg_error").format(error=proc.stderr[-2500:]))
+
+
+class NeonButton(tk.Button):
+    def __init__(self, master, text, command=None, variant="primary", sound_callback=None, **kwargs):
+        self.variant = variant
+        self.sound_callback = sound_callback
+        self.user_command = command
+        palette = {
+            "primary": (ACCENT, ACCENT_3, "#FFFFFF"),
+            "cyan": (ACCENT_2, ACCENT, "#FFFFFF"),
+            "pink": (ACCENT_3, ACCENT, "#FFFFFF"),
+            "ghost": (SURFACE_2, BORDER, TEXT),
+            "dark": (SURFACE, SURFACE_2, TEXT),
+        }
+        self.normal_bg, self.hover_bg, self.fg_color = palette.get(variant, palette["primary"])
+        super().__init__(
+            master,
+            text=text,
+            command=self._clicked,
+            bg=self.normal_bg,
+            fg=self.fg_color,
+            activebackground=self.hover_bg,
+            activeforeground=self.fg_color,
+            relief="flat",
+            bd=0,
+            padx=16,
+            pady=9,
+            cursor="hand2",
+            font=("Segoe UI", 10, "bold"),
+            highlightthickness=1,
+            highlightbackground=BORDER,
+            highlightcolor=self.hover_bg,
+            **kwargs,
+        )
+        self.bind("<Enter>", self._enter)
+        self.bind("<Leave>", self._leave)
+        self.bind("<ButtonPress-1>", self._press)
+        self.bind("<ButtonRelease-1>", self._release)
+
+    def _enter(self, _event=None):
+        self.configure(bg=self.hover_bg)
+
+    def _leave(self, _event=None):
+        self.configure(bg=self.normal_bg)
+
+    def _press(self, _event=None):
+        self.configure(relief="sunken", padx=15, pady=8)
+
+    def _release(self, _event=None):
+        self.configure(relief="flat", padx=16, pady=9)
+
+    def _clicked(self):
+        if self.sound_callback:
+            self.sound_callback()
+        if self.user_command:
+            self.user_command()
+
+
+class TOBOVietSubApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("TOBO VietSub - AI Video Translator")
+        self.root.geometry("1120x780")
+        self.root.minsize(1000, 700)
+        self.root.configure(bg=BG_COLOR)
+        self.q = queue.Queue()
+        self.worker = None
+        self.selected_file = tk.StringVar()
+        self.language = tk.StringVar(value=option_label("source", None))
+        self.translate_to = tk.StringVar(value=option_label("translate", None))
+        self.model_size = tk.StringVar(value=option_label("model", "small"))
+        self.device_mode = tk.StringVar(value=option_label("device", "auto"))
+        self.export_format = tk.StringVar(value="TXT + SRT")
+        self.sound_enabled = tk.BooleanVar(value=True)
+        self.status = tk.StringVar(value=tr("ready_status"))
+        self.progress = tk.DoubleVar(value=0)
+        self.last_text = ""
+        self.last_translation = ""
+        self.last_rows = []
+        self.last_translated_rows = []
+        self._icon_photo = None
+        self.logo_image = None
+        self.pulse_index = 0
+        self.pulse_colors = [ACCENT, "#E5C8FF", ACCENT_2, "#D8F7FF", ACCENT_3]
+        self.sparkle_enabled = tk.BooleanVar(value=True)
+        self.sparkle_canvas = None
+        self.sparkle_items = []
+        self.sparkle_tick = 0
+        self.header_status_label = None
+        self.video_bg_enabled = tk.BooleanVar(value=False)
+        self.video_bg_label = None
+        self.video_bg_status = None
+        self.video_bg_images = []
+        self.setup_branding()
+        self.build_ui()
+        self.root.after(100, self.poll_queue)
+        self.root.after(220, self.animate_pulse)
+        self.root.after(350, self.setup_sparkle_scene)
+        self.root.after(420, self.animate_sparkles)
+
+    def play_click(self):
+        if not self.sound_enabled.get():
+            return
+        try:
+            if winsound:
+                winsound.MessageBeep(winsound.MB_OK)
+            else:
+                self.root.bell()
+        except Exception:
+            pass
+
+    def setup_branding(self):
+        try:
+            if APP_ICON_PNG.exists():
+                self._icon_photo = tk.PhotoImage(file=str(APP_ICON_PNG))
+                self.root.iconphoto(True, self._icon_photo)
+        except Exception:
+            pass
+
+        try:
+            from PIL import Image, ImageTk
+            if APP_LOGO_PNG.exists():
+                logo = Image.open(APP_LOGO_PNG).convert("RGBA")
+            elif APP_ICON_PNG.exists():
+                logo = Image.open(APP_ICON_PNG).convert("RGBA")
+            else:
+                logo = None
+            if logo:
+                logo.thumbnail((82, 82))
+                self.logo_image = ImageTk.PhotoImage(logo)
+        except Exception:
+            try:
+                if APP_ICON_PNG.exists():
+                    self.logo_image = tk.PhotoImage(file=str(APP_ICON_PNG))
+            except Exception:
+                self.logo_image = None
+
+    def build_ui(self):
+        self.setup_styles()
+
+        shell = tk.Frame(self.root, bg=BG_COLOR)
+        shell.pack(fill="both", expand=True)
+
+        self.header = tk.Frame(shell, bg=BG_COLOR)
+        self.header.pack(fill="x", padx=18, pady=(16, 10))
+
+        brand = tk.Frame(self.header, bg=BG_COLOR)
+        brand.pack(side="left", fill="x", expand=True)
+
+        logo_box = tk.Frame(brand, bg=SURFACE, highlightthickness=1, highlightbackground=BORDER)
+        logo_box.pack(side="left", padx=(0, 14))
+        if self.logo_image:
+            tk.Label(logo_box, image=self.logo_image, bg=SURFACE, bd=0).pack(padx=8, pady=8)
+        else:
+            tk.Label(logo_box, text="TO", bg=SURFACE, fg=TEXT, font=("Segoe UI", 20, "bold")).pack(padx=18, pady=18)
+
+        title_wrap = tk.Frame(brand, bg=BG_COLOR)
+        title_wrap.pack(side="left", fill="x", expand=True)
+
+        title_row = tk.Frame(title_wrap, bg=BG_COLOR)
+        title_row.pack(anchor="w")
+        tk.Label(title_row, text="TOBO VietSub", bg=BG_COLOR, fg=TEXT, font=("Segoe UI Variable Display", 28, "bold")).pack(side="left")
+        self.pulse_dot = tk.Label(title_row, text="  ●", bg=BG_COLOR, fg=ACCENT_2, font=("Segoe UI", 20, "bold"))
+        self.pulse_dot.pack(side="left")
+
+        tk.Label(
+            title_wrap,
+            text=tr("subtitle"),
+            bg=BG_COLOR,
+            fg=TEXT_MUTED,
+            font=("Segoe UI", 10),
+        ).pack(anchor="w", pady=(3, 0))
+
+        header_actions = tk.Frame(self.header, bg=BG_COLOR)
+        header_actions.pack(side="right", anchor="ne")
+
+        control_card = tk.Frame(
+            header_actions,
+            bg=SURFACE,
+            width=560,
+            height=168,
+            highlightthickness=1,
+            highlightbackground=BORDER,
+        )
+        control_card.pack(anchor="e")
+        control_card.pack_propagate(False)
+
+        top_strip = tk.Frame(control_card, bg=SURFACE, height=32)
+        top_strip.pack(fill="x", side="top")
+        top_strip.pack_propagate(False)
+        tk.Label(
+            top_strip,
+            text=tr("control"),
+            bg=SURFACE,
+            fg=ACCENT,
+            font=("Segoe UI", 8, "bold"),
+        ).pack(side="left", padx=14)
+        self.settings_button = tk.Button(
+            top_strip,
+            text="☰",
+            command=self.open_settings,
+            bg=SURFACE_2,
+            fg=TEXT,
+            activebackground=BORDER,
+            activeforeground=TEXT,
+            relief="flat",
+            bd=0,
+            width=3,
+            cursor="hand2",
+            font=("Segoe UI", 12, "bold"),
+            highlightthickness=1,
+            highlightbackground=BORDER,
+        )
+        self.settings_button.pack(side="right", padx=(0, 12), pady=3)
+        tk.Label(
+            top_strip,
+            text=f"v{CURRENT_VERSION}",
+            bg=SURFACE,
+            fg=TEXT_DIM,
+            font=("Segoe UI", 9, "bold"),
+        ).pack(side="right", padx=(0, 10))
+
+        card_body = tk.Frame(control_card, bg=SURFACE)
+        card_body.pack(fill="both", expand=True, padx=14, pady=12)
+
+        aura_panel = tk.Frame(card_body, bg=SURFACE_2, width=304, height=112, highlightthickness=1, highlightbackground=BORDER)
+        aura_panel.pack(side="left", fill="y")
+        aura_panel.pack_propagate(False)
+
+        self.sparkle_canvas = tk.Canvas(
+            aura_panel,
+            width=304,
+            height=112,
+            bg=SURFACE_2,
+            highlightthickness=0,
+            bd=0,
+        )
+        self.sparkle_canvas.pack(fill="both", expand=True)
+
+        badge = tk.Label(
+            aura_panel,
+            text=tr("mode"),
+            bg=SURFACE,
+            fg=ACCENT,
+            font=("Segoe UI", 8, "bold"),
+            padx=9,
+            pady=3,
+        )
+        badge.place(x=12, y=10)
+
+        self.header_status_label = tk.Label(
+            aura_panel,
+            text=tr("soft_sparkle_active"),
+            bg=SURFACE,
+            fg=TEXT,
+            font=("Segoe UI", 8, "bold"),
+            padx=9,
+            pady=3,
+        )
+        self.header_status_label.place(x=12, rely=1, y=-12, anchor="sw")
+
+        control_panel = tk.Frame(card_body, bg=SURFACE, width=220)
+        control_panel.pack(side="left", fill="both", expand=True, padx=(16, 0))
+
+        tk.Label(
+            control_panel,
+            text=tr("update_center"),
+            bg=SURFACE,
+            fg=TEXT,
+            font=("Segoe UI Variable Display", 15, "bold"),
+        ).pack(anchor="w")
+        tk.Label(
+            control_panel,
+            text=tr("update_desc"),
+            bg=SURFACE,
+            fg=TEXT_MUTED,
+            justify="left",
+            wraplength=218,
+            font=("Segoe UI", 9),
+        ).pack(anchor="w", pady=(4, 10))
+
+        action_row = tk.Frame(control_panel, bg=SURFACE)
+        action_row.pack(fill="x")
+        NeonButton(action_row, tr("update"), self.check_update, variant="primary", sound_callback=self.play_click).pack(side="left")
+        NeonButton(action_row, tr("updates"), self.open_updates_folder, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(8, 0))
+
+        toggle_row = tk.Frame(control_panel, bg=SURFACE)
+        toggle_row.pack(fill="x", pady=(12, 0))
+        tk.Checkbutton(
+            toggle_row,
+            text=tr("sparkle"),
+            variable=self.sparkle_enabled,
+            bg=SURFACE,
+            fg=TEXT_MUTED,
+            activebackground=SURFACE,
+            activeforeground=TEXT,
+            selectcolor=ENTRY_BG,
+            font=("Segoe UI", 10),
+            relief="flat",
+        ).pack(side="left")
+        tk.Checkbutton(
+            toggle_row,
+            text=tr("sound"),
+            variable=self.sound_enabled,
+            bg=SURFACE,
+            fg=TEXT_MUTED,
+            activebackground=SURFACE,
+            activeforeground=TEXT,
+            selectcolor=ENTRY_BG,
+            font=("Segoe UI", 10),
+            relief="flat",
+        ).pack(side="left", padx=(14, 0))
+
+        info_row = tk.Frame(control_panel, bg=SURFACE)
+        info_row.pack(fill="x", pady=(12, 0))
+        tk.Label(
+            info_row,
+            text=tr("ready"),
+            bg=SURFACE,
+            fg=SUCCESS,
+            font=("Segoe UI", 9, "bold"),
+        ).pack(anchor="w")
+        tk.Label(
+            info_row,
+            text=tr("keep_libs"),
+            bg=SURFACE,
+            fg=TEXT_DIM,
+            font=("Segoe UI", 8),
+        ).pack(anchor="w", pady=(3, 0))
+
+        main = tk.Frame(shell, bg=BG_COLOR)
+        main.pack(fill="both", expand=True, padx=18, pady=(0, 16))
+
+        top = tk.Frame(main, bg=SURFACE, highlightthickness=1, highlightbackground=BORDER)
+        top.pack(fill="x", pady=(0, 12))
+
+        file_row = tk.Frame(top, bg=SURFACE)
+        file_row.pack(fill="x", padx=16, pady=(16, 12))
+        NeonButton(file_row, tr("pick"), self.pick_file, variant="cyan", sound_callback=self.play_click).pack(side="left")
+        self.file_entry = tk.Entry(
+            file_row,
+            textvariable=self.selected_file,
+            bg=ENTRY_BG,
+            fg=TEXT,
+            insertbackground=TEXT,
+            relief="flat",
+            font=("Consolas", 10),
+            highlightthickness=1,
+            highlightbackground=BORDER,
+            highlightcolor=ACCENT_2,
+        )
+        self.file_entry.pack(side="left", fill="x", expand=True, padx=(12, 0), ipady=10)
+
+        options = tk.Frame(top, bg=SURFACE)
+        options.pack(fill="x", padx=16, pady=(0, 14))
+        for col in range(5):
+            options.columnconfigure(col, weight=1)
+
+        self.add_combo(options, tr("source_lang"), self.language, list(option_map("source").keys()), 0)
+        self.add_combo(options, tr("translate"), self.translate_to, list(option_map("translate").keys()), 1)
+        self.add_combo(options, tr("model"), self.model_size, list(option_map("model").keys()), 2)
+        self.add_combo(options, tr("device"), self.device_mode, list(option_map("device").keys()), 3)
+        self.add_combo(options, tr("export"), self.export_format, list(EXPORT_FORMATS.keys()), 4)
+
+        btns = tk.Frame(top, bg=SURFACE)
+        btns.pack(fill="x", padx=16, pady=(0, 16))
+        self.start_btn = NeonButton(btns, tr("start"), self.start, variant="primary", sound_callback=self.play_click)
+        self.start_btn.pack(side="left")
+        NeonButton(btns, tr("save_txt"), self.save_text, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+        NeonButton(btns, tr("export_srt"), self.save_srt_manual, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+        NeonButton(btns, tr("output"), self.open_output, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+        NeonButton(btns, tr("clear"), self.clear_text, variant="dark", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+
+        tk.Checkbutton(
+            btns,
+            text=tr("sparkle"),
+            variable=self.sparkle_enabled,
+            bg=SURFACE,
+            fg=TEXT_MUTED,
+            activebackground=SURFACE,
+            activeforeground=TEXT,
+            selectcolor=ENTRY_BG,
+            font=("Segoe UI", 10),
+            relief="flat",
+        ).pack(side="right", padx=(0, 14))
+
+        tk.Checkbutton(
+            btns,
+            text=tr("sound"),
+            variable=self.sound_enabled,
+            bg=SURFACE,
+            fg=TEXT_MUTED,
+            activebackground=SURFACE,
+            activeforeground=TEXT,
+            selectcolor=ENTRY_BG,
+            font=("Segoe UI", 10),
+            relief="flat",
+        ).pack(side="right")
+
+        status_card = tk.Frame(main, bg=CARD, highlightthickness=1, highlightbackground=BORDER)
+        status_card.pack(fill="x", pady=(0, 12))
+        tk.Label(status_card, text=tr("status"), bg=CARD, fg=TEXT_DIM, font=("Segoe UI", 8, "bold")).pack(anchor="w", padx=14, pady=(10, 0))
+        self.progress_bar = ttk.Progressbar(status_card, variable=self.progress, maximum=100, mode="determinate")
+        self.progress_bar.pack(fill="x", padx=14, pady=(8, 4))
+        self.status_label = tk.Label(status_card, textvariable=self.status, bg=CARD, fg=TEXT_MUTED, font=("Segoe UI", 10))
+        self.status_label.pack(anchor="w", padx=14, pady=(2, 10))
+
+        panes = ttk.PanedWindow(main, orient="horizontal")
+        panes.pack(fill="both", expand=True)
+
+        left = self.make_text_card(panes, tr("original"), tr("original_hint"))
+        right = self.make_text_card(panes, tr("translation"), tr("translation_hint"))
+        panes.add(left, weight=1)
+        panes.add(right, weight=1)
+
+        self.text_original = self.make_textbox(left)
+        self.text_original.pack(fill="both", expand=True, padx=12, pady=(0, 12))
+        self.text_translated = self.make_textbox(right)
+        self.text_translated.pack(fill="both", expand=True, padx=12, pady=(0, 12))
+
+    def rebuild_ui(self):
+        try:
+            self.root.configure(bg=BG_COLOR)
+            for child in self.root.winfo_children():
+                child.destroy()
+            self.pulse_colors = [ACCENT, ACCENT_2, ACCENT_3, TEXT]
+            self.sparkle_canvas = None
+            self.sparkle_items = []
+            self.header_status_label = None
+            self.build_ui()
+            self.setup_sparkle_scene()
+            self.status.set(tr("ready_status"))
+        except Exception as e:
+            messagebox.showerror(tr("ui_error_title"), str(e))
+
+    def open_settings(self):
+        self.play_click()
+        if self.worker and self.worker.is_alive():
+            messagebox.showinfo(tr("busy_title"), tr("busy_settings"))
+            return
+
+        current = load_ui_settings()
+        win = tk.Toplevel(self.root)
+        win.title(tr("settings_title"))
+        win.geometry("520x520")
+        win.resizable(False, False)
+        win.configure(bg=BG_COLOR)
+        try:
+            win.transient(self.root)
+            win.grab_set()
+        except Exception:
+            pass
+
+        wrap = tk.Frame(win, bg=BG_COLOR)
+        wrap.pack(fill="both", expand=True, padx=18, pady=18)
+
+        head = tk.Frame(wrap, bg=BG_COLOR)
+        head.pack(fill="x", pady=(0, 14))
+        tk.Label(head, text="☰", bg=BG_COLOR, fg=ACCENT, font=("Segoe UI", 22, "bold")).pack(side="left")
+        tk.Label(head, text=tr("settings_title"), bg=BG_COLOR, fg=TEXT, font=("Segoe UI Variable Display", 18, "bold")).pack(side="left", padx=(10, 0))
+
+        card = tk.Frame(wrap, bg=SURFACE, highlightthickness=1, highlightbackground=BORDER)
+        card.pack(fill="x", pady=(0, 14))
+
+        tk.Label(card, text=tr("app_language"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=14, pady=(14, 4))
+        lang_reverse = {name: key for key, name in LANG_OPTIONS.items()}
+        lang_var = tk.StringVar(value=LANG_OPTIONS.get(current.get("app_language", "vi"), "Tiếng Việt"))
+        lang_combo = ttk.Combobox(card, textvariable=lang_var, values=list(LANG_OPTIONS.values()), state="readonly")
+        lang_combo.pack(fill="x", padx=14, pady=(0, 14), ipady=5)
+
+        tk.Label(card, text=tr("theme"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=14, pady=(0, 4))
+        theme_var = tk.StringVar(value=current.get("theme", CURRENT_THEME_KEY) if current.get("theme", CURRENT_THEME_KEY) in THEME_PRESETS else CURRENT_THEME_KEY)
+        theme_combo = ttk.Combobox(card, textvariable=theme_var, values=list(THEME_PRESETS.keys()), state="readonly")
+        theme_combo.pack(fill="x", padx=14, pady=(0, 12), ipady=5)
+
+        preview = tk.Frame(card, bg=SURFACE)
+        preview.pack(fill="x", padx=14, pady=(0, 14))
+
+        swatches = []
+        labels = list(zip(["bg", "surface", "primary", "secondary", "accent", "text", "muted", "border"], tr("theme_swatches")))
+
+        def draw_preview(*_):
+            for child in preview.winfo_children():
+                child.destroy()
+            theme = THEME_PRESETS.get(theme_var.get()) or THEME_PRESETS[CURRENT_THEME_KEY]
+            for i, (key, label) in enumerate(labels):
+                box = tk.Frame(preview, bg=SURFACE)
+                box.grid(row=i // 4, column=i % 4, sticky="ew", padx=4, pady=5)
+                color = theme[key]
+                tk.Label(box, text="  ", bg=color, width=4, relief="flat", highlightthickness=1, highlightbackground=BORDER).pack(side="left")
+                tk.Label(box, text=f" {label}\n {color}", bg=SURFACE, fg=TEXT_MUTED, justify="left", font=("Segoe UI", 8)).pack(side="left")
+            for c in range(4):
+                preview.columnconfigure(c, weight=1)
+
+        theme_combo.bind("<<ComboboxSelected>>", draw_preview)
+        draw_preview()
+
+        note = tk.Label(wrap, text=tr("theme_note"), bg=BG_COLOR, fg=TEXT_MUTED, wraplength=480, justify="left", font=("Segoe UI", 9))
+        note.pack(anchor="w", pady=(0, 14))
+
+        btn_row = tk.Frame(wrap, bg=BG_COLOR)
+        btn_row.pack(fill="x", side="bottom")
+
+        def apply_settings():
+            global APP_LANG
+            old_source = option_value("source", self.language.get())
+            old_translate = option_value("translate", self.translate_to.get())
+            old_model = option_value("model", self.model_size.get()) or "small"
+            old_device = option_value("device", self.device_mode.get()) or "auto"
+            lang_key = lang_reverse.get(lang_var.get(), "vi")
+            theme_key = theme_var.get()
+            save_ui_settings({"app_language": lang_key, "theme": theme_key})
+            APP_LANG = lang_key
+            apply_theme(theme_key)
+            self.language.set(option_label("source", old_source))
+            self.translate_to.set(option_label("translate", old_translate))
+            self.model_size.set(option_label("model", old_model))
+            self.device_mode.set(option_label("device", old_device))
+            try:
+                win.grab_release()
+            except Exception:
+                pass
+            try:
+                win.destroy()
+            except Exception:
+                pass
+            self.rebuild_ui()
+
+        tk.Button(
+            btn_row,
+            text=tr("apply"),
+            command=apply_settings,
+            bg=ACCENT,
+            fg="#FFFFFF",
+            activebackground=ACCENT_3,
+            activeforeground="#FFFFFF",
+            relief="flat",
+            bd=0,
+            padx=18,
+            pady=10,
+            cursor="hand2",
+            font=("Segoe UI", 10, "bold"),
+        ).pack(side="left")
+        tk.Button(
+            btn_row,
+            text=tr("close"),
+            command=win.destroy,
+            bg=SURFACE,
+            fg=TEXT,
+            activebackground=SURFACE_2,
+            activeforeground=TEXT,
+            relief="flat",
+            bd=0,
+            padx=18,
+            pady=10,
+            cursor="hand2",
+            font=("Segoe UI", 10, "bold"),
+            highlightthickness=1,
+            highlightbackground=BORDER,
+        ).pack(side="left", padx=(10, 0))
+
+    def setup_styles(self):
+        style = ttk.Style()
+        style.theme_use("clam")
+        style.configure("TCombobox", fieldbackground=ENTRY_BG, background=ENTRY_BG, foreground=TEXT, arrowcolor=ACCENT, bordercolor=BORDER, lightcolor=BORDER, darkcolor=BORDER)
+        style.map("TCombobox", fieldbackground=[("readonly", ENTRY_BG)], foreground=[("readonly", TEXT)])
+        style.configure("Horizontal.TProgressbar", thickness=12, troughcolor=BORDER, background=ACCENT, bordercolor=BORDER, lightcolor=ACCENT, darkcolor=ACCENT)
+        style.configure("TPanedwindow", background=BG_COLOR)
+
+    def make_text_card(self, panes, title, subtitle):
+        frame = tk.Frame(panes, bg=SURFACE, highlightthickness=1, highlightbackground=BORDER)
+        head = tk.Frame(frame, bg=SURFACE)
+        head.pack(fill="x", padx=12, pady=(12, 8))
+        tk.Label(head, text=title, bg=SURFACE, fg=TEXT, font=("Segoe UI", 13, "bold")).pack(anchor="w")
+        tk.Label(head, text=subtitle, bg=SURFACE, fg=TEXT_DIM, font=("Segoe UI", 9)).pack(anchor="w", pady=(2, 0))
+        return frame
+
+    def make_textbox(self, parent):
+        return tk.Text(
+            parent,
+            wrap="word",
+            bg=TEXTBOX_BG,
+            fg=TEXT,
+            insertbackground=TEXT,
+            font=("Consolas", 10),
+            relief="flat",
+            bd=0,
+            highlightthickness=1,
+            highlightbackground=BORDER,
+            highlightcolor=ACCENT_2,
+            padx=12,
+            pady=12,
+        )
+
+    def add_combo(self, parent, label, variable, values, col):
+        frame = tk.Frame(parent, bg=SURFACE)
+        frame.grid(row=0, column=col, sticky="ew", padx=(0 if col == 0 else 10, 0))
+        tk.Label(frame, text=label, bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 9, "bold")).pack(anchor="w")
+        combo = ttk.Combobox(frame, textvariable=variable, values=values, state="readonly")
+        combo.pack(fill="x", pady=(6, 0), ipady=4)
+
+    def animate_pulse(self):
+        try:
+            color = self.pulse_colors[self.pulse_index % len(self.pulse_colors)]
+            self.pulse_dot.configure(fg=color)
+            self.status_label.configure(fg=color if self.worker and self.worker.is_alive() else TEXT_MUTED)
+            self.pulse_index += 1
+        except Exception:
+            pass
+        self.root.after(420, self.animate_pulse)
+
+    def setup_sparkle_scene(self):
+        if not self.sparkle_canvas:
+            return
+        c = self.sparkle_canvas
+        c.delete("all")
+        w, h = 304, 112
+        c.create_rectangle(0, 0, w, h, fill=SURFACE_2, outline="")
+        c.create_oval(-50, -38, 132, 118, fill=BORDER, outline="")
+        c.create_oval(148, -22, 330, 94, fill=BG_COLOR, outline="")
+        c.create_oval(172, 44, 342, 156, fill=SURFACE, outline="")
+        c.create_arc(36, 30, 270, 158, start=20, extent=142, style="arc", outline=BORDER, width=2)
+        c.create_text(152, 43, text="TOBO", fill=TEXT, font=("Segoe UI Variable Display", 21, "bold"))
+        c.create_text(152, 66, text="clean subtitle AI workspace", fill=TEXT_MUTED, font=("Segoe UI", 8))
+        self.sparkle_items = []
+        palette = [ACCENT, ACCENT_2, ACCENT_3, "#FFFFFF"]
+        for _ in range(24):
+            x = random.randint(18, w - 18)
+            y = random.randint(18, h - 18)
+            base = random.choice([1.2, 1.7, 2.2, 2.8])
+            color = random.choice(palette)
+            item = c.create_oval(x - base, y - base, x + base, y + base, fill=color, outline=color)
+            self.sparkle_items.append({"item": item, "x": x, "y": y, "base": base, "phase": random.random() * math.tau})
+        self.sparkle_orbit = c.create_text(238, 88, text=tr("soft_glow"), fill=ACCENT, font=("Segoe UI", 9, "bold"))
+
+    def animate_sparkles(self):
+        try:
+            if self.sparkle_canvas and self.sparkle_items and self.sparkle_enabled.get():
+                self.sparkle_tick += 1
+                palette = [ACCENT, ACCENT_2, ACCENT_3, "#FFFFFF"]
+                for idx, sp in enumerate(self.sparkle_items):
+                    t = self.sparkle_tick / 7.0 + sp["phase"]
+                    twinkle = 0.55 + 0.45 * math.sin(t)
+                    size = sp["base"] * (0.8 + 0.7 * twinkle)
+                    dx = math.sin(t * 0.4) * 0.8
+                    dy = math.cos(t * 0.5) * 0.8
+                    x = sp["x"] + dx
+                    y = sp["y"] + dy
+                    self.sparkle_canvas.coords(sp["item"], x - size, y - size, x + size, y + size)
+                    color = palette[(idx + int(self.sparkle_tick / 5)) % len(palette)] if twinkle > 0.76 else BORDER
+                    self.sparkle_canvas.itemconfig(sp["item"], fill=color, outline=color)
+                if self.header_status_label:
+                    label = tr("soft_sparkle_active") if self.sparkle_tick % 10 < 5 else tr("mode")
+                    self.header_status_label.configure(text=label)
+                if hasattr(self, "sparkle_orbit"):
+                    ox = 238 + math.sin(self.sparkle_tick / 8.0) * 5
+                    oy = 88 + math.cos(self.sparkle_tick / 9.0) * 2
+                    self.sparkle_canvas.coords(self.sparkle_orbit, ox, oy)
+                    self.sparkle_canvas.itemconfig(self.sparkle_orbit, fill=palette[int(self.sparkle_tick / 6) % len(palette)])
+            elif self.sparkle_canvas and self.header_status_label:
+                self.header_status_label.configure(text=tr("soft_sparkle_paused"))
+        except Exception:
+            pass
+        self.root.after(140, self.animate_sparkles)
+
+    def version_tuple(self, value: str):
+        parts = []
+        for chunk in str(value or "0").replace("-", ".").split("."):
+            num = "".join(ch for ch in chunk if ch.isdigit())
+            parts.append(int(num or 0))
+        return tuple(parts or [0])
+
+    def default_update_config_text(self) -> str:
+        return json.dumps(
+            {
+                "manifest_url": "https://raw.githubusercontent.com/kienztrn/TOBO/main/update_manifest.json",
+                "note": "Link manifest JSON cho nut cap nhat TOBO VietSub.",
+                "example_manifest": {
+                    "version": CURRENT_VERSION,
+                    "url": "https://github.com/kienztrn/TOBO/releases/latest/download/TOBO_VietSub_Portable.zip",
+                    "notes": "Sua loi va toi uu app."
+                }
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+
+    def get_update_config_path(self) -> Path:
+        local = APP_DIR / "update_config.json"
+        bundled = BUNDLE_DIR / "update_config.json"
+        if local.exists():
+            return local
+        try:
+            if bundled.exists():
+                local.write_text(bundled.read_text(encoding="utf-8"), encoding="utf-8")
+            else:
+                local.write_text(self.default_update_config_text(), encoding="utf-8")
+            return local
+        except Exception:
+            return bundled if bundled.exists() else local
+
+    def load_update_config(self) -> dict:
+        path = self.get_update_config_path()
+        if not path.exists():
+            return {"manifest_url": ""}
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            raise RuntimeError(f"File update_config.json bị lỗi JSON: {e}")
+
+    def is_placeholder_url(self, url: str) -> bool:
+        lower = (url or "").strip().lower()
+        placeholders = ["your-domain.com", "example.com", "your-site", "paste-link", "link-that-cua-ban", "your-link"]
+        return any(item in lower for item in placeholders)
+
+    def explain_url_error(self, err: Exception, purpose: str) -> str:
+        config_path = self.get_update_config_path()
+        if isinstance(err, urllib.error.HTTPError):
+            if err.code == 404:
+                return tr("url_404").format(purpose=purpose) + f"\n\n{tr("config_file")}: {config_path}"
+            return tr("url_http").format(purpose=purpose, code=err.code, reason=err.reason) + f"\n\n{tr("config_file")}: {config_path}"
+        if isinstance(err, urllib.error.URLError):
+            reason = getattr(err, "reason", err)
+            reason_text = str(reason)
+            if isinstance(reason, socket.gaierror) or "getaddrinfo failed" in reason_text.lower():
+                return tr("url_dns").format(purpose=purpose) + f"\n\n{tr("config_file")}: {config_path}"
+            return tr("url_network").format(purpose=purpose, reason=reason_text) + f"\n\n{tr("config_file")}: {config_path}"
+        if isinstance(err, json.JSONDecodeError):
+            return tr("manifest_not_json").format(purpose=purpose)
+        return tr("generic_error").format(purpose=purpose, error=err)
+
+    def check_update(self):
+        if self.worker and self.worker.is_alive():
+            messagebox.showinfo(tr("busy_title"), tr("busy_processing"))
+            return
+        self.status.set(tr("checking_update"))
+        threading.Thread(target=self.check_update_worker, daemon=True).start()
+
+    def check_update_worker(self):
+        try:
+            cfg = self.load_update_config()
+            manifest_url = (cfg.get("manifest_url") or "").strip()
+            config_path = self.get_update_config_path()
+            if not manifest_url:
+                self.q.put(("update_info", f"manifest_url is empty.\n\nConfig file: {config_path}"))
+                return
+            if self.is_placeholder_url(manifest_url):
+                self.q.put(("update_info", f"manifest_url is still a placeholder. Replace it with a real JSON link.\n\nCurrent link: {manifest_url}"))
+                return
+            if not (manifest_url.startswith("http://") or manifest_url.startswith("https://") or manifest_url.startswith("file://")):
+                self.q.put(("update_info", f"Invalid manifest_url: {manifest_url}"))
+                return
+            try:
+                req = urllib.request.Request(manifest_url, headers={"User-Agent": f"{APP_NAME}/{CURRENT_VERSION}"})
+                with urllib.request.urlopen(req, timeout=20) as resp:
+                    manifest = json.loads(resp.read().decode("utf-8"))
+            except Exception as e:
+                self.q.put(("update_info", self.explain_url_error(e, tr("update_title"))))
+                return
+            latest_version = str(manifest.get("version", "")).strip()
+            download_url = str(manifest.get("url") or manifest.get("zip_url") or manifest.get("exe_url") or "").strip()
+            notes = str(manifest.get("notes", "")).strip()
+            if not latest_version or not download_url:
+                raise RuntimeError("Update manifest is missing version or url/zip_url/exe_url.")
+            if self.version_tuple(latest_version) <= self.version_tuple(CURRENT_VERSION):
+                self.q.put(("update_info", tr("newest_version").format(version=CURRENT_VERSION)))
+                return
+            self.q.put(("update_available", {"version": latest_version, "url": download_url, "notes": notes}))
+        except Exception as e:
+            self.q.put(("update_info", f"{tr("update_title")}: {e}"))
+
+    def download_update(self, info: dict):
+        threading.Thread(target=self.download_update_worker, args=(info,), daemon=True).start()
+
+    def download_update_worker(self, info: dict):
+        try:
+            version = safe_filename(info.get("version", "new"))
+            url = (info.get("url") or "").strip()
+            if not url:
+                raise RuntimeError("Missing update download URL.")
+            suffix = ".exe" if url.lower().split("?")[0].endswith(".exe") else ".zip"
+            target = UPDATES_DIR / f"TOBO_VietSub_update_{version}{suffix}"
+            self.q.put(("status", f"{tr("update_title")} v{version}..."))
+            self.q.put(("progress", 5))
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": f"{APP_NAME}/{CURRENT_VERSION}"})
+                with urllib.request.urlopen(req, timeout=60) as resp, open(target, "wb") as f:
+                    total = int(resp.headers.get("Content-Length", "0") or 0)
+                    downloaded = 0
+                    while True:
+                        chunk = resp.read(1024 * 256)
+                        if not chunk:
+                            break
+                        f.write(chunk)
+                        downloaded += len(chunk)
+                        if total:
+                            self.q.put(("progress", min(95, int(downloaded / total * 100))))
+            except Exception as e:
+                if target.exists():
+                    try:
+                        target.unlink()
+                    except Exception:
+                        pass
+                self.q.put(("update_info", self.explain_url_error(e, tr("update_title"))))
+                return
+            self.q.put(("progress", 100))
+            if suffix == ".zip":
+                self.q.put(("update_ready_to_apply", str(target)))
+            else:
+                self.q.put(("update_downloaded", str(target)))
+        except Exception as e:
+            self.q.put(("update_info", f"{tr("update_title")}: {e}"))
+
+    def find_update_python(self) -> str | None:
+        candidates = []
+        if not getattr(sys, "frozen", False):
+            candidates.append(Path(sys.executable))
+        candidates.extend([
+            APP_DIR / ".venv" / "Scripts" / "python.exe",
+            APP_DIR / "venv" / "Scripts" / "python.exe",
+        ])
+        for candidate in candidates:
+            try:
+                if candidate and Path(candidate).exists():
+                    return str(candidate)
+            except Exception:
+                pass
+        return "py"
+
+    def apply_update_zip(self, zip_path: str):
+        helper = APP_DIR / "tobo_update_helper.py"
+        bundled_helper = BUNDLE_DIR / "tobo_update_helper.py"
+        if not helper.exists() and bundled_helper.exists():
+            try:
+                helper.write_text(bundled_helper.read_text(encoding="utf-8"), encoding="utf-8")
+            except Exception:
+                pass
+        if not helper.exists():
+            messagebox.showerror(tr("update_title"), "Missing tobo_update_helper.py")
+            return
+
+        py_cmd = self.find_update_python()
+        if not py_cmd:
+            messagebox.showinfo(
+                tr("update_title"),
+                tr("python_missing_update")
+            )
+            try:
+                os.startfile(str(UPDATES_DIR))
+            except Exception:
+                pass
+            return
+
+        try:
+            args = [py_cmd, str(helper), str(zip_path), str(APP_DIR)]
+            if os.name == "nt":
+                subprocess.Popen(args, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            else:
+                subprocess.Popen(args)
+            messagebox.showinfo(
+                tr("update_title"),
+                tr("update_ready_apply")
+            )
+            self.root.after(500, self.root.destroy)
+        except Exception as e:
+            messagebox.showerror(tr("update_title"), f"{e}")
+
+    def default_background_config_text(self) -> str:
+        return json.dumps(
+            {
+                "enabled": True,
+                "video_url": DEFAULT_BACKGROUND_VIDEO_URL,
+                "cache_file": "assets/background_cloudfront.mp4",
+                "max_frames": 90,
+                "width": 360,
+                "height": 128,
+                "fps": 12,
+                "note": "TOBO VietSub se tu tai MP4 nay ve cache tren may cua ban de lam nen dong nhe."
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+
+    def get_background_config_path(self) -> Path:
+        local = APP_DIR / BACKGROUND_CONFIG_NAME
+        bundled = BUNDLE_DIR / BACKGROUND_CONFIG_NAME
+        if local.exists():
+            return local
+        try:
+            if bundled.exists():
+                local.write_text(bundled.read_text(encoding="utf-8"), encoding="utf-8")
+            else:
+                local.write_text(self.default_background_config_text(), encoding="utf-8")
+            return local
+        except Exception:
+            return bundled if bundled.exists() else local
+
+    def load_background_config(self) -> dict:
+        path = self.get_background_config_path()
+        if not path.exists():
+            return json.loads(self.default_background_config_text())
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(data, dict):
+                return json.loads(self.default_background_config_text())
+            return data
+        except Exception:
+            return json.loads(self.default_background_config_text())
+
+    def start_video_background(self):
+        return
+
+    def resolve_background_video_file(self, cfg: dict) -> Path | None:
+        cache_name = str(cfg.get("cache_file") or "assets/background_cloudfront.mp4").replace("\\", "/").strip("/")
+        local_cache = APP_DIR / cache_name
+        bundled_cache = BUNDLE_DIR / cache_name
+        if local_cache.exists() and local_cache.stat().st_size > 0:
+            return local_cache
+        if bundled_cache.exists() and bundled_cache.stat().st_size > 0:
+            return bundled_cache
+
+        url = str(cfg.get("video_url") or DEFAULT_BACKGROUND_VIDEO_URL).strip()
+        if not url:
+            return None
+        local_cache.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": f"{APP_NAME}/{CURRENT_VERSION}"})
+            with urllib.request.urlopen(req, timeout=60) as resp, open(local_cache, "wb") as f:
+                while True:
+                    chunk = resp.read(1024 * 512)
+                    if not chunk:
+                        break
+                    f.write(chunk)
+            if local_cache.exists() and local_cache.stat().st_size > 0:
+                return local_cache
+        except Exception as e:
+            self.q.put(("bg_status", f"Không tải được nền video: {e}"))
+            return None
+        return None
+
+    def video_background_worker(self):
+        try:
+            cfg = self.load_background_config()
+            if not cfg.get("enabled", True):
+                self.q.put(("bg_status", "Nền video đang tắt trong background_config.json"))
+                return
+            width = int(cfg.get("width") or self.video_bg_size[0])
+            height = int(cfg.get("height") or self.video_bg_size[1])
+            self.video_bg_size = (max(180, width), max(80, height))
+            fps = int(cfg.get("fps") or 12)
+            self.video_bg_delay_ms = max(33, int(1000 / max(1, fps)))
+            max_frames = max(12, min(180, int(cfg.get("max_frames") or 90)))
+
+            video_file = self.resolve_background_video_file(cfg)
+            if not video_file:
+                self.q.put(("bg_status", "Không có file nền video. Kiểm tra background_config.json"))
+                return
+
+            try:
+                import av
+                from PIL import Image, ImageEnhance
+            except Exception as e:
+                self.q.put(("bg_status", f"Thiếu thư viện nền video: {e}"))
+                return
+
+            frames = []
+            container = av.open(str(video_file))
+            stream = container.streams.video[0]
+            step = max(1, int((float(stream.average_rate or 24) / max(1, fps))))
+            for i, frame in enumerate(container.decode(stream)):
+                if i % step != 0:
+                    continue
+                img = frame.to_image().convert("RGB")
+                img = img.resize(self.video_bg_size, Image.LANCZOS)
+                img = ImageEnhance.Brightness(img).enhance(0.52)
+                img = ImageEnhance.Contrast(img).enhance(1.25)
+                # phủ nhẹ màu neon để hợp UI dark/future
+                overlay = Image.new("RGB", img.size, (8, 11, 24))
+                img = Image.blend(img, overlay, 0.22)
+                frames.append(img)
+                if len(frames) >= max_frames:
+                    break
+            try:
+                container.close()
+            except Exception:
+                pass
+
+            if frames:
+                self.q.put(("bg_frames", frames))
+            else:
+                self.q.put(("bg_status", "Không đọc được frame nào từ MP4 nền."))
+        except Exception as e:
+            self.q.put(("bg_status", f"Nền video lỗi: {e}"))
+
+    def animate_video_background(self):
+        try:
+            if self.video_bg_enabled.get() and self.video_bg_images and self.video_bg_label:
+                img = self.video_bg_images[self.video_bg_index % len(self.video_bg_images)]
+                self.video_bg_label.configure(image=img, text="")
+                self.video_bg_index += 1
+        except Exception:
+            pass
+        self.root.after(self.video_bg_delay_ms, self.animate_video_background)
+
+    def pick_file(self):
+        path = filedialog.askopenfilename(
+            title=tr("pick_title"),
+            filetypes=[("Media files", AUDIO_VIDEO_EXTENSIONS), ("All files", "*.*")],
+        )
+        if path:
+            self.selected_file.set(path)
+
+    def log(self, msg):
+        self.q.put(("status", msg))
+
+    def start(self):
+        if self.worker and self.worker.is_alive():
+            messagebox.showinfo(tr("busy_title"), tr("busy_processing"))
+            return
+        file_path = self.selected_file.get().strip()
+        if not file_path or not Path(file_path).exists():
+            messagebox.showerror(tr("missing_file_title"), tr("missing_file_message"))
+            return
+        settings = {
+            "model_name": option_value("model", self.model_size.get()) or "small",
+            "device_choice": option_value("device", self.device_mode.get()) or "auto",
+            "source_lang": option_value("source", self.language.get()),
+            "target_lang": option_value("translate", self.translate_to.get()),
+            "export_format": EXPORT_FORMATS[self.export_format.get()],
+        }
+        self.start_btn.config(state="disabled")
+        self.progress.set(3)
+        self.status.set(tr("preparing"))
+        self.text_original.delete("1.0", "end")
+        self.text_translated.delete("1.0", "end")
+        self.last_text = ""
+        self.last_translation = ""
+        self.last_rows = []
+        self.last_translated_rows = []
+        self.worker = threading.Thread(target=self.process_file, args=(Path(file_path), settings), daemon=True)
+        self.worker.start()
+
+    def create_model(self, model_name: str, device_choice: str):
+        from faster_whisper import WhisperModel
+        if device_choice == "gpu":
+            try:
+                return WhisperModel(model_name, device="cuda", compute_type="float16")
+            except Exception as e:
+                self.log(tr("gpu_failed").format(error=e))
+                return WhisperModel(model_name, device="cpu", compute_type="int8")
+        if device_choice == "cpu":
+            return WhisperModel(model_name, device="cpu", compute_type="int8")
+        try:
+            return WhisperModel(model_name, device="auto", compute_type="auto")
+        except Exception as e:
+            self.log(tr("auto_device_failed").format(error=e))
+            return WhisperModel(model_name, device="cpu", compute_type="int8")
+
+    def transcribe_source(self, model, media_path: Path, lang: str | None):
+        segments, info = model.transcribe(str(media_path), language=lang, beam_size=5, vad_filter=True, word_timestamps=False)
+        duration = float(getattr(info, "duration", 0) or 0)
+        detected_language = getattr(info, "language", None)
+        self.log(tr("detected_lang").format(lang=detected_language) if detected_language else tr("transcribing"))
+        rows = []
+        pending_lines = []
+        for count, seg in enumerate(segments, start=1):
+            text = (seg.text or "").strip()
+            if not text:
+                continue
+            row = {"start": float(seg.start or 0), "end": float(seg.end or 0), "text": text}
+            rows.append(row)
+            pending_lines.append(self.format_segment_line(row, text))
+            if len(pending_lines) >= 5:
+                self.q.put(("append_original", "\n".join(pending_lines) + "\n"))
+                pending_lines = []
+            pct = 25 + min(60, int((row["end"] / duration) * 60)) if duration > 0 else min(85, 25 + count)
+            if count % 3 == 0:
+                self.q.put(("progress", pct))
+        if pending_lines:
+            self.q.put(("append_original", "\n".join(pending_lines) + "\n"))
+        return rows
+
+    def process_file(self, input_file: Path, settings: dict):
+        audio_path = None
+        try:
+            self.q.put(("progress", 8))
+            self.log(tr("loading_model"))
+            model = self.create_model(settings["model_name"], settings["device_choice"])
+            rows = None
+            direct_error = None
+            try:
+                self.q.put(("progress", 18))
+                self.log(tr("reading_media"))
+                rows = self.transcribe_source(model, input_file, settings["source_lang"])
+            except Exception as e:
+                direct_error = e
+                self.q.put(("clear_original", None))
+                self.log(tr("direct_read_failed"))
+            if rows is None:
+                if not check_ffmpeg():
+                    raise RuntimeError(tr("ffmpeg_missing").format(error=direct_error))
+                audio_path = TEMP_DIR / f"{safe_filename(input_file.stem)}_{int(time.time())}.wav"
+                extract_audio(input_file, audio_path, self.log)
+                self.q.put(("progress", 22))
+                rows = self.transcribe_source(model, audio_path, settings["source_lang"])
+
+            self.last_rows = rows
+            original_text = "\n".join(self.format_segment_line(row, row["text"]) for row in rows)
+            self.last_text = original_text
+            safe_stem = safe_filename(input_file.stem)
+            export_format = settings["export_format"]
+            written_files = []
+
+            if export_format in ("txt", "both"):
+                out_txt = OUTPUT_DIR / f"{safe_stem}_transcript.txt"
+                out_txt.write_text(original_text, encoding="utf-8")
+                written_files.append(out_txt.name)
+
+            if export_format in ("srt", "both"):
+                out_srt = OUTPUT_DIR / f"{safe_stem}_transcript.srt"
+                out_srt.write_text(self.rows_to_srt(rows), encoding="utf-8-sig")
+                written_files.append(out_srt.name)
+
+            self.q.put(("progress", 88))
+            self.log(tr("exported").format(files=", ".join(written_files)) if written_files else tr("transcribed_done"))
+
+            target_lang = settings["target_lang"]
+            if target_lang:
+                self.log(tr("translating_clean"))
+                translated_rows = self.translate_rows(rows, target_lang)
+                self.last_translated_rows = translated_rows
+                display_translation = rows_to_delay_text(translated_rows)
+                self.last_translation = display_translation
+                self.q.put(("set_translation", display_translation))
+
+                if export_format in ("txt", "both"):
+                    trans_txt = OUTPUT_DIR / f"{safe_stem}_translated_{target_lang.replace('-', '_')}.txt"
+                    trans_txt.write_text(display_translation, encoding="utf-8")
+                    written_files.append(trans_txt.name)
+                if export_format in ("srt", "both"):
+                    trans_srt = OUTPUT_DIR / f"{safe_stem}_translated_{target_lang.replace('-', '_')}.srt"
+                    trans_srt.write_text(self.rows_to_srt(translated_rows), encoding="utf-8-sig")
+                    written_files.append(trans_srt.name)
+
+            self.q.put(("progress", 100))
+            done_msg = tr("done_message")
+            if written_files:
+                done_msg += "\n\n" + tr("exported_list") + ":\n- " + "\n- ".join(written_files)
+            self.q.put(("done", done_msg))
+        except Exception as e:
+            self.q.put(("error", str(e)))
+        finally:
+            if audio_path:
+                try:
+                    audio_path.unlink(missing_ok=True)
+                except Exception:
+                    pass
+
+    def format_segment_line(self, row: dict, text: str) -> str:
+        return f"[{format_timestamp(row['start'])} → {format_timestamp(row['end'])}] {text.strip()}"
+
+    def rows_to_srt(self, rows: list[dict]) -> str:
+        blocks = []
+        for idx, row in enumerate(rows, start=1):
+            text = (row.get("text") or "").strip()
+            if not text:
+                continue
+            blocks.append(f"{idx}\n{format_srt_timestamp(row.get('start', 0))} --> {format_srt_timestamp(row.get('end', 0))}\n{text}")
+        return "\n\n".join(blocks) + ("\n" if blocks else "")
+
+    def translate_rows(self, rows: list[dict], target_lang: str) -> list[dict]:
+        try:
+            from deep_translator import GoogleTranslator
+        except Exception:
+            raise RuntimeError(tr("missing_translate_lib"))
+        if not rows:
+            return []
+        translator = GoogleTranslator(source="auto", target=target_lang)
+        translated_texts = [""] * len(rows)
+        chunks = []
+        current = []
+        current_len = 0
+        max_chars = 3000
+        for idx, row in enumerate(rows):
+            text = row["text"].strip()
+            projected = current_len + len(text) + 1
+            if current and projected > max_chars:
+                chunks.append(current)
+                current = []
+                current_len = 0
+            current.append((idx, text))
+            current_len += len(text) + 1
+        if current:
+            chunks.append(current)
+        for i, chunk in enumerate(chunks, start=1):
+            self.log(tr("translating_part").format(i=i, total=len(chunks)))
+            source_lines = [text for _, text in chunk]
+            source_blob = "\n".join(source_lines)
+            try:
+                translated_blob = translator.translate(source_blob)
+                translated_lines = [line.strip() for line in translated_blob.splitlines() if line.strip()]
+            except Exception:
+                translated_lines = []
+            if len(translated_lines) != len(chunk):
+                translated_lines = []
+                for _, text in chunk:
+                    try:
+                        translated_lines.append(translator.translate(text).strip())
+                    except Exception:
+                        translated_lines.append(text)
+            for (idx, _), translated_line in zip(chunk, translated_lines):
+                translated_texts[idx] = translated_line
+            self.q.put(("progress", min(98, 88 + int(i / max(1, len(chunks)) * 10))))
+        translated_rows = []
+        for idx, row in enumerate(rows):
+            translated_rows.append({"start": row["start"], "end": row["end"], "text": translated_texts[idx] or row["text"]})
+        return translated_rows
+
+    def poll_queue(self):
+        try:
+            while True:
+                typ, value = self.q.get_nowait()
+                if typ == "status":
+                    self.status.set(value)
+                elif typ == "progress":
+                    self.progress.set(value)
+                elif typ == "append_original":
+                    self.text_original.insert("end", value)
+                    self.text_original.see("end")
+                elif typ == "clear_original":
+                    self.text_original.delete("1.0", "end")
+                elif typ == "set_translation":
+                    self.text_translated.delete("1.0", "end")
+                    self.text_translated.insert("1.0", value)
+                elif typ == "bg_status":
+                    if self.video_bg_status:
+                        self.video_bg_status.configure(text=str(value)[:80])
+                elif typ == "bg_frames":
+                    try:
+                        from PIL import ImageTk
+                        self.video_bg_images = [ImageTk.PhotoImage(img) for img in value]
+                        if self.video_bg_status:
+                            self.video_bg_status.configure(text=f"Video nền: {len(self.video_bg_images)} frames")
+                        self.animate_video_background()
+                    except Exception as e:
+                        if self.video_bg_status:
+                            self.video_bg_status.configure(text=f"Lỗi render nền: {e}")
+                elif typ == "update_info":
+                    self.status.set(tr("ready_status"))
+                    self.start_btn.config(state="normal")
+                    messagebox.showinfo(tr("update_title"), value)
+                elif typ == "update_available":
+                    self.status.set(tr("update_available_title"))
+                    msg = tr("update_available_msg").format(version=value.get("version"), notes=value.get("notes") or "")
+                    if messagebox.askyesno(tr("update_available_title"), msg):
+                        self.download_update(value)
+                elif typ == "update_ready_to_apply":
+                    self.status.set(tr("update_downloaded_title"))
+                    if messagebox.askyesno(
+                        tr("update_title"),
+                        tr("update_ready_apply")
+                    ):
+                        self.apply_update_zip(value)
+                    else:
+                        try:
+                            os.startfile(str(UPDATES_DIR))
+                        except Exception:
+                            pass
+                elif typ == "update_downloaded":
+                    self.status.set(tr("update_downloaded_title"))
+                    messagebox.showinfo(tr("update_downloaded_title"), tr("update_downloaded_msg").format(path=value))
+                    try:
+                        os.startfile(str(UPDATES_DIR))
+                    except Exception:
+                        pass
+                elif typ == "done":
+                    self.status.set(tr("completed"))
+                    self.start_btn.config(state="normal")
+                    messagebox.showinfo(tr("completed"), value)
+                elif typ == "error":
+                    self.status.set(tr("error_title") if tr("error_title") != "error_title" else "Error")
+                    self.start_btn.config(state="normal")
+                    messagebox.showerror(tr("error_title") if tr("error_title") != "error_title" else "Error", value)
+        except queue.Empty:
+            pass
+        self.root.after(100, self.poll_queue)
+
+    def save_text(self):
+        original = self.text_original.get("1.0", "end").strip()
+        translated = self.text_translated.get("1.0", "end").strip()
+        if not original and not translated:
+            messagebox.showinfo(tr("no_data_title"), tr("no_text_to_save"))
+            return
+        path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("TXT", "*.txt")])
+        if not path:
+            return
+        content = original
+        if translated:
+            content += "\n\n===== BẢN DỊCH =====\n\n" + translated
+        Path(path).write_text(content, encoding="utf-8")
+        messagebox.showinfo(tr("saved_title"), path)
+
+    def save_srt_manual(self):
+        rows = self.last_translated_rows if self.last_translated_rows else self.last_rows
+        if not rows:
+            messagebox.showinfo(tr("no_data_title"), tr("no_srt_data"))
+            return
+        path = filedialog.asksaveasfilename(defaultextension=".srt", filetypes=[("SRT", "*.srt")])
+        if not path:
+            return
+        Path(path).write_text(self.rows_to_srt(rows), encoding="utf-8-sig")
+        messagebox.showinfo(tr("saved_srt_title"), path)
+
+    def open_output(self):
+        OUTPUT_DIR.mkdir(exist_ok=True)
+        try:
+            os.startfile(str(OUTPUT_DIR))
+        except Exception:
+            messagebox.showinfo(tr("output_folder"), str(OUTPUT_DIR))
+
+    def open_updates_folder(self):
+        UPDATES_DIR.mkdir(exist_ok=True)
+        try:
+            os.startfile(str(UPDATES_DIR))
+        except Exception:
+            messagebox.showinfo(tr("updates_folder"), str(UPDATES_DIR))
+
+    def clear_text(self):
+        self.text_original.delete("1.0", "end")
+        self.text_translated.delete("1.0", "end")
+        self.last_text = ""
+        self.last_translation = ""
+        self.last_rows = []
+        self.last_translated_rows = []
+        self.progress.set(0)
+        self.status.set(tr("ready_status"))
+
+
+def main():
+    root = tk.Tk()
+    TOBOVietSubApp(root)
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    main()

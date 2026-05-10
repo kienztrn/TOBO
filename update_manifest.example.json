@@ -1,0 +1,5 @@
+{
+  "version": "1.6.5",
+  "url": "https://github.com/kienztrn/TOBO/archive/refs/heads/main.zip",
+  "notes": "Thêm delay tag <#ss.mmm#> trước từng dòng bản dịch, lấy theo timestamp bắt đầu của bản gốc. Giữ auto-update in-place, không xóa .venv/thư viện."
+}

@@ -1,0 +1,4 @@
+faster-whisper>=1.1.1
+deep-translator>=1.11.4
+av>=12.0.0
+Pillow>=10.0.0

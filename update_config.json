@@ -1,0 +1,4 @@
+{
+  "manifest_url": "https://raw.githubusercontent.com/kienztrn/TOBO/main/update_manifest.json",
+  "note": "App đọc manifest này. URL trong manifest đang dùng GitHub archive main.zip để cập nhật không cần GitHub Releases."
+}
