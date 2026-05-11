@@ -31,7 +31,7 @@ else:
 TEMP_DIR = APP_DIR / "temp"
 OUTPUT_DIR = APP_DIR / "output"
 UPDATES_DIR = APP_DIR / "updates"
-CURRENT_VERSION = "1.7.9"
+CURRENT_VERSION = "1.8.1"
 APP_NAME = "TOBO VietSub"
 TEMP_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -123,8 +123,8 @@ I18N = {
         "control": "TOBO AI CONTROL",
         "mode": "AI LIGHT MODE",
         "settings": "Cài đặt",
-        "update_center": "Please support me by buying me a cup of coffee 😘",
-        "update_desc": "Cảm ơn bạn đã ủng hộ TOBO VietSub.",
+        "update_center": "TOBO AI CONTROL",
+        "update_desc": "Preset phim hoạt hình, cập nhật tại chỗ và ủng hộ tác giả.",
         "update": "↻ Cập nhật",
         "updates": "☕ Ủng hộ",
         "sparkle": "Sparkle FX",
@@ -159,8 +159,8 @@ I18N = {
         "control": "TOBO AI CONTROL",
         "mode": "AI LIGHT MODE",
         "settings": "Settings",
-        "update_center": "Please support me by buying me a cup of coffee 😘",
-        "update_desc": "Thank you for supporting TOBO VietSub.",
+        "update_center": "TOBO AI CONTROL",
+        "update_desc": "Cartoon preset, in-place update, and creator support.",
         "update": "↻ Update",
         "updates": "☕ Ủng hộ",
         "sparkle": "Sparkle FX",
@@ -195,7 +195,7 @@ I18N = {
         "control": "TOBO AI CONTROL",
         "mode": "AI LIGHT MODE",
         "settings": "설정",
-        "update_center": "Please support me by buying me a cup of coffee 😘",
+        "update_center": "TOBO AI CONTROL",
         "update_desc": "TOBO VietSub를 응원해 주셔서 감사합니다.",
         "update": "↻ 업데이트",
         "updates": "☕ Ủng hộ",
@@ -231,8 +231,8 @@ I18N = {
         "control": "TOBO AI CONTROL",
         "mode": "AI LIGHT MODE",
         "settings": "设置",
-        "update_center": "Please support me by buying me a cup of coffee 😘",
-        "update_desc": "感谢你支持 TOBO VietSub。",
+        "update_center": "TOBO AI CONTROL",
+        "update_desc": "Cartoon preset, in-place update, and creator support.",
         "update": "↻ 更新",
         "updates": "☕ Ủng hộ",
         "sparkle": "Sparkle FX",
@@ -818,6 +818,7 @@ class TOBOVietSubApp:
         self.delay_min = tk.StringVar(value="0.10")
         self.delay_max = tk.StringVar(value="2.50")
         self.delay_round = tk.StringVar(value="0.05")
+        self.srt_max_lines = tk.StringVar(value="0")
         self.delay_skip_small = tk.BooleanVar(value=True)
         self.sound_enabled = tk.BooleanVar(value=True)
         self.status = tk.StringVar(value=tr("ready_status"))
@@ -1134,7 +1135,7 @@ class TOBOVietSubApp:
         )
         voice_options = tk.Frame(top, bg=SURFACE)
         voice_options.pack(fill="x", padx=16, pady=(0, 14))
-        for col in range(5):
+        for col in range(6):
             voice_options.columnconfigure(col, weight=1)
         self.add_combo(voice_options, tr("read_speed"), self.read_speed, speed_options(), 0)
 
@@ -1149,8 +1150,9 @@ class TOBOVietSubApp:
         small_entry(voice_options, tr("delay_min"), self.delay_min, 1)
         small_entry(voice_options, tr("delay_max"), self.delay_max, 2)
         small_entry(voice_options, tr("delay_round"), self.delay_round, 3)
+        small_entry(voice_options, tr("srt_max_lines"), self.srt_max_lines, 4)
         skip_box = tk.Frame(voice_options, bg=SURFACE)
-        skip_box.grid(row=0, column=4, sticky="ew", padx=(10, 0))
+        skip_box.grid(row=0, column=5, sticky="ew", padx=(10, 0))
         tk.Label(skip_box, text=tr("voice_timing_settings"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 9, "bold")).pack(anchor="w")
         tk.Checkbutton(
             skip_box,
@@ -1175,6 +1177,7 @@ class TOBOVietSubApp:
             sound_callback=self.play_click,
         )
         self.controls_toggle_btn.pack(side="left")
+        NeonButton(btns, tr("cartoon_mode"), self.apply_cartoon_mode, variant="pink", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("save_txt"), self.save_text, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("export_srt"), self.save_srt_manual, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("export_voice"), self.save_voice_timing_manual, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
@@ -2234,6 +2237,57 @@ class TOBOVietSubApp:
         except Exception:
             return default
 
+    def apply_cartoon_mode(self):
+        if self.worker and self.worker.is_alive():
+            messagebox.showinfo(tr("busy_title"), tr("busy_processing"))
+            return
+        try:
+            self.translation_style.set(style_label("cartoon_movie"))
+            self.read_speed.set(speed_label("normal"))
+            self.delay_min.set("0.15")
+            self.delay_max.set("2.00")
+            self.delay_round.set("0.05")
+            if hasattr(self, "srt_max_lines"):
+                self.srt_max_lines.set("2")
+            self.delay_skip_small.set(True)
+            self.delay_tags_enabled.set(True)
+            self.status.set(tr("cartoon_applied"))
+            if self.controls_collapsed:
+                self.toggle_controls_panel()
+        except Exception as e:
+            messagebox.showerror(tr("ui_error_title"), str(e))
+
+    def wrap_srt_text(self, text: str, max_lines: int = 0, max_chars: int = 42) -> str:
+        text = " ".join((text or "").split()).strip()
+        if not text or max_lines <= 0:
+            return text
+        max_lines = max(1, int(max_lines))
+        max_chars = max(12, int(max_chars))
+        # CJK text has no spaces; split by character chunks.
+        cjk = sum(1 for ch in text if "\u4e00" <= ch <= "\u9fff" or "\u3040" <= ch <= "\u30ff" or "\uac00" <= ch <= "\ud7af")
+        if cjk >= max(2, len(text.replace(" ", "")) * 0.45):
+            chunk = 18
+            parts = [text[i:i+chunk] for i in range(0, len(text), chunk)]
+        else:
+            words = text.split()
+            parts = []
+            current = ""
+            for word in words:
+                candidate = (current + " " + word).strip()
+                if current and len(candidate) > max_chars:
+                    parts.append(current)
+                    current = word
+                else:
+                    current = candidate
+            if current:
+                parts.append(current)
+        if len(parts) <= max_lines:
+            return "\n".join(parts)
+        # Keep max line count by merging overflow into the last line.
+        kept = parts[:max_lines-1]
+        kept.append(" ".join(parts[max_lines-1:]))
+        return "\n".join(kept)
+
     def start(self):
         if self.worker and self.worker.is_alive():
             messagebox.showinfo(tr("busy_title"), tr("busy_processing"))
@@ -2256,6 +2310,7 @@ class TOBOVietSubApp:
             "delay_min": self.safe_float(self.delay_min.get(), 0.10),
             "delay_max": self.safe_float(self.delay_max.get(), 2.50),
             "delay_round": self.safe_float(self.delay_round.get(), 0.05),
+            "srt_max_lines": int(self.safe_float(self.srt_max_lines.get(), 0)) if hasattr(self, "srt_max_lines") else 0,
             "delay_skip_small": bool(self.delay_skip_small.get()),
         }
         self.begin_busy(tr("preparing"), 3)
@@ -2372,7 +2427,7 @@ class TOBOVietSubApp:
 
             if export_format in ("srt", "both"):
                 out_srt = export_dir / f"{safe_stem}_transcript.srt"
-                out_srt.write_text(self.rows_to_srt(rows), encoding="utf-8-sig")
+                out_srt.write_text(self.rows_to_srt(rows, max_lines=settings.get("srt_max_lines", 0)), encoding="utf-8-sig")
                 written_files.append(str(out_srt.relative_to(OUTPUT_DIR)) if out_srt.is_relative_to(OUTPUT_DIR) else out_srt.name)
 
             self.q.put(("progress", 88))
@@ -2416,7 +2471,7 @@ class TOBOVietSubApp:
                         written_files.append(str(voice_txt.relative_to(OUTPUT_DIR)) if voice_txt.is_relative_to(OUTPUT_DIR) else voice_txt.name)
                 if export_format in ("srt", "both"):
                     trans_srt = export_dir / f"{safe_stem}_translated_{target_lang.replace('-', '_')}.srt"
-                    trans_srt.write_text(self.rows_to_srt(translated_rows), encoding="utf-8-sig")
+                    trans_srt.write_text(self.rows_to_srt(translated_rows, max_lines=settings.get("srt_max_lines", 0)), encoding="utf-8-sig")
                     written_files.append(str(trans_srt.relative_to(OUTPUT_DIR)) if trans_srt.is_relative_to(OUTPUT_DIR) else trans_srt.name)
 
             self.q.put(("progress", 100))
@@ -2533,12 +2588,13 @@ class TOBOVietSubApp:
     def format_segment_line(self, row: dict, text: str) -> str:
         return f"[{format_timestamp(row['start'])} → {format_timestamp(row['end'])}] {text.strip()}"
 
-    def rows_to_srt(self, rows: list[dict]) -> str:
+    def rows_to_srt(self, rows: list[dict], max_lines: int = 0) -> str:
         blocks = []
         for idx, row in enumerate(rows, start=1):
             text = (row.get("text") or "").strip()
             if not text:
                 continue
+            text = self.wrap_srt_text(text, max_lines=max_lines)
             blocks.append(f"{idx}\n{format_srt_timestamp(row.get('start', 0))} --> {format_srt_timestamp(row.get('end', 0))}\n{text}")
         return "\n\n".join(blocks) + ("\n" if blocks else "")
 
@@ -2750,7 +2806,7 @@ class TOBOVietSubApp:
             return
         self.begin_busy("Đang xuất SRT...", 20)
         try:
-            Path(path).write_text(self.rows_to_srt(rows), encoding="utf-8-sig")
+            Path(path).write_text(self.rows_to_srt(rows, max_lines=int(self.safe_float(self.srt_max_lines.get(), 0)) if hasattr(self, "srt_max_lines") else 0), encoding="utf-8-sig")
             self.end_busy(tr("ready_status"), 100)
             messagebox.showinfo(tr("saved_srt_title"), path)
         except Exception as e:

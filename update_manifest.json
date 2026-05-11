@@ -1,5 +1,5 @@
 {
-  "version": "1.7.9",
+  "version": "1.8.1",
   "url": "https://github.com/kienztrn/TOBO/archive/refs/heads/main.zip",
-  "notes": "Chuyển nút thu gọn thành Thiết lập xong, đưa xuống hàng thao tác; nút Bắt đầu xử lý được căn giữa và bỏ chữ trạng thái Sẵn sàng."
+  "notes": "Thêm preset 🎭 Cartoon Mode: dịch phim hoạt hình, tốc độ đọc vừa, delay 0.15-2.0s, SRT tối đa 2 dòng."
 }

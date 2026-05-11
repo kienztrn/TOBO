@@ -146,3 +146,11 @@ BAN 1.7.8:
 - Bo o SYSTEM STATUS.
 - Thay bang o Bat dau xu ly gon hon nam ngay tren phan Van ban goc/Ban dich.
 - Loader van hien dang overlay giua app khi xu ly.
+
+
+BAN v1.8.1:
+- Them preset 🎭 Cartoon Mode.
+- Tu set Phong cach dich = Dich phim hoat hinh.
+- Tu set Toc do doc = Vua.
+- Tu set Delay = 0.15 den 2.00s.
+- Tu set SRT toi da 2 dong.
