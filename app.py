@@ -31,7 +31,7 @@ else:
 TEMP_DIR = APP_DIR / "temp"
 OUTPUT_DIR = APP_DIR / "output"
 UPDATES_DIR = APP_DIR / "updates"
-CURRENT_VERSION = "1.7.0"
+CURRENT_VERSION = "1.7.9"
 APP_NAME = "TOBO VietSub"
 TEMP_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -366,6 +366,68 @@ I18N["en"].update({"config_file": "Config file", "url_404": "{purpose} 404 error
 I18N["ko"].update({"config_file": "수정할 파일", "url_404": "{purpose} 404 오류: 업데이트 링크가 없거나 파일이 업로드되지 않았습니다.", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS 오류: 업데이트 도메인이 없거나 링크가 잘못되었거나 네트워크가 끊겼습니다.", "url_network": "{purpose} 네트워크 오류: {reason}", "manifest_not_json": "{purpose} 오류: manifest가 올바른 JSON이 아닙니다.", "generic_error": "{purpose} 오류: {error}"})
 I18N["zh"].update({"config_file": "需要修改的文件", "url_404": "{purpose} 404 错误：更新链接不存在或文件尚未上传。", "url_http": "{purpose} HTTP {code}: {reason}", "url_dns": "{purpose} DNS 错误：更新域名不存在、链接错误或网络不可用。", "url_network": "{purpose} 网络错误：{reason}", "manifest_not_json": "{purpose} 错误：manifest 不是有效 JSON。", "generic_error": "{purpose} 错误：{error}"})
 
+I18N["vi"].update({
+    "system_check": "🩺 Kiểm tra hệ thống",
+    "system_check_title": "Kiểm tra hệ thống",
+    "system_check_running": "Đang kiểm tra hệ thống...",
+    "system_check_done": "Đã kiểm tra hệ thống.",
+    "read_speed": "Tốc độ đọc",
+    "speed_slow": "Chậm",
+    "speed_normal": "Vừa",
+    "speed_fast": "Nhanh",
+    "delay_min": "Delay tối thiểu",
+    "delay_max": "Delay tối đa",
+    "delay_round": "Làm tròn delay",
+    "delay_skip": "Bỏ delay < 0.2s",
+    "voice_timing_settings": "Thiết lập Voice Delay",
+})
+I18N["en"].update({
+    "system_check": "🩺 System check",
+    "system_check_title": "System check",
+    "system_check_running": "Checking system...",
+    "system_check_done": "System check completed.",
+    "read_speed": "Read speed",
+    "speed_slow": "Slow",
+    "speed_normal": "Normal",
+    "speed_fast": "Fast",
+    "delay_min": "Min delay",
+    "delay_max": "Max delay",
+    "delay_round": "Round delay",
+    "delay_skip": "Skip delay < 0.2s",
+    "voice_timing_settings": "Voice Delay Settings",
+})
+I18N["ko"].update({
+    "system_check": "🩺 시스템 확인",
+    "system_check_title": "시스템 확인",
+    "system_check_running": "시스템 확인 중...",
+    "system_check_done": "시스템 확인 완료.",
+    "read_speed": "읽기 속도",
+    "speed_slow": "느림",
+    "speed_normal": "보통",
+    "speed_fast": "빠름",
+    "delay_min": "최소 Delay",
+    "delay_max": "최대 Delay",
+    "delay_round": "Delay 반올림",
+    "delay_skip": "0.2초 미만 Delay 생략",
+    "voice_timing_settings": "Voice Delay 설정",
+})
+I18N["zh"].update({
+    "system_check": "🩺 系统检查",
+    "system_check_title": "系统检查",
+    "system_check_running": "正在检查系统...",
+    "system_check_done": "系统检查完成。",
+    "read_speed": "朗读速度",
+    "speed_slow": "慢",
+    "speed_normal": "中",
+    "speed_fast": "快",
+    "delay_min": "最小延迟",
+    "delay_max": "最大延迟",
+    "delay_round": "延迟取整",
+    "delay_skip": "跳过 <0.2秒 延迟",
+    "voice_timing_settings": "Voice Delay 设置",
+})
+
+
 def get_settings_path() -> Path:
     return APP_DIR / SETTINGS_CONFIG_NAME
 
@@ -442,11 +504,70 @@ OPTION_TABLES = {
 
 
 STYLE_OPTION_TABLES = {
-    "vi": [("natural", I18N["vi"]["style_natural"]), ("humorous", I18N["vi"]["style_humorous"]), ("serious", I18N["vi"]["style_serious"]), ("horror", I18N["vi"]["style_horror"]), ("romantic", I18N["vi"]["style_romantic"]), ("sci_fi", I18N["vi"]["style_scifi"]), ("cartoon", I18N["vi"]["style_cartoon"]), ("action", I18N["vi"]["style_action"])],
-    "en": [("natural", I18N["en"]["style_natural"]), ("humorous", I18N["en"]["style_humorous"]), ("serious", I18N["en"]["style_serious"]), ("horror", I18N["en"]["style_horror"]), ("romantic", I18N["en"]["style_romantic"]), ("sci_fi", I18N["en"]["style_scifi"]), ("cartoon", I18N["en"]["style_cartoon"]), ("action", I18N["en"]["style_action"])],
-    "ko": [("natural", I18N["ko"]["style_natural"]), ("humorous", I18N["ko"]["style_humorous"]), ("serious", I18N["ko"]["style_serious"]), ("horror", I18N["ko"]["style_horror"]), ("romantic", I18N["ko"]["style_romantic"]), ("sci_fi", I18N["ko"]["style_scifi"]), ("cartoon", I18N["ko"]["style_cartoon"]), ("action", I18N["ko"]["style_action"])],
-    "zh": [("natural", I18N["zh"]["style_natural"]), ("humorous", I18N["zh"]["style_humorous"]), ("serious", I18N["zh"]["style_serious"]), ("horror", I18N["zh"]["style_horror"]), ("romantic", I18N["zh"]["style_romantic"]), ("sci_fi", I18N["zh"]["style_scifi"]), ("cartoon", I18N["zh"]["style_cartoon"]), ("action", I18N["zh"]["style_action"])],
+    "vi": [
+        ("faithful", "Giữ nghĩa sát"),
+        ("natural", "Dịch tự nhiên"),
+        ("viral_tiktok", "Dịch viral/TikTok"),
+        ("cartoon_movie", "Dịch phim hoạt hình"),
+        ("dubbing", "Dịch lồng tiếng"),
+        ("silly_fun", "Dịch hài bựa nhẹ"),
+        ("polite", "Dịch lịch sự"),
+        ("native", "Dịch như người bản xứ"),
+    ],
+    "en": [
+        ("faithful", "Faithful meaning"),
+        ("natural", "Natural translation"),
+        ("viral_tiktok", "Viral/TikTok style"),
+        ("cartoon_movie", "Cartoon movie style"),
+        ("dubbing", "Voice dubbing style"),
+        ("silly_fun", "Light silly comedy"),
+        ("polite", "Polite style"),
+        ("native", "Native speaker style"),
+    ],
+    "ko": [
+        ("faithful", "의미 충실"),
+        ("natural", "자연스러운 번역"),
+        ("viral_tiktok", "바이럴/TikTok 스타일"),
+        ("cartoon_movie", "애니메이션 영화 스타일"),
+        ("dubbing", "더빙 대사 스타일"),
+        ("silly_fun", "가벼운 코미디 스타일"),
+        ("polite", "정중한 스타일"),
+        ("native", "원어민 스타일"),
+    ],
+    "zh": [
+        ("faithful", "忠实原意"),
+        ("natural", "自然翻译"),
+        ("viral_tiktok", "爆款/TikTok 风格"),
+        ("cartoon_movie", "动画电影风格"),
+        ("dubbing", "配音台词风格"),
+        ("silly_fun", "轻松搞笑风格"),
+        ("polite", "礼貌风格"),
+        ("native", "母语者风格"),
+    ],
 }
+
+SPEED_OPTION_TABLES = {
+    "vi": [("slow", "Chậm"), ("normal", "Vừa"), ("fast", "Nhanh")],
+    "en": [("slow", "Slow"), ("normal", "Normal"), ("fast", "Fast")],
+    "ko": [("slow", "느림"), ("normal", "보통"), ("fast", "빠름")],
+    "zh": [("slow", "慢"), ("normal", "中"), ("fast", "快")],
+}
+
+def speed_options() -> list[str]:
+    return [label for _, label in SPEED_OPTION_TABLES.get(APP_LANG, SPEED_OPTION_TABLES["vi"])]
+
+def speed_label(value: str) -> str:
+    for code, label in SPEED_OPTION_TABLES.get(APP_LANG, SPEED_OPTION_TABLES["vi"]):
+        if code == value:
+            return label
+    return SPEED_OPTION_TABLES.get(APP_LANG, SPEED_OPTION_TABLES["vi"])[1][1]
+
+def speed_value(label: str) -> str:
+    for table in SPEED_OPTION_TABLES.values():
+        for code, any_label in table:
+            if any_label == label:
+                return code
+    return "normal"
 
 def style_options() -> list[str]:
     return [label for _, label in STYLE_OPTION_TABLES.get(APP_LANG, STYLE_OPTION_TABLES["vi"])]
@@ -679,8 +800,8 @@ class TOBOVietSubApp:
     def __init__(self, root):
         self.root = root
         self.root.title("TOBO VietSub - AI Video Translator")
-        self.root.geometry("1120x780")
-        self.root.minsize(1000, 700)
+        self.root.geometry("1180x820")
+        self.root.minsize(1080, 740)
         self.root.configure(bg=BG_COLOR)
         self.q = queue.Queue()
         self.worker = None
@@ -693,6 +814,11 @@ class TOBOVietSubApp:
         self.translation_style = tk.StringVar(value=style_label("natural"))
         self.output_folder_name = tk.StringVar(value="")
         self.delay_tags_enabled = tk.BooleanVar(value=True)
+        self.read_speed = tk.StringVar(value=speed_label("normal"))
+        self.delay_min = tk.StringVar(value="0.10")
+        self.delay_max = tk.StringVar(value="2.50")
+        self.delay_round = tk.StringVar(value="0.05")
+        self.delay_skip_small = tk.BooleanVar(value=True)
         self.sound_enabled = tk.BooleanVar(value=True)
         self.status = tk.StringVar(value=tr("ready_status"))
         self.progress = tk.DoubleVar(value=0)
@@ -711,6 +837,18 @@ class TOBOVietSubApp:
         self.sparkle_items = []
         self.sparkle_tick = 0
         self.header_status_label = None
+        self.settings_panel = None
+        self.shell = None
+        self.main_container = None
+        self.controls_collapsed = False
+        self.controls_toggle_btn = None
+        self.controls_rows = []
+        self.loader_canvas = None
+        self.loader_tick = 0
+        self.loader_popup = None
+        self.loader_popup_canvas = None
+        self.loader_popup_label = None
+        self.ui_locked = False
         self.video_bg_enabled = tk.BooleanVar(value=True)
         self.video_bg_label = None
         self.video_bg_status = None
@@ -722,6 +860,7 @@ class TOBOVietSubApp:
         self.build_ui()
         self.root.after(100, self.poll_queue)
         self.root.after(220, self.animate_pulse)
+        self.root.after(260, self.animate_loader)
         self.root.after(600, self.start_video_background)
 
     def play_click(self):
@@ -766,6 +905,7 @@ class TOBOVietSubApp:
 
         shell = tk.Frame(self.root, bg=BG_COLOR)
         shell.pack(fill="both", expand=True)
+        self.shell = shell
 
         self.header = tk.Frame(shell, bg=BG_COLOR)
         self.header.pack(fill="x", padx=18, pady=(16, 10))
@@ -937,6 +1077,7 @@ class TOBOVietSubApp:
         ).pack(anchor="w", pady=(3, 0))
 
         main = tk.Frame(shell, bg=BG_COLOR)
+        self.main_container = main
         main.pack(fill="both", expand=True, padx=18, pady=(0, 16))
 
         top = tk.Frame(main, bg=SURFACE, highlightthickness=1, highlightbackground=BORDER)
@@ -957,7 +1098,8 @@ class TOBOVietSubApp:
             highlightbackground=BORDER,
             highlightcolor=ACCENT_2,
         )
-        self.file_entry.pack(side="left", fill="x", expand=True, padx=(12, 0), ipady=10)
+        self.file_entry.pack(side="left", fill="x", expand=True, padx=(12, 10), ipady=10)
+        # Nút thu/phóng thiết lập đã được chuyển xuống hàng thao tác.
 
         options = tk.Frame(top, bg=SURFACE)
         options.pack(fill="x", padx=16, pady=(0, 14))
@@ -990,15 +1132,53 @@ class TOBOVietSubApp:
             highlightbackground=BORDER,
             highlightcolor=ACCENT_2,
         )
-        self.output_folder_entry.pack(fill="x", pady=(6, 0), ipady=6)
+        voice_options = tk.Frame(top, bg=SURFACE)
+        voice_options.pack(fill="x", padx=16, pady=(0, 14))
+        for col in range(5):
+            voice_options.columnconfigure(col, weight=1)
+        self.add_combo(voice_options, tr("read_speed"), self.read_speed, speed_options(), 0)
+
+        def small_entry(parent, label, var, col):
+            fr = tk.Frame(parent, bg=SURFACE)
+            fr.grid(row=0, column=col, sticky="ew", padx=(10 if col else 0, 0))
+            tk.Label(fr, text=label, bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 9, "bold")).pack(anchor="w")
+            ent = tk.Entry(fr, textvariable=var, bg=ENTRY_BG, fg=TEXT, insertbackground=TEXT, relief="flat", font=("Segoe UI", 10), highlightthickness=1, highlightbackground=BORDER, highlightcolor=ACCENT_2)
+            ent.pack(fill="x", pady=(6, 0), ipady=5)
+            return ent
+
+        small_entry(voice_options, tr("delay_min"), self.delay_min, 1)
+        small_entry(voice_options, tr("delay_max"), self.delay_max, 2)
+        small_entry(voice_options, tr("delay_round"), self.delay_round, 3)
+        skip_box = tk.Frame(voice_options, bg=SURFACE)
+        skip_box.grid(row=0, column=4, sticky="ew", padx=(10, 0))
+        tk.Label(skip_box, text=tr("voice_timing_settings"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 9, "bold")).pack(anchor="w")
+        tk.Checkbutton(
+            skip_box,
+            text=tr("delay_skip"),
+            variable=self.delay_skip_small,
+            bg=SURFACE,
+            fg=TEXT_MUTED,
+            activebackground=SURFACE,
+            activeforeground=TEXT,
+            selectcolor=ENTRY_BG,
+            font=("Segoe UI", 10),
+            relief="flat",
+        ).pack(anchor="w", pady=(6, 0))
 
         btns = tk.Frame(top, bg=SURFACE)
         btns.pack(fill="x", padx=16, pady=(0, 16))
-        self.start_btn = NeonButton(btns, tr("start"), self.start, variant="primary", sound_callback=self.play_click)
-        self.start_btn.pack(side="left")
+        self.controls_toggle_btn = NeonButton(
+            btns,
+            "✓ Thiết lập xong",
+            self.toggle_controls_panel,
+            variant="primary",
+            sound_callback=self.play_click,
+        )
+        self.controls_toggle_btn.pack(side="left")
         NeonButton(btns, tr("save_txt"), self.save_text, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("export_srt"), self.save_srt_manual, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("export_voice"), self.save_voice_timing_manual, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
+        NeonButton(btns, tr("system_check"), self.check_system, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("output"), self.open_output, variant="ghost", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
         NeonButton(btns, tr("clear"), self.clear_text, variant="dark", sound_callback=self.play_click).pack(side="left", padx=(10, 0))
 
@@ -1041,13 +1221,27 @@ class TOBOVietSubApp:
             relief="flat",
         ).pack(side="right")
 
-        status_card = tk.Frame(main, bg=CARD, highlightthickness=1, highlightbackground=BORDER)
-        status_card.pack(fill="x", pady=(0, 12))
-        tk.Label(status_card, text=tr("status"), bg=CARD, fg=TEXT_DIM, font=("Segoe UI", 8, "bold")).pack(anchor="w", padx=14, pady=(10, 0))
-        self.progress_bar = ttk.Progressbar(status_card, variable=self.progress, maximum=100, mode="determinate")
-        self.progress_bar.pack(fill="x", padx=14, pady=(8, 4))
-        self.status_label = tk.Label(status_card, textvariable=self.status, bg=CARD, fg=TEXT_MUTED, font=("Segoe UI", 10))
-        self.status_label.pack(anchor="w", padx=14, pady=(2, 10))
+        self.controls_collapsed = False
+        self.controls_rows = [
+            (options, {"fill": "x", "padx": 16, "pady": (0, 14)}),
+            (advanced_options, {"fill": "x", "padx": 16, "pady": (0, 14)}),
+            (voice_options, {"fill": "x", "padx": 16, "pady": (0, 14)}),
+        ]
+
+        process_strip = tk.Frame(main, bg=SURFACE, highlightthickness=1, highlightbackground=BORDER)
+        process_strip.pack(fill="x", pady=(0, 8))
+        start_wrap = tk.Frame(process_strip, bg=SURFACE)
+        start_wrap.pack(anchor="center", pady=10)
+        self.quick_start_btn = NeonButton(
+            start_wrap,
+            tr("start"),
+            self.start,
+            variant="primary",
+            sound_callback=self.play_click,
+        )
+        self.quick_start_btn.pack()
+        self.start_btn = self.quick_start_btn
+        self.status_label = None
 
         panes = ttk.PanedWindow(main, orient="horizontal")
         panes.pack(fill="both", expand=True)
@@ -1062,6 +1256,184 @@ class TOBOVietSubApp:
         self.text_translated = self.make_textbox(right)
         self.text_translated.pack(fill="both", expand=True, padx=12, pady=(0, 12))
 
+    def toggle_controls_panel(self):
+        """Thu/phóng khung cấu hình chính để giao diện gọn hơn."""
+        try:
+            self.play_click()
+            self.controls_collapsed = not self.controls_collapsed
+            if self.controls_collapsed:
+                for widget, _pack_opts in self.controls_rows:
+                    try:
+                        widget.pack_forget()
+                    except Exception:
+                        pass
+                if self.controls_toggle_btn:
+                    self.controls_toggle_btn.configure(text="▾ Mở thiết lập")
+            else:
+                for widget, pack_opts in self.controls_rows:
+                    try:
+                        widget.pack(**pack_opts)
+                    except Exception:
+                        pass
+                if self.controls_toggle_btn:
+                    self.controls_toggle_btn.configure(text="✓ Thiết lập xong")
+        except Exception as e:
+            messagebox.showerror(tr("ui_error_title"), str(e))
+
+    def draw_loader(self):
+        """Truck overlay loader dựng bằng Tkinter Canvas theo ý tưởng Uiverse CSS."""
+        c = getattr(self, "loader_popup_canvas", None)
+        if not c:
+            return
+        try:
+            c.delete("all")
+            w, h = 340, 165
+            pct = max(0, min(100, float(self.progress.get() or 0)))
+            active = bool((self.worker and self.worker.is_alive()) or self.ui_locked)
+            phase = self.loader_tick
+
+            # Background card.
+            c.create_rectangle(0, 0, w, h, fill="#FFFFFF", outline="")
+            c.create_rectangle(12, 12, w - 12, h - 12, fill="#FFFBF5", outline=BORDER, width=1)
+            # Truck wrapper.
+            base_x = 104
+            base_y = 104
+            bounce = math.sin(phase / 3.0) * 3 if active else 0
+            road_y = 132
+
+            # Moving road marks.
+            c.create_line(60, road_y, 280, road_y, fill="#282828", width=2)
+            if active:
+                off = (phase * 9) % 80
+                for mx in range(-30, 300, 70):
+                    x1 = 280 - ((mx + off) % 320)
+                    c.create_line(x1, road_y - 1, x1 + 24, road_y - 1, fill="#282828", width=3)
+
+                # Lamp post sliding.
+                lamp_x = 320 - ((phase * 7) % 410)
+                c.create_line(lamp_x, road_y, lamp_x, road_y - 62, fill="#282828", width=3)
+                c.create_line(lamp_x, road_y - 62, lamp_x + 18, road_y - 70, fill="#282828", width=3)
+                c.create_oval(lamp_x + 14, road_y - 76, lamp_x + 26, road_y - 64, fill=ACCENT, outline="#282828")
+
+            # Truck body.
+            bx = base_x
+            by = base_y + bounce
+            primary = ACCENT if ACCENT else "#F97316"
+            dark = TEXT if TEXT else "#282828"
+            # cargo box
+            c.create_rectangle(bx, by - 46, bx + 82, by - 12, fill=primary, outline=dark, width=2)
+            c.create_rectangle(bx + 10, by - 38, bx + 40, by - 20, fill="#FFF7ED", outline=dark, width=1)
+            # cabin
+            c.create_polygon(bx + 82, by - 46, bx + 112, by - 34, bx + 122, by - 12, bx + 82, by - 12, fill="#FB923C", outline=dark, width=2)
+            c.create_polygon(bx + 88, by - 38, bx + 108, by - 30, bx + 113, by - 20, bx + 88, by - 20, fill="#DBEAFE", outline=dark, width=1)
+            # bumper/underbody
+            c.create_rectangle(bx - 6, by - 14, bx + 130, by - 4, fill=dark, outline=dark)
+            c.create_rectangle(bx + 122, by - 18, bx + 136, by - 8, fill=ACCENT_3, outline=dark, width=1)
+
+            # Wheels.
+            wheel_angle = phase * 20 if active else 0
+            for wx in (bx + 28, bx + 100):
+                c.create_oval(wx - 14, by - 15, wx + 14, by + 13, fill=dark, outline=dark)
+                c.create_oval(wx - 7, by - 8, wx + 7, by + 6, fill="#FFFFFF", outline="#FFFFFF")
+                # spokes
+                r = 11
+                for a in (0, math.pi / 2):
+                    ang = math.radians(wheel_angle) + a
+                    c.create_line(wx - math.cos(ang) * r, by - 1 - math.sin(ang) * r, wx + math.cos(ang) * r, by - 1 + math.sin(ang) * r, fill="#FFFFFF", width=1)
+
+            # Progress text + bar.
+            c.create_rectangle(66, 146, 274, 154, fill=BORDER, outline="")
+            if pct > 0:
+                c.create_rectangle(66, 146, 66 + int(208 * pct / 100), 154, fill=primary, outline="")
+            c.create_text(w / 2, 160, text=f"{int(pct)}%", fill=TEXT_MUTED, font=("Segoe UI", 9, "bold"))
+
+            if self.loader_popup_label:
+                self.loader_popup_label.configure(text=self.status.get() or "Loading...")
+        except Exception:
+            pass
+
+    def animate_loader(self):
+        try:
+            self.loader_tick += 1
+            if self.loader_popup and self.loader_popup.winfo_exists():
+                self.draw_loader()
+        except Exception:
+            pass
+        self.root.after(90, self.animate_loader)
+
+    def show_loader_overlay(self):
+        """Hiện truck loader ở giữa app bằng Frame nội bộ, không dùng Toplevel nữa.
+        Bản Toplevel trước có thể bị Windows/theme đẩy ra sau nên người dùng không thấy.
+        """
+        try:
+            if self.loader_popup and self.loader_popup.winfo_exists():
+                self.position_loader_overlay()
+                self.draw_loader()
+                self.loader_popup.lift()
+                return
+
+            popup = tk.Frame(
+                self.root,
+                bg="#FFFFFF",
+                highlightthickness=2,
+                highlightbackground=ACCENT if ACCENT else BORDER,
+                bd=0,
+            )
+            popup.configure(width=360, height=245)
+            popup.pack_propagate(False)
+
+            # Card shadow giả lập bằng nền viền dày, nhìn rõ hơn trên cả theme sáng/tối.
+            title = tk.Label(
+                popup,
+                text="TOBO IS WORKING",
+                bg="#FFFFFF",
+                fg=TEXT if TEXT else "#111827",
+                font=("Segoe UI", 11, "bold"),
+            )
+            title.pack(pady=(10, 0))
+
+            self.loader_popup_canvas = tk.Canvas(popup, width=340, height=165, bg="#FFFFFF", highlightthickness=0, bd=0)
+            self.loader_popup_canvas.pack(fill="both", expand=True, padx=10, pady=(0, 0))
+            self.loader_popup_label = tk.Label(
+                popup,
+                text=self.status.get() or "Loading...",
+                bg="#FFFFFF",
+                fg=TEXT_MUTED if TEXT_MUTED else "#64748B",
+                font=("Segoe UI", 10, "bold"),
+                wraplength=320,
+            )
+            self.loader_popup_label.pack(pady=(0, 10))
+
+            self.loader_popup = popup
+            self.position_loader_overlay()
+            self.draw_loader()
+            self.loader_popup.lift()
+            self.root.update_idletasks()
+        except Exception as e:
+            try:
+                self.status.set(f"Loader error: {e}")
+            except Exception:
+                pass
+
+    def position_loader_overlay(self):
+        try:
+            if not (self.loader_popup and self.loader_popup.winfo_exists()):
+                return
+            self.loader_popup.place(relx=0.5, rely=0.52, anchor="center", width=360, height=245)
+            self.loader_popup.lift()
+        except Exception:
+            pass
+
+    def hide_loader_overlay(self):
+        try:
+            if self.loader_popup and self.loader_popup.winfo_exists():
+                self.loader_popup.destroy()
+        except Exception:
+            pass
+        self.loader_popup = None
+        self.loader_popup_canvas = None
+        self.loader_popup_label = None
+
     def rebuild_ui(self):
         try:
             self.root.configure(bg=BG_COLOR)
@@ -1071,11 +1443,29 @@ class TOBOVietSubApp:
             self.sparkle_canvas = None
             self.sparkle_items = []
             self.header_status_label = None
+            self.settings_panel = None
+            self.loader_canvas = None
+            self.hide_loader_overlay()
+            self.controls_rows = []
+            self.controls_collapsed = False
             self.build_ui()
             self.setup_sparkle_scene()
             self.status.set(tr("ready_status"))
         except Exception as e:
             messagebox.showerror(tr("ui_error_title"), str(e))
+
+    def close_settings_panel(self):
+        panel = getattr(self, "settings_panel", None)
+        if panel is not None:
+            try:
+                panel.destroy()
+            except Exception:
+                pass
+        self.settings_panel = None
+        try:
+            self.settings_button.configure(text="☰")
+        except Exception:
+            pass
 
     def open_settings(self):
         self.play_click()
@@ -1083,44 +1473,71 @@ class TOBOVietSubApp:
             messagebox.showinfo(tr("busy_title"), tr("busy_settings"))
             return
 
+        if getattr(self, "settings_panel", None) is not None and self.settings_panel.winfo_exists():
+            self.close_settings_panel()
+            return
+
         current = load_ui_settings()
-        win = tk.Toplevel(self.root)
-        win.title(tr("settings_title"))
-        win.geometry("520x520")
-        win.resizable(False, False)
-        win.configure(bg=BG_COLOR)
+        panel = tk.Frame(self.shell, bg=BG_COLOR, highlightthickness=1, highlightbackground=BORDER)
+        self.settings_panel = panel
         try:
-            win.transient(self.root)
-            win.grab_set()
+            self.settings_button.configure(text="×")
         except Exception:
             pass
 
-        wrap = tk.Frame(win, bg=BG_COLOR)
-        wrap.pack(fill="both", expand=True, padx=18, pady=18)
+        pack_kwargs = {"fill": "x", "padx": 18, "pady": (0, 10)}
+        if getattr(self, "main_container", None) is not None:
+            pack_kwargs["before"] = self.main_container
+        panel.pack(**pack_kwargs)
+
+        wrap = tk.Frame(panel, bg=BG_COLOR)
+        wrap.pack(fill="x", padx=16, pady=14)
 
         head = tk.Frame(wrap, bg=BG_COLOR)
-        head.pack(fill="x", pady=(0, 14))
-        tk.Label(head, text="☰", bg=BG_COLOR, fg=ACCENT, font=("Segoe UI", 22, "bold")).pack(side="left")
-        tk.Label(head, text=tr("settings_title"), bg=BG_COLOR, fg=TEXT, font=("Segoe UI Variable Display", 18, "bold")).pack(side="left", padx=(10, 0))
+        head.pack(fill="x", pady=(0, 12))
+        tk.Label(head, text="☰", bg=BG_COLOR, fg=ACCENT, font=("Segoe UI", 18, "bold")).pack(side="left")
+        tk.Label(head, text=tr("settings_title"), bg=BG_COLOR, fg=TEXT, font=("Segoe UI Variable Display", 16, "bold")).pack(side="left", padx=(10, 0))
+        tk.Button(
+            head,
+            text="×",
+            command=self.close_settings_panel,
+            bg=BG_COLOR,
+            fg=TEXT_MUTED,
+            activebackground=SURFACE_2,
+            activeforeground=TEXT,
+            relief="flat",
+            bd=0,
+            padx=10,
+            pady=2,
+            cursor="hand2",
+            font=("Segoe UI", 16, "bold"),
+        ).pack(side="right")
 
         card = tk.Frame(wrap, bg=SURFACE, highlightthickness=1, highlightbackground=BORDER)
-        card.pack(fill="x", pady=(0, 14))
+        card.pack(fill="x")
 
-        tk.Label(card, text=tr("app_language"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=14, pady=(14, 4))
+        grid = tk.Frame(card, bg=SURFACE)
+        grid.pack(fill="x", padx=14, pady=14)
+        grid.columnconfigure(0, weight=1)
+        grid.columnconfigure(1, weight=1)
+
+        lang_box = tk.Frame(grid, bg=SURFACE)
+        lang_box.grid(row=0, column=0, sticky="ew", padx=(0, 10))
+        tk.Label(lang_box, text=tr("app_language"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 10, "bold")).pack(anchor="w", pady=(0, 4))
         lang_reverse = {name: key for key, name in LANG_OPTIONS.items()}
         lang_var = tk.StringVar(value=LANG_OPTIONS.get(current.get("app_language", "vi"), "Tiếng Việt"))
-        lang_combo = ttk.Combobox(card, textvariable=lang_var, values=list(LANG_OPTIONS.values()), state="readonly")
-        lang_combo.pack(fill="x", padx=14, pady=(0, 14), ipady=5)
+        lang_combo = ttk.Combobox(lang_box, textvariable=lang_var, values=list(LANG_OPTIONS.values()), state="readonly")
+        lang_combo.pack(fill="x", ipady=5)
 
-        tk.Label(card, text=tr("theme"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 10, "bold")).pack(anchor="w", padx=14, pady=(0, 4))
+        theme_box = tk.Frame(grid, bg=SURFACE)
+        theme_box.grid(row=0, column=1, sticky="ew", padx=(10, 0))
+        tk.Label(theme_box, text=tr("theme"), bg=SURFACE, fg=TEXT_MUTED, font=("Segoe UI", 10, "bold")).pack(anchor="w", pady=(0, 4))
         theme_var = tk.StringVar(value=current.get("theme", CURRENT_THEME_KEY) if current.get("theme", CURRENT_THEME_KEY) in THEME_PRESETS else CURRENT_THEME_KEY)
-        theme_combo = ttk.Combobox(card, textvariable=theme_var, values=list(THEME_PRESETS.keys()), state="readonly")
-        theme_combo.pack(fill="x", padx=14, pady=(0, 12), ipady=5)
+        theme_combo = ttk.Combobox(theme_box, textvariable=theme_var, values=list(THEME_PRESETS.keys()), state="readonly")
+        theme_combo.pack(fill="x", ipady=5)
 
         preview = tk.Frame(card, bg=SURFACE)
-        preview.pack(fill="x", padx=14, pady=(0, 14))
-
-        swatches = []
+        preview.pack(fill="x", padx=14, pady=(0, 12))
         labels = list(zip(["bg", "surface", "primary", "secondary", "accent", "text", "muted", "border"], tr("theme_swatches")))
 
         def draw_preview(*_):
@@ -1129,21 +1546,19 @@ class TOBOVietSubApp:
             theme = THEME_PRESETS.get(theme_var.get()) or THEME_PRESETS[CURRENT_THEME_KEY]
             for i, (key, label) in enumerate(labels):
                 box = tk.Frame(preview, bg=SURFACE)
-                box.grid(row=i // 4, column=i % 4, sticky="ew", padx=4, pady=5)
+                box.grid(row=0, column=i, sticky="ew", padx=3, pady=5)
                 color = theme[key]
-                tk.Label(box, text="  ", bg=color, width=4, relief="flat", highlightthickness=1, highlightbackground=BORDER).pack(side="left")
-                tk.Label(box, text=f" {label}\n {color}", bg=SURFACE, fg=TEXT_MUTED, justify="left", font=("Segoe UI", 8)).pack(side="left")
-            for c in range(4):
+                tk.Label(box, text="  ", bg=color, width=3, relief="flat", highlightthickness=1, highlightbackground=BORDER).pack(side="top", anchor="w")
+                tk.Label(box, text=f"{label}\n{color}", bg=SURFACE, fg=TEXT_MUTED, justify="left", font=("Segoe UI", 7)).pack(side="top", anchor="w")
+            for c in range(8):
                 preview.columnconfigure(c, weight=1)
 
         theme_combo.bind("<<ComboboxSelected>>", draw_preview)
         draw_preview()
 
-        note = tk.Label(wrap, text=tr("theme_note"), bg=BG_COLOR, fg=TEXT_MUTED, wraplength=480, justify="left", font=("Segoe UI", 9))
-        note.pack(anchor="w", pady=(0, 14))
-
-        btn_row = tk.Frame(wrap, bg=BG_COLOR)
-        btn_row.pack(fill="x", side="bottom")
+        bottom = tk.Frame(wrap, bg=BG_COLOR)
+        bottom.pack(fill="x", pady=(12, 0))
+        tk.Label(bottom, text=tr("theme_note"), bg=BG_COLOR, fg=TEXT_MUTED, wraplength=620, justify="left", font=("Segoe UI", 9)).pack(side="left", fill="x", expand=True)
 
         def apply_settings():
             global APP_LANG
@@ -1152,6 +1567,7 @@ class TOBOVietSubApp:
             old_model = option_value("model", self.model_size.get()) or "large-v3-turbo"
             old_device = option_value("device", self.device_mode.get()) or "auto"
             old_style = style_value(self.translation_style.get()) if hasattr(self, "translation_style") else "natural"
+            old_speed = speed_value(self.read_speed.get()) if hasattr(self, "read_speed") else "normal"
             lang_key = lang_reverse.get(lang_var.get(), "vi")
             theme_key = theme_var.get()
             save_ui_settings({"app_language": lang_key, "theme": theme_key})
@@ -1163,18 +1579,13 @@ class TOBOVietSubApp:
             self.device_mode.set(option_label("device", old_device))
             if hasattr(self, "translation_style"):
                 self.translation_style.set(style_label(old_style))
-            try:
-                win.grab_release()
-            except Exception:
-                pass
-            try:
-                win.destroy()
-            except Exception:
-                pass
+            if hasattr(self, "read_speed"):
+                self.read_speed.set(speed_label(old_speed))
+            self.close_settings_panel()
             self.rebuild_ui()
 
         tk.Button(
-            btn_row,
+            bottom,
             text=tr("apply"),
             command=apply_settings,
             bg=ACCENT,
@@ -1184,12 +1595,12 @@ class TOBOVietSubApp:
             relief="flat",
             bd=0,
             padx=18,
-            pady=10,
+            pady=9,
             cursor="hand2",
             font=("Segoe UI", 10, "bold"),
-        ).pack(side="left")
+        ).pack(side="right", padx=(10, 0))
         tk.Button(
-            btn_row,
+            bottom,
             text=tr("help_button"),
             command=self.open_help_window,
             bg=SURFACE,
@@ -1199,30 +1610,12 @@ class TOBOVietSubApp:
             relief="flat",
             bd=0,
             padx=18,
-            pady=10,
+            pady=9,
             cursor="hand2",
             font=("Segoe UI", 10, "bold"),
             highlightthickness=1,
             highlightbackground=BORDER,
-        ).pack(side="left", padx=(10, 0))
-
-        tk.Button(
-            btn_row,
-            text=tr("close"),
-            command=win.destroy,
-            bg=SURFACE,
-            fg=TEXT,
-            activebackground=SURFACE_2,
-            activeforeground=TEXT,
-            relief="flat",
-            bd=0,
-            padx=18,
-            pady=10,
-            cursor="hand2",
-            font=("Segoe UI", 10, "bold"),
-            highlightthickness=1,
-            highlightbackground=BORDER,
-        ).pack(side="left", padx=(10, 0))
+        ).pack(side="right", padx=(10, 0))
 
     def open_help_window(self):
         self.play_click()
@@ -1272,6 +1665,16 @@ class TOBOVietSubApp:
             font=("Segoe UI", 10, "bold"),
         ).pack(side="left")
 
+    def make_card(self, parent, **pack_opts):
+        outer = tk.Frame(parent, bg=BG_COLOR)
+        if pack_opts:
+            outer.pack(**pack_opts)
+        card = tk.Frame(outer, bg=SURFACE, highlightthickness=1, highlightbackground=BORDER)
+        card.pack(fill="both", expand=True, padx=1, pady=1)
+        # Tkinter gốc không bo góc thật như web/CSS. Bản này làm mềm bằng padding, viền nhẹ,
+        # ít góc nhọn hơn và layout đều hơn. Muốn bo góc thật nên chuyển sang PySide6/CustomTkinter.
+        return card
+
     def setup_styles(self):
         style = ttk.Style()
         style.theme_use("clam")
@@ -1316,7 +1719,8 @@ class TOBOVietSubApp:
         try:
             color = self.pulse_colors[self.pulse_index % len(self.pulse_colors)]
             self.pulse_dot.configure(fg=color)
-            self.status_label.configure(fg=color if self.worker and self.worker.is_alive() else TEXT_MUTED)
+            if getattr(self, "status_label", None):
+                self.status_label.configure(fg=color if self.worker and self.worker.is_alive() else TEXT_MUTED)
             self.pulse_index += 1
         except Exception:
             pass
@@ -1727,6 +2131,109 @@ class TOBOVietSubApp:
     def log(self, msg):
         self.q.put(("status", msg))
 
+    def iter_interactive_widgets(self, parent=None):
+        parent = parent or self.root
+        for child in parent.winfo_children():
+            if isinstance(child, (tk.Button, tk.Checkbutton, tk.Entry, ttk.Combobox)):
+                yield child
+            yield from self.iter_interactive_widgets(child)
+
+    def set_interaction_locked(self, locked: bool):
+        self.ui_locked = bool(locked)
+        for widget in self.iter_interactive_widgets():
+            try:
+                if isinstance(widget, ttk.Combobox):
+                    widget.configure(state="disabled" if locked else "readonly")
+                else:
+                    widget.configure(state="disabled" if locked else "normal")
+            except Exception:
+                pass
+
+    def begin_busy(self, message: str, progress: float = 5):
+        self.status.set(message)
+        self.progress.set(progress)
+        self.set_interaction_locked(True)
+        self.show_loader_overlay()
+        self.root.update_idletasks()
+
+    def end_busy(self, message: str | None = None, progress: float | None = None):
+        if progress is not None:
+            self.progress.set(progress)
+        if message:
+            self.status.set(message)
+        self.set_interaction_locked(False)
+        self.hide_loader_overlay()
+        self.root.update_idletasks()
+
+    def check_system(self):
+        if self.ui_locked or (self.worker and self.worker.is_alive()):
+            return
+        self.play_click()
+        self.begin_busy(tr("system_check_running"), 8)
+        threading.Thread(target=self.check_system_worker, daemon=True).start()
+
+    def check_system_worker(self):
+        lines = []
+        def ok(name, detail=""):
+            lines.append(f"✅ {name} OK" + (f" — {detail}" if detail else ""))
+        def bad(name, detail=""):
+            lines.append(f"❌ {name}" + (f" — {detail}" if detail else ""))
+
+        ok("Python", sys.version.split()[0])
+        try:
+            import faster_whisper
+            ok("faster-whisper", getattr(faster_whisper, "__version__", "installed"))
+        except Exception as e:
+            bad("faster-whisper", str(e))
+
+        if check_ffmpeg():
+            ok("FFmpeg")
+        else:
+            bad("FFmpeg", "chưa thấy trong PATH/local folder")
+
+        try:
+            import huggingface_hub
+            cache_home = Path(os.environ.get("HF_HOME", Path.home() / ".cache" / "huggingface"))
+            model_hint = "cache folder exists" if cache_home.exists() else "cache folder not found yet"
+            ok("Model cache", model_hint)
+        except Exception as e:
+            bad("Model cache", str(e))
+
+        try:
+            urllib.request.urlopen(urllib.request.Request("https://github.com", headers={"User-Agent": APP_NAME}), timeout=8).close()
+            ok("Internet")
+        except Exception as e:
+            bad("Internet", str(e))
+
+        try:
+            import ctranslate2
+            cuda_count = 0
+            if hasattr(ctranslate2, "get_cuda_device_count"):
+                cuda_count = ctranslate2.get_cuda_device_count()
+            if cuda_count:
+                ok("GPU/CUDA", f"{cuda_count} CUDA device(s)")
+            else:
+                bad("GPU/CUDA", "không phát hiện CUDA, CPU vẫn chạy được")
+        except Exception as e:
+            bad("GPU/CUDA", str(e))
+
+        try:
+            OUTPUT_DIR.mkdir(exist_ok=True)
+            test = OUTPUT_DIR / ".write_test"
+            test.write_text("ok", encoding="utf-8")
+            test.unlink(missing_ok=True)
+            ok("Thư mục output", str(OUTPUT_DIR))
+        except Exception as e:
+            bad("Thư mục output", str(e))
+
+        self.q.put(("system_check_result", "\n".join(lines)))
+
+    def safe_float(self, value, default: float) -> float:
+        try:
+            return float(str(value).strip().replace(",", "."))
+        except Exception:
+            return default
+
     def start(self):
         if self.worker and self.worker.is_alive():
             messagebox.showinfo(tr("busy_title"), tr("busy_processing"))
@@ -1745,10 +2252,13 @@ class TOBOVietSubApp:
             "translation_style": style_value(self.translation_style.get()),
             "translation_style_label": self.translation_style.get(),
             "output_folder_name": self.output_folder_name.get().strip(),
+            "read_speed": speed_value(self.read_speed.get()),
+            "delay_min": self.safe_float(self.delay_min.get(), 0.10),
+            "delay_max": self.safe_float(self.delay_max.get(), 2.50),
+            "delay_round": self.safe_float(self.delay_round.get(), 0.05),
+            "delay_skip_small": bool(self.delay_skip_small.get()),
         }
-        self.start_btn.config(state="disabled")
-        self.progress.set(3)
-        self.status.set(tr("preparing"))
+        self.begin_busy(tr("preparing"), 3)
         self.text_original.delete("1.0", "end")
         self.text_translated.delete("1.0", "end")
         self.last_text = ""
@@ -1879,7 +2389,15 @@ class TOBOVietSubApp:
 
                 if settings.get("delay_tags_enabled", True):
                     self.log(tr("translating_timed"))
-                    timed_translation = self.rows_to_voice_timing_text(translated_rows, target_lang)
+                    timed_translation = self.rows_to_voice_timing_text(
+                        translated_rows,
+                        target_lang,
+                        speed=settings.get("read_speed", "normal"),
+                        min_delay=settings.get("delay_min", 0.10),
+                        max_delay=settings.get("delay_max", 2.50),
+                        round_step=settings.get("delay_round", 0.05),
+                        skip_under=0.2 if settings.get("delay_skip_small", True) else 0.10,
+                    )
                     self.last_timed_translation = timed_translation
                     display_translation = timed_translation
                 else:
@@ -1926,55 +2444,90 @@ class TOBOVietSubApp:
 
     def stylize_translation_text(self, text: str, style_code: str, target_lang: str) -> str:
         raw = (text or "").strip()
-        if not raw or style_code in ("", "natural", None):
+        if not raw:
             return raw
-        lang = "vi" if target_lang == "vi" else ("zh" if target_lang in {"zh", "zh-CN"} else target_lang)
-        end_punct = raw.endswith((".", "!", "?", "…", "。", "！", "？"))
+        if style_code in ("", None, "faithful"):
+            # Giữ nghĩa sát: không thêm thắt, chỉ dọn khoảng trắng.
+            return " ".join(raw.split())
 
-        def finish(s: str, punct: str = "!") -> str:
-            s = s.strip()
+        lang = "vi" if target_lang == "vi" else ("zh" if target_lang in {"zh", "zh-CN"} else target_lang)
+        end_punct = raw.endswith((".", "!", "?", "…", "。", "！", "？", "~"))
+
+        def finish(s: str, punct: str = ".") -> str:
+            s = " ".join((s or "").split()).strip()
             if not s:
                 return s
-            return s if s.endswith((".", "!", "?", "…", "。", "！", "？")) else s + punct
+            return s if s.endswith((".", "!", "?", "…", "。", "！", "？", "~")) else s + punct
 
-        if lang == "vi":
-            replacements = {
-                "humorous": [("không", "không vậy trời"), ("được rồi", "ok luôn nè"), ("xin chào", "hí lô")],
-                "cartoon": [("không", "không nha"), ("được rồi", "được rồi nè"), ("tại sao", "sao vậy ta")],
-                "serious": [("ok", "được"), ("ừ", "vâng"), ("nha", "")],
-                "horror": [("ai", "kẻ nào"), ("ở đâu", "ở nơi nào"), ("không", "không...")],
-                "romantic": [("xin chào", "chào bạn"), ("cảm ơn", "cảm ơn nhé"), ("được", "được chứ")],
-                "sci_fi": [("được rồi", "hệ thống xác nhận"), ("bắt đầu", "kích hoạt"), ("tôi", "tôi")],
-                "action": [("đi", "đi ngay"), ("chạy", "chạy mau"), ("được rồi", "rõ")],
-            }
-            out = raw
-            for a, b in replacements.get(style_code, []):
+        def apply_replacements(s: str, pairs: list[tuple[str, str]]) -> str:
+            out = s
+            for a, b in pairs:
                 out = out.replace(a, b).replace(a.capitalize(), b.capitalize())
-            if style_code == "humorous" and not end_punct:
-                out = finish(out, "!")
-            elif style_code == "cartoon" and not out.endswith(("~", "!", "?")):
-                out = out + " nha!"
-            elif style_code == "horror" and not out.endswith("..."):
-                out = out + "..."
-            elif style_code == "romantic" and not out.endswith((" nhé.", " nhé!", " nhé")):
-                out = finish(out, ".")
-            elif style_code == "sci_fi" and len(out) < 70:
-                out = finish(out, ".")
-            elif style_code == "action":
-                out = finish(out, "!")
             return out
 
-        # Light style cues for other output languages. Keep it conservative so the translation stays usable.
-        if style_code == "humorous":
-            return finish(raw, "!")
-        if style_code == "cartoon":
-            return finish(raw, "!")
-        if style_code == "horror":
-            return raw + ("..." if not raw.endswith("...") else "")
-        if style_code == "romantic":
+        if lang == "vi":
+            replacement_map = {
+                "natural": [
+                    ("tôi là", "mình là"), ("tại sao", "sao"), ("được rồi", "được rồi"),
+                    ("không thể", "không thể"), ("xin chào", "chào"),
+                ],
+                "viral_tiktok": [
+                    ("tại sao", "ủa sao"), ("không thể", "không thể nào"), ("được rồi", "ok luôn"),
+                    ("thật sao", "thật luôn á"), ("xin chào", "hello nha"),
+                ],
+                "cartoon_movie": [
+                    ("tại sao", "sao vậy ta"), ("không", "không nha"), ("được rồi", "được rồi nè"),
+                    ("chạy", "chạy lẹ lên"), ("xin chào", "hí lô"),
+                ],
+                "dubbing": [
+                    ("tôi", "ta"), ("bạn", "ngươi"), ("được rồi", "rõ rồi"),
+                    ("không thể", "không được"),
+                ],
+                "silly_fun": [
+                    ("không", "không nha trời"), ("tại sao", "sao kỳ vậy trời"),
+                    ("được rồi", "ok luôn, khỏi căng"), ("xin chào", "hí lô bà con"),
+                ],
+                "polite": [
+                    ("tôi", "tôi"), ("mày", "bạn"), ("tao", "tôi"), ("ừ", "vâng"),
+                    ("ok", "được"), ("không", "không ạ"),
+                ],
+                "native": [
+                    ("tại sao", "sao"), ("không phải", "đâu phải"), ("được rồi", "rồi, được"),
+                    ("bạn có thể", "bạn thử"), ("xin chào", "chào"),
+                ],
+            }
+            out = apply_replacements(raw, replacement_map.get(style_code, []))
+            if style_code == "natural":
+                return finish(out, ".") if not end_punct else out
+            if style_code == "viral_tiktok":
+                return finish(out, "!")
+            if style_code == "cartoon_movie":
+                return out if out.endswith(("nè!", "nha!", "!", "?", "~")) else out + " nha!"
+            if style_code == "dubbing":
+                return finish(out, "!") if len(out) <= 38 else finish(out, ".")
+            if style_code == "silly_fun":
+                return finish(out, "!")
+            if style_code == "polite":
+                if not out.endswith(("ạ.", "ạ!", "ạ?", ".", "!", "?")) and len(out) < 70:
+                    out += " ạ"
+                return finish(out, ".")
+            if style_code == "native":
+                return finish(out, ".") if len(out) > 18 else finish(out, "!")
+            return out
+
+        # Với ngôn ngữ khác: giữ an toàn, chỉ chỉnh nhịp/punctuation nhẹ để không làm méo nghĩa.
+        if style_code == "natural":
             return finish(raw, ".")
-        if style_code == "action":
+        if style_code == "viral_tiktok":
             return finish(raw, "!")
+        if style_code in ("cartoon_movie", "silly_fun"):
+            return finish(raw, "!")
+        if style_code == "dubbing":
+            return finish(raw, "!") if len(raw) < 42 else finish(raw, ".")
+        if style_code == "polite":
+            return finish(raw, ".")
+        if style_code == "native":
+            return finish(raw, ".")
         return raw
 
     def format_segment_line(self, row: dict, text: str) -> str:
@@ -1989,7 +2542,7 @@ class TOBOVietSubApp:
             blocks.append(f"{idx}\n{format_srt_timestamp(row.get('start', 0))} --> {format_srt_timestamp(row.get('end', 0))}\n{text}")
         return "\n\n".join(blocks) + ("\n" if blocks else "")
 
-    def estimate_tts_seconds(self, text: str, target_lang: str | None = None) -> float:
+    def estimate_tts_seconds(self, text: str, target_lang: str | None = None, speed: str = "normal") -> float:
         clean = (text or "").strip()
         if not clean:
             return 0.0
@@ -2001,15 +2554,26 @@ class TOBOVietSubApp:
             words = [w for w in clean.replace("\n", " ").split(" ") if w.strip()]
             base = max(0.55, len(words) / 2.65)
         punctuation_pause = sum(clean.count(ch) for ch in ",.;:!?，。！？、") * 0.10
-        return min(20.0, base + punctuation_pause)
+        result = min(20.0, base + punctuation_pause)
+        factor = {"slow": 1.25, "normal": 1.0, "fast": 0.82}.get(speed, 1.0)
+        return result * factor
 
-    def rows_to_voice_timing_text(self, rows: list[dict], target_lang: str | None = None) -> str:
+    def rows_to_voice_timing_text(self, rows: list[dict], target_lang: str | None = None, speed: str = "normal", min_delay: float = 0.10, max_delay: float = 2.50, round_step: float = 0.05, skip_under: float = 0.20) -> str:
         lines = []
         if not rows:
             return ""
         first_start = max(0.0, float(rows[0].get("start", 0) or 0))
-        if first_start >= 0.15:
-            lines.append(f"<#{first_start:.2f}#>")
+        round_step = max(0.01, float(round_step or 0.05))
+        min_delay = max(0.0, float(min_delay or 0.0))
+        max_delay = max(min_delay, float(max_delay or 2.5))
+        skip_under = max(0.0, float(skip_under or 0.0))
+
+        def clean_delay(value: float) -> float:
+            value = max(min_delay, min(max_delay, value))
+            return round(value / round_step) * round_step
+
+        if first_start >= skip_under:
+            lines.append(f"<#{clean_delay(first_start):.2f}#>")
         for idx, row in enumerate(rows):
             text = (row.get("text") or "").strip()
             if not text:
@@ -2023,10 +2587,10 @@ class TOBOVietSubApp:
                     next_start = float(nxt.get("start", end) or end)
                     break
             gap_to_next = max(0.0, (next_start - end) if next_start is not None else 0.0)
-            estimated_speech = self.estimate_tts_seconds(text, target_lang)
+            estimated_speech = self.estimate_tts_seconds(text, target_lang, speed=speed)
             delay = max(0.0, segment_duration - estimated_speech) + gap_to_next
-            if delay >= 0.10:
-                lines.append(f"{text}<#{delay:.2f}#>")
+            if delay >= skip_under:
+                lines.append(f"{text}<#{clean_delay(delay):.2f}#>")
             else:
                 lines.append(text)
         return "\n".join(lines)
@@ -2090,6 +2654,10 @@ class TOBOVietSubApp:
                     self.status.set(value)
                 elif typ == "progress":
                     self.progress.set(value)
+                    if self.ui_locked or (self.worker and self.worker.is_alive()):
+                        self.show_loader_overlay()
+                    else:
+                        self.hide_loader_overlay()
                 elif typ == "append_original":
                     self.text_original.insert("end", value)
                     self.text_original.see("end")
@@ -2110,8 +2678,7 @@ class TOBOVietSubApp:
                         if self.video_bg_status:
                             self.video_bg_status.configure(text=f"Lỗi render nền: {e}")
                 elif typ == "update_info":
-                    self.status.set(tr("ready_status"))
-                    self.start_btn.config(state="normal")
+                    self.end_busy(tr("ready_status"))
                     messagebox.showinfo(tr("update_title"), value)
                 elif typ == "update_available":
                     self.status.set(tr("update_available_title"))
@@ -2137,13 +2704,14 @@ class TOBOVietSubApp:
                         os.startfile(str(UPDATES_DIR))
                     except Exception:
                         pass
+                elif typ == "system_check_result":
+                    self.end_busy(tr("system_check_done"), 100)
+                    messagebox.showinfo(tr("system_check_title"), value)
                 elif typ == "done":
-                    self.status.set(tr("completed"))
-                    self.start_btn.config(state="normal")
+                    self.end_busy(tr("completed"), 100)
                     messagebox.showinfo(tr("completed"), value)
                 elif typ == "error":
-                    self.status.set(tr("error_title") if tr("error_title") != "error_title" else "Error")
-                    self.start_btn.config(state="normal")
+                    self.end_busy(tr("error_title") if tr("error_title") != "error_title" else "Error")
                     messagebox.showerror(tr("error_title") if tr("error_title") != "error_title" else "Error", value)
         except queue.Empty:
             pass
@@ -2158,13 +2726,21 @@ class TOBOVietSubApp:
         path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("TXT", "*.txt")])
         if not path:
             return
-        content = original
-        if translated:
-            content += "\n\n===== BẢN DỊCH =====\n\n" + translated
-        Path(path).write_text(content, encoding="utf-8")
-        messagebox.showinfo(tr("saved_title"), path)
+        self.begin_busy("Đang lưu TXT...", 20)
+        try:
+            content = original
+            if translated:
+                content += "\n\n===== BẢN DỊCH =====\n\n" + translated
+            Path(path).write_text(content, encoding="utf-8")
+            self.end_busy(tr("ready_status"), 100)
+            messagebox.showinfo(tr("saved_title"), path)
+        except Exception as e:
+            self.end_busy(tr("ready_status"))
+            messagebox.showerror(tr("error_title") if tr("error_title") != "error_title" else "Error", str(e))
 
     def save_srt_manual(self):
+        if self.ui_locked:
+            return
         rows = self.last_translated_rows if self.last_translated_rows else self.last_rows
         if not rows:
             messagebox.showinfo(tr("no_data_title"), tr("no_srt_data"))
@@ -2172,23 +2748,45 @@ class TOBOVietSubApp:
         path = filedialog.asksaveasfilename(defaultextension=".srt", filetypes=[("SRT", "*.srt")])
         if not path:
             return
-        Path(path).write_text(self.rows_to_srt(rows), encoding="utf-8-sig")
-        messagebox.showinfo(tr("saved_srt_title"), path)
+        self.begin_busy("Đang xuất SRT...", 20)
+        try:
+            Path(path).write_text(self.rows_to_srt(rows), encoding="utf-8-sig")
+            self.end_busy(tr("ready_status"), 100)
+            messagebox.showinfo(tr("saved_srt_title"), path)
+        except Exception as e:
+            self.end_busy(tr("ready_status"))
+            messagebox.showerror(tr("error_title") if tr("error_title") != "error_title" else "Error", str(e))
 
     def save_voice_timing_manual(self):
+        if self.ui_locked:
+            return
         content = self.last_timed_translation.strip() if self.last_timed_translation else ""
         if not content:
             rows = self.last_translated_rows if self.last_translated_rows else []
             if rows:
-                content = self.rows_to_voice_timing_text(rows, None)
+                content = self.rows_to_voice_timing_text(
+                    rows,
+                    None,
+                    speed=speed_value(self.read_speed.get()) if hasattr(self, "read_speed") else "normal",
+                    min_delay=self.safe_float(self.delay_min.get(), 0.10) if hasattr(self, "delay_min") else 0.10,
+                    max_delay=self.safe_float(self.delay_max.get(), 2.50) if hasattr(self, "delay_max") else 2.50,
+                    round_step=self.safe_float(self.delay_round.get(), 0.05) if hasattr(self, "delay_round") else 0.05,
+                    skip_under=0.2 if (hasattr(self, "delay_skip_small") and self.delay_skip_small.get()) else 0.10,
+                )
         if not content:
             messagebox.showinfo(tr("no_data_title"), tr("no_voice_data"))
             return
         path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("TXT", "*.txt")])
         if not path:
             return
-        Path(path).write_text(content, encoding="utf-8")
-        messagebox.showinfo(tr("saved_voice_title"), path)
+        self.begin_busy("Đang xuất Voice TXT...", 20)
+        try:
+            Path(path).write_text(content, encoding="utf-8")
+            self.end_busy(tr("ready_status"), 100)
+            messagebox.showinfo(tr("saved_voice_title"), path)
+        except Exception as e:
+            self.end_busy(tr("ready_status"))
+            messagebox.showerror(tr("error_title") if tr("error_title") != "error_title" else "Error", str(e))
 
     def open_output(self):
         target = self.resolve_export_dir(self.output_folder_name.get().strip()) if hasattr(self, "output_folder_name") and self.output_folder_name.get().strip() else OUTPUT_DIR

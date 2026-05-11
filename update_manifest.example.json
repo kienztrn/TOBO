@@ -1,5 +1,5 @@
 {
-  "version": "1.7.0",
+  "version": "1.7.9",
   "url": "https://github.com/kienztrn/TOBO/archive/refs/heads/main.zip",
-  "notes": "Chuyển model mặc định sang Whisper large-v3-turbo để nhận diện nhanh hơn; vẫn giữ auto-update in-place và thư viện đã cài."
+  "notes": "Chuyển nút thu gọn thành Thiết lập xong, đưa xuống hàng thao tác; nút Bắt đầu xử lý được căn giữa và bỏ chữ trạng thái Sẵn sàng."
 }

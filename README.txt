@@ -124,3 +124,25 @@ V1.7.0:
 - Them model Turbo - large-v3-turbo.
 - Dat Turbo lam model mac dinh de xu ly nhanh hon.
 - Neu alias turbo bi loi, app tu fallback sang model CTranslate2 tren Hugging Face.
+
+
+V1.7.1:
+- Nâng cấp bộ phong cách dịch theo yêu cầu: Giữ nghĩa sát, Dịch tự nhiên, Viral/TikTok, Phim hoạt hình, Lồng tiếng, Hài bựa nhẹ, Lịch sự, Như người bản xứ.
+- Vẫn giữ Whisper Turbo mặc định và auto-update in-place, không xóa .venv/thư viện/output.
+
+v1.7.2:
+- Them nut Kiem tra he thong: Python, faster-whisper, FFmpeg, model cache, Internet, GPU/CUDA, output.
+- Them tuy chinh Voice Delay: toc do doc cham/vua/nhanh, delay toi thieu, delay toi da, lam tron delay, bo delay nho hon 0.2s.
+- Sap xep lai khu dieu khien cho gon hon va lam mem visual card.
+
+
+BAN v1.7.4:
+- Sua nut cai dat: bam ☰ de thu/phong panel cai dat ngay trong app.
+- Khong mo cua so popup rieng khi bam cai dat nua.
+- Giu auto-update in-place, khong xoa .venv/thu vien/output/temp/updates.
+
+
+BAN 1.7.8:
+- Bo o SYSTEM STATUS.
+- Thay bang o Bat dau xu ly gon hon nam ngay tren phan Van ban goc/Ban dich.
+- Loader van hien dang overlay giua app khi xu ly.
