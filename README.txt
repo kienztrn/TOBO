@@ -118,3 +118,9 @@ V1.6.9 HOTFIX:
 - Doi nut Updates thanh nut Ung ho.
 - Bam Ung ho se mo popup QR placeholder. Sau nay dat ma QR vao assets/support_qr.png.
 - Fix layout nut header de khong bi cat hien thi.
+
+
+V1.7.0:
+- Them model Turbo - large-v3-turbo.
+- Dat Turbo lam model mac dinh de xu ly nhanh hon.
+- Neu alias turbo bi loi, app tu fallback sang model CTranslate2 tren Hugging Face.

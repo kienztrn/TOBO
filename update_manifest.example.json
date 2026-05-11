@@ -1,5 +1,5 @@
 {
-  "version": "1.6.9",
+  "version": "1.7.0",
   "url": "https://github.com/kienztrn/TOBO/archive/refs/heads/main.zip",
-  "notes": "Thêm QR ủng hộ vào nút Ủng hộ, giữ auto-update in-place."
+  "notes": "Chuyển model mặc định sang Whisper large-v3-turbo để nhận diện nhanh hơn; vẫn giữ auto-update in-place và thư viện đã cài."
 }

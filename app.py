@@ -31,7 +31,7 @@ else:
 TEMP_DIR = APP_DIR / "temp"
 OUTPUT_DIR = APP_DIR / "output"
 UPDATES_DIR = APP_DIR / "updates"
-CURRENT_VERSION = "1.6.9"
+CURRENT_VERSION = "1.7.0"
 APP_NAME = "TOBO VietSub"
 TEMP_DIR.mkdir(exist_ok=True)
 OUTPUT_DIR.mkdir(exist_ok=True)
@@ -417,25 +417,25 @@ OPTION_TABLES = {
     "vi": {
         "source": [(None, "Tự động nhận diện"), ("vi", "Tiếng Việt"), ("en", "Tiếng Anh"), ("zh", "Tiếng Trung"), ("ja", "Tiếng Nhật"), ("ko", "Tiếng Hàn"), ("fr", "Tiếng Pháp"), ("de", "Tiếng Đức"), ("es", "Tiếng Tây Ban Nha"), ("th", "Tiếng Thái"), ("id", "Tiếng Indonesia")],
         "translate": [(None, "Không dịch"), ("vi", "Dịch sang Tiếng Việt"), ("en", "Dịch sang Tiếng Anh"), ("zh-CN", "Dịch sang Tiếng Trung"), ("ja", "Dịch sang Tiếng Nhật"), ("ko", "Dịch sang Tiếng Hàn"), ("fr", "Dịch sang Tiếng Pháp"), ("de", "Dịch sang Tiếng Đức"), ("es", "Dịch sang Tiếng Tây Ban Nha"), ("th", "Dịch sang Tiếng Thái"), ("id", "Dịch sang Tiếng Indonesia")],
-        "model": [("tiny", "Nhanh nhất - tiny"), ("base", "Nhanh - base"), ("small", "Cân bằng - small"), ("medium", "Chính xác hơn - medium"), ("large-v3", "Rất chính xác - large-v3")],
+        "model": [("large-v3-turbo", "Turbo - large-v3-turbo"), ("tiny", "Nhanh nhất - tiny"), ("base", "Nhanh - base"), ("small", "Cân bằng - small"), ("medium", "Chính xác hơn - medium"), ("large-v3", "Rất chính xác - large-v3")],
         "device": [("auto", "Tự động"), ("cpu", "CPU"), ("gpu", "GPU NVIDIA")],
     },
     "en": {
         "source": [(None, "Auto detect"), ("vi", "Vietnamese"), ("en", "English"), ("zh", "Chinese"), ("ja", "Japanese"), ("ko", "Korean"), ("fr", "French"), ("de", "German"), ("es", "Spanish"), ("th", "Thai"), ("id", "Indonesian")],
         "translate": [(None, "No translation"), ("vi", "Translate to Vietnamese"), ("en", "Translate to English"), ("zh-CN", "Translate to Chinese"), ("ja", "Translate to Japanese"), ("ko", "Translate to Korean"), ("fr", "Translate to French"), ("de", "Translate to German"), ("es", "Translate to Spanish"), ("th", "Translate to Thai"), ("id", "Translate to Indonesian")],
-        "model": [("tiny", "Fastest - tiny"), ("base", "Fast - base"), ("small", "Balanced - small"), ("medium", "More accurate - medium"), ("large-v3", "Very accurate - large-v3")],
+        "model": [("large-v3-turbo", "Turbo - large-v3-turbo"), ("tiny", "Fastest - tiny"), ("base", "Fast - base"), ("small", "Balanced - small"), ("medium", "More accurate - medium"), ("large-v3", "Very accurate - large-v3")],
         "device": [("auto", "Auto"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
     },
     "ko": {
         "source": [(None, "자동 감지"), ("vi", "베트남어"), ("en", "영어"), ("zh", "중국어"), ("ja", "일본어"), ("ko", "한국어"), ("fr", "프랑스어"), ("de", "독일어"), ("es", "스페인어"), ("th", "태국어"), ("id", "인도네시아어")],
         "translate": [(None, "번역 안 함"), ("vi", "베트남어로 번역"), ("en", "영어로 번역"), ("zh-CN", "중국어로 번역"), ("ja", "일본어로 번역"), ("ko", "한국어로 번역"), ("fr", "프랑스어로 번역"), ("de", "독일어로 번역"), ("es", "스페인어로 번역"), ("th", "태국어로 번역"), ("id", "인도네시아어로 번역")],
-        "model": [("tiny", "가장 빠름 - tiny"), ("base", "빠름 - base"), ("small", "균형 - small"), ("medium", "더 정확함 - medium"), ("large-v3", "매우 정확함 - large-v3")],
+        "model": [("large-v3-turbo", "터보 - large-v3-turbo"), ("tiny", "가장 빠름 - tiny"), ("base", "빠름 - base"), ("small", "균형 - small"), ("medium", "더 정확함 - medium"), ("large-v3", "매우 정확함 - large-v3")],
         "device": [("auto", "자동"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
     },
     "zh": {
         "source": [(None, "自动识别"), ("vi", "越南语"), ("en", "英语"), ("zh", "中文"), ("ja", "日语"), ("ko", "韩语"), ("fr", "法语"), ("de", "德语"), ("es", "西班牙语"), ("th", "泰语"), ("id", "印尼语")],
         "translate": [(None, "不翻译"), ("vi", "翻译成越南语"), ("en", "翻译成英语"), ("zh-CN", "翻译成中文"), ("ja", "翻译成日语"), ("ko", "翻译成韩语"), ("fr", "翻译成法语"), ("de", "翻译成德语"), ("es", "翻译成西班牙语"), ("th", "翻译成泰语"), ("id", "翻译成印尼语")],
-        "model": [("tiny", "最快 - tiny"), ("base", "快速 - base"), ("small", "平衡 - small"), ("medium", "更准确 - medium"), ("large-v3", "非常准确 - large-v3")],
+        "model": [("large-v3-turbo", "Turbo - large-v3-turbo"), ("tiny", "最快 - tiny"), ("base", "快速 - base"), ("small", "平衡 - small"), ("medium", "更准确 - medium"), ("large-v3", "非常准确 - large-v3")],
         "device": [("auto", "自动"), ("cpu", "CPU"), ("gpu", "NVIDIA GPU")],
     },
 }
@@ -525,6 +525,7 @@ TRANSLATE_LANGUAGES = {
 }
 
 MODEL_SIZES = {
+    "Turbo - large-v3-turbo": "large-v3-turbo",
     "Nhanh nhất - tiny": "tiny",
     "Nhanh - base": "base",
     "Cân bằng - small": "small",
@@ -686,7 +687,7 @@ class TOBOVietSubApp:
         self.selected_file = tk.StringVar()
         self.language = tk.StringVar(value=option_label("source", None))
         self.translate_to = tk.StringVar(value=option_label("translate", None))
-        self.model_size = tk.StringVar(value=option_label("model", "small"))
+        self.model_size = tk.StringVar(value=option_label("model", "large-v3-turbo"))
         self.device_mode = tk.StringVar(value=option_label("device", "auto"))
         self.export_format = tk.StringVar(value="TXT + SRT")
         self.translation_style = tk.StringVar(value=style_label("natural"))
@@ -1148,7 +1149,7 @@ class TOBOVietSubApp:
             global APP_LANG
             old_source = option_value("source", self.language.get())
             old_translate = option_value("translate", self.translate_to.get())
-            old_model = option_value("model", self.model_size.get()) or "small"
+            old_model = option_value("model", self.model_size.get()) or "large-v3-turbo"
             old_device = option_value("device", self.device_mode.get()) or "auto"
             old_style = style_value(self.translation_style.get()) if hasattr(self, "translation_style") else "natural"
             lang_key = lang_reverse.get(lang_var.get(), "vi")
@@ -1735,7 +1736,7 @@ class TOBOVietSubApp:
             messagebox.showerror(tr("missing_file_title"), tr("missing_file_message"))
             return
         settings = {
-            "model_name": option_value("model", self.model_size.get()) or "small",
+            "model_name": option_value("model", self.model_size.get()) or "large-v3-turbo",
             "device_choice": option_value("device", self.device_mode.get()) or "auto",
             "source_lang": option_value("source", self.language.get()),
             "target_lang": option_value("translate", self.translate_to.get()),
@@ -1759,21 +1760,44 @@ class TOBOVietSubApp:
         self.worker = threading.Thread(target=self.process_file, args=(Path(file_path), settings), daemon=True)
         self.worker.start()
 
+    def turbo_model_candidates(self, model_name: str) -> list[str]:
+        if model_name == "large-v3-turbo":
+            # Try the short alias first. If the installed faster-whisper build does not know it,
+            # fall back to public CTranslate2 conversions on Hugging Face.
+            return [
+                "large-v3-turbo",
+                "h2oai/faster-whisper-large-v3-turbo",
+                "deepdml/faster-whisper-large-v3-turbo-ct2",
+            ]
+        return [model_name]
+
+    def load_whisper_candidate(self, WhisperModel, candidates: list[str], device: str, compute_type: str):
+        last_error = None
+        for candidate in candidates:
+            try:
+                if candidate != candidates[0]:
+                    self.log(f"Turbo alias lỗi, thử model thay thế: {candidate}")
+                return WhisperModel(candidate, device=device, compute_type=compute_type)
+            except Exception as e:
+                last_error = e
+        raise last_error
+
     def create_model(self, model_name: str, device_choice: str):
         from faster_whisper import WhisperModel
+        candidates = self.turbo_model_candidates(model_name)
         if device_choice == "gpu":
             try:
-                return WhisperModel(model_name, device="cuda", compute_type="float16")
+                return self.load_whisper_candidate(WhisperModel, candidates, device="cuda", compute_type="float16")
             except Exception as e:
                 self.log(tr("gpu_failed").format(error=e))
-                return WhisperModel(model_name, device="cpu", compute_type="int8")
+                return self.load_whisper_candidate(WhisperModel, candidates, device="cpu", compute_type="int8")
         if device_choice == "cpu":
-            return WhisperModel(model_name, device="cpu", compute_type="int8")
+            return self.load_whisper_candidate(WhisperModel, candidates, device="cpu", compute_type="int8")
         try:
-            return WhisperModel(model_name, device="auto", compute_type="auto")
+            return self.load_whisper_candidate(WhisperModel, candidates, device="auto", compute_type="auto")
         except Exception as e:
             self.log(tr("auto_device_failed").format(error=e))
-            return WhisperModel(model_name, device="cpu", compute_type="int8")
+            return self.load_whisper_candidate(WhisperModel, candidates, device="cpu", compute_type="int8")
 
     def transcribe_source(self, model, media_path: Path, lang: str | None):
         segments, info = model.transcribe(str(media_path), language=lang, beam_size=5, vad_filter=True, word_timestamps=False)
